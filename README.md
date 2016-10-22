@@ -12,8 +12,25 @@ This project demonstrates the basic CRUD functions combining express, mysql and 
 
 1. Create MySQL database "demo"
 
-2. git clone git@bitbucket.org:LaurenceHo/yelpcamp.git
+2. Clone the repo: 
+```
+#!python
 
-3. npm install
+git clone git@bitbucket.org:LaurenceHo/yelpcamp.git
+```
 
-4. node server.js
+3. Install npm package: 
+```
+#!python
+
+npm install
+```
+
+4. Launch the server: 
+```
+#!python
+
+node server.js
+```
+
+5. Visit in your browser: http://localhost:3000
