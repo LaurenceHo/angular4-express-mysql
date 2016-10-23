@@ -22,23 +22,17 @@ router.get('/campground', function(req, res) {
 });
 
 router.post('/campground', isLoggedIn, function(req, res) {
-    var name = req.body.name;
-    var image = req.body.image;
-    var description = req.body.description;
-
-    var newCampground = { name: name, image: image, description: description };
-
     db.getConnection((err, connection) => {
         if (err) {
             res.render('campgrounds/new');
         } else {
-            connection.query('INSERT INTO campgrounds SET ?', newCampground, function(err, result) {
+            connection.query('INSERT INTO campgrounds SET ?', req.body.campground, function(err, result) {
                 connection.release();
 
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('Create new campground:' + result.insertId);
+                    console.log('Create new campground:' + req.body.campground);
                     res.redirect('/campground');
                 }
             });

@@ -5,10 +5,10 @@
 			<h1 style = 'text-align: center'>Add New Comment to <%= campground.name %> </h1>
 			<div style = 'width:30% ; margin: 25px auto;'>
 				<form action='/campground/<%= campground.id %>/comments' method='POST'>
-					<div class = 'form-group'>
-						<input class = 'hidden' value = '<%= campground.id %>' name = 'comment[campground_id]'>
-						<input class = 'form-control' type = 'text' name = 'comment[author]' value = '<%= currentUser.username%>' readonly>
-					</div>
+					<input class = 'hidden' value = '<%= campground.id %>' name = 'comment[campground_id]'>
+					<input class = 'hidden' value = '<%= currentUser.id %>' name = 'comment[user_id]'>
+					<input class = 'hidden' value = '<%= currentUser.username %>' name = 'comment[username]'>
+
 					<div class = 'form-group'>
 						<textarea class = 'form-control' name = 'comment[text]' rows="6" placeholder='comment'></textarea>
 					</div>
