@@ -31,10 +31,11 @@ app.use(function(req, res, next) {
 });
 
 //initial routes
+var authRoutes = require('./routes/auth.js');
 var campgroundRoutes = require('./routes/campground.js');
 var commentRoutes = require('./routes/comment.js');
 
-require('./routes/auth.js')(app, passport);
+app.use(authRoutes);
 app.use(campgroundRoutes);
 app.use(commentRoutes);
 

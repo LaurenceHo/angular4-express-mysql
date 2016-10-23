@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 
-router.get('/campground/:id/comments/new', function(req, res) {
+router.get('/campground/:id/comments/new', isLoggedIn, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
             console.log(err);
@@ -21,7 +21,7 @@ router.get('/campground/:id/comments/new', function(req, res) {
     });
 });
 
-router.post('/campground/:id/comments', function(req, res) {
+router.post('/campground/:id/comments', isLoggedIn, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
             res.render('campgrounds/new');
@@ -39,5 +39,12 @@ router.post('/campground/:id/comments', function(req, res) {
         }
     });
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+
+    res.redirect('/login');
+}
 
 module.exports = router;

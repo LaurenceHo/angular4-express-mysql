@@ -3,7 +3,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
 router.get('/campground', function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
@@ -22,7 +21,7 @@ router.get('/campground', function(req, res) {
     });
 });
 
-router.post('/campground', function(req, res) {
+router.post('/campground', isLoggedIn, function(req, res) {
     var name = req.body.name;
     var image = req.body.image;
     var description = req.body.description;
@@ -47,7 +46,7 @@ router.post('/campground', function(req, res) {
     });
 });
 
-router.get('/campground/new', function(req, res) {
+router.get('/campground/new', isLoggedIn, function(req, res) {
     res.render('campgrounds/new');
 });
 
@@ -92,5 +91,12 @@ router.get('/campground/:id', function(req, res) {
         }
     });
 });
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+
+    res.redirect('/login');
+}
 
 module.exports = router;
