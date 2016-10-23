@@ -26,14 +26,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(function(req, res, next) {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 app.get("/", function(req, res) {
     res.redirect('/campground');
 });
 
+require('./routes/user.js')(app, passport);
 require('./routes/campground.js')(app, db);
 require('./routes/comment.js')(app, db);
-require('./routes/user.js')(app, passport);
 
 app.get("*", function(req, res) {
     res.send("Sorry, page not found!");

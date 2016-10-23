@@ -4,7 +4,7 @@ module.exports = function(app, db) {
             if (err) {
                 console.log(err);
             } else {
-                connection.query('SELECT * FROM CAMPGROUND WHERE ID = ?', [req.params.id], function(err, result, fields) {
+                connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
                     connection.release();
 
                     if (err) {
@@ -22,7 +22,7 @@ module.exports = function(app, db) {
             if (err) {
                 res.render('campgrounds/new');
             } else {
-                connection.query('INSERT INTO COMMENT SET ?', req.body.comment, function(err, result) {
+                connection.query('INSERT INTO comments SET ?', req.body.comment, function(err, result) {
                     connection.release();
 
                     if (err) {

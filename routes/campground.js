@@ -5,7 +5,7 @@ module.exports = function(app, db) {
             if (err) {
                 console.log(err);
             } else {
-                connection.query('SELECT * FROM CAMPGROUND', function(err, results, fields) {
+                connection.query('SELECT * FROM campgrounds', function(err, results, fields) {
                     connection.release();
 
                     if (err) {
@@ -23,13 +23,13 @@ module.exports = function(app, db) {
         var image = req.body.image;
         var description = req.body.description;
 
-        var newCampground = { NAME: name, IMAGE: image, DESCRIPTION: description };
+        var newCampground = { name: name, image: image, description: description };
 
         db.getConnection((err, connection) => {
             if (err) {
                 res.render('campgrounds/new');
             } else {
-                connection.query('INSERT INTO CAMPGROUND SET ?', newCampground, function(err, result) {
+                connection.query('INSERT INTO campgrounds SET ?', newCampground, function(err, result) {
                     connection.release();
 
                     if (err) {
@@ -55,7 +55,7 @@ module.exports = function(app, db) {
             if (err) {
                 console.log(err);
             } else {
-                connection.query('SELECT * FROM CAMPGROUND WHERE ID = ?', [req.params.id], function(err, result, fields) {
+                connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
                     connection.release();
 
                     if (err) {
@@ -71,7 +71,7 @@ module.exports = function(app, db) {
             if (err) {
                 console.log(err);
             } else {
-                connection.query('SELECT * FROM COMMENT WHERE CAMPGROUND_ID = ?', [req.params.id], function(err, result, fields) {
+                connection.query('SELECT * FROM comments WHERE campground_id = ?', [req.params.id], function(err, result, fields) {
                     connection.release();
 
                     if (err) {
