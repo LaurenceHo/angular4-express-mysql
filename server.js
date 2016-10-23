@@ -5,11 +5,10 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
 
-require('./passport')(passport);
-
 //initial database schema
 var db = require('./db');
 require('./db_schema.js')(db);
+require('./passport')(passport);
 
 var app = express();
 app.set('view engine', 'ejs');
@@ -31,13 +30,17 @@ app.use(function(req, res, next) {
     next();
 });
 
+//initial routes
+var campgroundRoutes = require('./routes/campground.js');
+var commentRoutes = require('./routes/comment.js');
+
+require('./routes/auth.js')(app, passport);
+app.use(campgroundRoutes);
+app.use(commentRoutes);
+
 app.get("/", function(req, res) {
     res.redirect('/campground');
 });
-
-require('./routes/user.js')(app, passport);
-require('./routes/campground.js')(app, db);
-require('./routes/comment.js')(app, db);
 
 app.get("*", function(req, res) {
     res.send("Sorry, page not found!");
