@@ -50,7 +50,6 @@ module.exports = function(passport) {
             function(req, username, password, done) {
                 console.log('-- User Signup --');
                 console.log('username:' + username);
-                console.log('password:' + password);
 
                 db.getConnection((err, connection) => {
                     if (err) {
@@ -102,7 +101,6 @@ module.exports = function(passport) {
             function(req, username, password, done) { // callback with email and password from our form
                 console.log('-- User login --');
                 console.log('username:' + username);
-                console.log('password:' + password);
 
                 db.getConnection((err, connection) => {
                     if (err) {

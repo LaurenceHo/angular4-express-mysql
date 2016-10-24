@@ -18,17 +18,22 @@
 						<h4><a><%= campground.name %></a></h4>
 						<p><%= campground.description %></p>
 						<p><em> Submitted By <%= campground.username %> </em></p>
-						<a class = 'btn btn-warning btn-sm' href = '/campground/<%= campground.id %>/edit'>Edit</a>
-						<form id = 'delete' action = '/campground/<%= campground.id %>?_method=DELETE' method = 'POST'>
-							<button class = 'btn btn-danger btn-sm'>Delete</button>
-						</form>						
+						<% if (currentUser && campground.user_id === currentUser.id) { %>
+							<a class = 'btn btn-warning btn-sm' href = '/campground/<%= campground.id %>/edit'>Edit</a>
+							<form id = 'delete' action = '/campground/<%= campground.id %>?_method=DELETE' method = 'POST'>
+								<button class = 'btn btn-danger btn-sm'>Delete</button>
+							</form>	
+						<% } %>					
 					</div>
 				</div>
 				<div class = 'well'>
-					<div class = 'text-right'>
-						<a class= 'btn btn-success' href = '/campground/<%= campground.id %>/comments/new'>Add New Comment</a>
-					</div>
-					<hr>
+					<% if(currentUser) { %>
+						<div class = 'text-right'>
+							<a class= 'btn btn-success' href = '/campground/<%= campground.id %>/comments/new'>Add New Comment</a>
+						</div>
+						<hr>
+					<% } %>
+
 					<% comments.forEach(function(comment){ %>
 						<div class = 'row'>
 							<div class = 'col-md-12'>
