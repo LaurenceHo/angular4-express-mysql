@@ -22,6 +22,10 @@ router.get('/campground', function(req, res) {
 });
 
 router.post('/campground', isLoggedIn, function(req, res) {
+    req.body.campground.name = req.sanitize(req.body.campground.name);
+    req.body.campground.image = req.sanitize(req.body.campground.image);    
+    req.body.campground.description = req.sanitize(req.body.campground.description);
+
     db.getConnection((err, connection) => {
         if (err) {
             res.render('campgrounds/new');
@@ -32,7 +36,7 @@ router.post('/campground', isLoggedIn, function(req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('Create new campground:' + req.body.campground);
+                    console.log('Create new campground:' + campground.name);
                     res.redirect('/campground');
                 }
             });

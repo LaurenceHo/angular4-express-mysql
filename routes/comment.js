@@ -22,6 +22,8 @@ router.get('/campground/:id/comments/new', isLoggedIn, function(req, res) {
 });
 
 router.post('/campground/:id/comments', isLoggedIn, function(req, res) {
+    req.body.comment.text = req.sanitize(req.body.comment.text);
+
     db.getConnection((err, connection) => {
         if (err) {
             res.render('campgrounds/new');

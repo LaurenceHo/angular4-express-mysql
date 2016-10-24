@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require('express-session');
+var expressSanitizer = require('express-sanitizer');
 var parser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(expressSanitizer());
 
 app.use(session({
     secret: 'mySecretKey',
