@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 
+// get all camp grounds
 router.get('/campground', function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
@@ -21,9 +22,15 @@ router.get('/campground', function(req, res) {
     });
 });
 
+// get create camp ground form
+router.get('/campground/new', isLoggedIn, function(req, res) {
+    res.render('campgrounds/new');
+});
+
+// create one camp ground
 router.post('/campground', isLoggedIn, function(req, res) {
     req.body.campground.name = req.sanitize(req.body.campground.name);
-    req.body.campground.image = req.sanitize(req.body.campground.image);    
+    req.body.campground.image = req.sanitize(req.body.campground.image);
     req.body.campground.description = req.sanitize(req.body.campground.description);
 
     db.getConnection((err, connection) => {
@@ -36,7 +43,7 @@ router.post('/campground', isLoggedIn, function(req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('Create new campground:' + campground.name);
+                    console.log('Create new campground:' + req.body.campground.name);
                     res.redirect('/campground');
                 }
             });
@@ -44,10 +51,7 @@ router.post('/campground', isLoggedIn, function(req, res) {
     });
 });
 
-router.get('/campground/new', isLoggedIn, function(req, res) {
-    res.render('campgrounds/new');
-});
-
+// get one camp ground with comments
 router.get('/campground/:id', function(req, res) {
     var campground = [],
         comments = [];
@@ -85,6 +89,66 @@ router.get('/campground/:id', function(req, res) {
                         comments: comments
                     });
                 }
+            });
+        }
+    });
+});
+
+// get edit camp ground form
+router.get('/campground/:id/edit', isLoggedIn, function(req, res) {
+    db.getConnection((err, connection) => {
+        if (err) {
+            res.redirect('/campground');
+        } else {
+            connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
+                connection.release();
+
+                if (err) {
+                    console.log(err);
+                    res.redirect('/campground/' + req.params.id);
+                } else {
+                    res.render('campgrounds/edit', { campground: result[0] });
+                }
+            });
+        }
+    });
+});
+
+// edit one camp ground
+router.put('/campground/:id', isLoggedIn, function(req, res) {
+    req.body.campground.name = req.sanitize(req.body.campground.name);
+    req.body.campground.image = req.sanitize(req.body.campground.image);
+    req.body.campground.description = req.sanitize(req.body.campground.description);
+
+    db.getConnection((err, connection) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/campground/' + req.params.id);
+        } else {
+            connection.query('UPDATE campgrounds SET ? WHERE id = ?', [req.body.campground, req.params.id], function(err, result, fields) {
+                connection.release();
+
+                if (err) {
+                    console.log(err);
+                    res.redirect('/campground');
+                } else {
+                    res.redirect('/campground/' + req.params.id);
+                }
+            });
+        }
+    });
+});
+
+// delete one camp ground
+router.delete('/campground/:id', isLoggedIn, function(req, res) {
+    db.getConnection((err, connection) => {
+        if (err) {
+            res.redirect('/campground' + req.params.id);
+        } else {
+            connection.query('DELETE FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
+                connection.release();
+
+                res.redirect('/campground');
             });
         }
     });
