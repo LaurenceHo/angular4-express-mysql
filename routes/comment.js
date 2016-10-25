@@ -1,9 +1,11 @@
 var db = require('../db');
 var express = require('express');
 var router = express.Router();
+var middleware = require('../middleware/index');
+
 
 // get create comment form
-router.get('/campground/:id/comments/new', isLoggedIn, function(req, res) {
+router.get('/campground/:id/comments/new', middleware.isLoggedIn, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
             console.log(err);
@@ -22,7 +24,7 @@ router.get('/campground/:id/comments/new', isLoggedIn, function(req, res) {
 });
 
 // create a new comment by campground id
-router.post('/campground/:id/comments', isLoggedIn, function(req, res) {
+router.post('/campground/:id/comments', middleware.isLoggedIn, function(req, res) {
     req.body.comment.text = req.sanitize(req.body.comment.text);
 
     db.getConnection((err, connection) => {
@@ -44,7 +46,7 @@ router.post('/campground/:id/comments', isLoggedIn, function(req, res) {
 });
 
 // get edit comment form
-router.get('/campground/:id/comments/:comment_id/edit', checkOwner, function(req, res) {
+router.get('/campground/:id/comments/:comment_id/edit', middleware.checkCommentOwner, function(req, res) {
     var campground = [],
         comments = [];
 
@@ -86,7 +88,7 @@ router.get('/campground/:id/comments/:comment_id/edit', checkOwner, function(req
 });
 
 //edit one comment by campground id
-router.put('/campground/:id/comments/:comment_id', checkOwner, function(req, res) {
+router.put('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function(req, res) {
     req.body.comment.text = req.sanitize(req.body.comment.text);
 
     db.getConnection((err, connection) => {
@@ -108,7 +110,7 @@ router.put('/campground/:id/comments/:comment_id', checkOwner, function(req, res
 });
 
 // delete one comment
-router.delete('/campground/:id/comments/:comment_id', checkOwner, function(req, res) {
+router.delete('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
             res.redirect('back');
@@ -121,39 +123,5 @@ router.delete('/campground/:id/comments/:comment_id', checkOwner, function(req, 
         }
     });
 });
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-
-    res.redirect('/login');
-}
-
-function checkOwner(req, res, next) {
-    if (req.isAuthenticated()) {
-        db.getConnection((err, connection) => {
-            if (err) {
-                res.redirect('back');
-            } else {
-                connection.query('SELECT * FROM comments WHERE id = ?', [req.params.comment_id], function(err, result, fields) {
-                    connection.release();
-
-                    if (err) {
-                        console.log(err);
-                        res.redirect('back');
-                    } else {
-                        if (result[0].user_id === req.user.id) {
-                            next();
-                        } else {
-                            res.redirect('back');
-                        }
-                    }
-                });
-            }
-        });
-    } else {
-        res.redirect('/login');
-    }
-}
 
 module.exports = router;

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var middleware = require('../middleware/index');
 
 
 router.get('/login', function(req, res) {
@@ -34,7 +35,7 @@ router.post('/signup', passport.authenticate('local-signup', {
     failureFlash: true // allow flash messages
 }));
 
-router.get('/profile', isLoggedIn, function(req, res) {
+router.get('/profile', middleware.isLoggedIn, function(req, res) {
     res.render('profile', {
         user: req.user // get the user out of session and pass to template
     });
@@ -44,12 +45,5 @@ router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-
-    res.redirect('/login');
-}
 
 module.exports = router;
