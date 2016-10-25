@@ -19,9 +19,9 @@
 						<p><%= campground.description %></p>
 						<p><em> Submitted By <%= campground.username %> </em></p>
 						<% if (currentUser && campground.user_id === currentUser.id) { %>
-							<a class = 'btn btn-warning btn-sm' href = '/campground/<%= campground.id %>/edit'>Edit</a>
+							<a class = 'btn btn-warning btn-xs' href = '/campground/<%= campground.id %>/edit'>Edit</a>
 							<form id = 'delete' action = '/campground/<%= campground.id %>?_method=DELETE' method = 'POST'>
-								<button class = 'btn btn-danger btn-sm'>Delete</button>
+								<button class = 'btn btn-danger btn-xs'>Delete</button>
 							</form>	
 						<% } %>					
 					</div>
@@ -40,6 +40,9 @@
 								<strong> <%= comment.username %> </strong>
 								<span class = 'pull-right'>10 days ago</span>
 								<p><%= comment.text %></p>
+								<% if (currentUser && comment.user_id === currentUser.id) { %>
+									<a class="btn btn-warning btn-xs" href = "/campground/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
+								<% } %>	
 							</div>
 						</div>
 					<% }) %>

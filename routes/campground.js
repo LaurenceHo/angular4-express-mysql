@@ -61,21 +61,13 @@ router.get('/campground/:id', function(req, res) {
             console.log(err);
         } else {
             connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
-                connection.release();
-
                 if (err) {
                     console.log(err);
                 } else {
                     campground = result[0];
                 }
             });
-        }
-    });
 
-    db.getConnection((err, connection) => {
-        if (err) {
-            console.log(err);
-        } else {
             connection.query('SELECT * FROM comments WHERE campground_id = ?', [req.params.id], function(err, result, fields) {
                 connection.release();
 
