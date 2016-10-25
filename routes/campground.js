@@ -166,7 +166,7 @@ function checkOwner(req, res, next) {
                         console.log(err);
                         res.redirect('back');
                     } else {
-                        if (result[0].id === req.user.id) {
+                        if (result[0].user_id === req.user.id) {
                             next();
                         } else {
                             res.redirect('back');

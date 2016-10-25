@@ -42,6 +42,9 @@
 								<p><%= comment.text %></p>
 								<% if (currentUser && comment.user_id === currentUser.id) { %>
 									<a class="btn btn-warning btn-xs" href = "/campground/<%= campground.id %>/comments/<%= comment.id %>/edit">Edit</a>
+									<form id = 'delete' action = '/campground/<%= campground.id %>/comments/<%= comment.id %>?_method=DELETE' method = 'POST'>
+										<button class = 'btn btn-danger btn-xs'>Delete</button>
+									</form>
 								<% } %>	
 							</div>
 						</div>
