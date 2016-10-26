@@ -27,3 +27,12 @@
 			</div>
 		</nav>
 
+	<div class="container">
+		<!-- show any messages that come back with authentication -->
+        <% if (error && error.length > 0) { %>
+            <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+            <div class="alert alert-success"><%= success %></div>
+        <% } %>
+	</div>

@@ -19,13 +19,13 @@ module.exports = function(passport) {
     passport.deserializeUser(function(id, done) {
         db.getConnection((err, connection) => {
             if (err) {
-                console.log(err);
+                req.flash('error', err);
             } else {
                 connection.query('SELECT * FROM users WHERE id = ?', [id], function(err, rows) {
                     connection.release();
 
                     if (err) {
-                        console.log(err);
+                        req.flash('error', err);
                     } else {
                         done(err, rows[0]);
                     }
@@ -53,14 +53,14 @@ module.exports = function(passport) {
 
                 db.getConnection((err, connection) => {
                     if (err) {
-                        console.log(err);
+                        req.flash('error', err);
                     } else {
                         connection.query("SELECT * FROM users WHERE username = ?", [username], function(err, rows) {
                             if (err)
                                 return done(err);
 
                             if (rows.length) {
-                                return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+                                return done(null, false, req.flash('error', 'That username is already taken.'));
                             } else {
                                 // if there is no user with that username
                                 // create the user
@@ -104,7 +104,7 @@ module.exports = function(passport) {
 
                 db.getConnection((err, connection) => {
                     if (err) {
-                        console.log(err);
+                        req.flash('error', err);
                     } else {
                         connection.query("SELECT * FROM users WHERE username = ?", [username], function(err, rows) {
                             connection.release();
@@ -113,13 +113,13 @@ module.exports = function(passport) {
                                 return done(err);
 
                             if (!rows.length) {
-                                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                                return done(null, false, req.flash('error', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                             } else {
                                 // if the user is found but the password is wrong
                                 if (!bcrypt.compareSync(password, rows[0].password))
-                                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                                    return done(null, false, req.flash('error', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
                                 else // all is well, return successful user
-                                    return done(null, rows[0]);
+                                    return done(null, rows[0], req.flash('success', 'Welcome to YelpCamp ' + username));
                             }
                         });
                     }

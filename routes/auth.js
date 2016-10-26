@@ -5,7 +5,7 @@ var middleware = require('../middleware/index');
 
 
 router.get('/login', function(req, res) {
-    res.render('login', { message: req.flash('loginMessage') });
+    res.render('login');
 });
 
 // process the login form
@@ -15,18 +15,17 @@ router.post('/login', passport.authenticate('local-login', {
         failureFlash: true // allow flash messages
     }),
     function(req, res) {
-        console.log("hello");
-
         if (req.body.remember) {
             req.session.cookie.maxAge = 1000 * 60 * 3;
         } else {
             req.session.cookie.expires = false;
         }
         res.redirect('/');
-    });
+    }
+);
 
 router.get('/signup', function(req, res) {
-    res.render('signup', { message: req.flash('signupMessage') });
+    res.render('signup');
 });
 
 router.post('/signup', passport.authenticate('local-signup', {

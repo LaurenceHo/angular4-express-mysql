@@ -8,13 +8,13 @@ var middleware = require('../middleware/index');
 router.get('/campground', function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
-            console.log(err);
+            req.flash('error', err);
         } else {
             connection.query('SELECT * FROM campgrounds', function(err, results, fields) {
                 connection.release();
 
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                 } else {
                     res.render('campgrounds/index', { campgrounds: results });
                 }
@@ -36,13 +36,14 @@ router.post('/campground', middleware.isLoggedIn, function(req, res) {
 
     db.getConnection((err, connection) => {
         if (err) {
+            req.flash('error', err);
             res.render('campgrounds/new');
         } else {
             connection.query('INSERT INTO campgrounds SET ?', req.body.campground, function(err, result) {
                 connection.release();
 
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                 } else {
                     console.log('Create new campground:' + req.body.campground.name);
                     res.redirect('/campground');
@@ -59,11 +60,11 @@ router.get('/campground/:id', function(req, res) {
 
     db.getConnection((err, connection) => {
         if (err) {
-            console.log(err);
+            req.flash('error', err);
         } else {
             connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                 } else {
                     campground = result[0];
                 }
@@ -73,7 +74,7 @@ router.get('/campground/:id', function(req, res) {
                 connection.release();
 
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                 } else {
                     comments = result;
 
@@ -91,13 +92,14 @@ router.get('/campground/:id', function(req, res) {
 router.get('/campground/:id/edit', middleware.checkCampOwner, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
-            res.redirect('/campground');
+            req.flash('error', err);
+            res.redirect('/campground' + req.params.id);
         } else {
             connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
                 connection.release();
 
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                     res.redirect('/campground/' + req.params.id);
                 } else {
                     res.render('campgrounds/edit', { campground: result[0] });
@@ -115,14 +117,14 @@ router.put('/campground/:id', middleware.checkCampOwner, function(req, res) {
 
     db.getConnection((err, connection) => {
         if (err) {
-            console.log(err);
+            req.flash('error', err);
             res.redirect('/campground/' + req.params.id);
         } else {
             connection.query('UPDATE campgrounds SET ? WHERE id = ?', [req.body.campground, req.params.id], function(err, result, fields) {
                 connection.release();
 
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                     res.redirect('/campground');
                 } else {
                     res.redirect('/campground/' + req.params.id);
@@ -136,6 +138,7 @@ router.put('/campground/:id', middleware.checkCampOwner, function(req, res) {
 router.delete('/campground/:id', middleware.checkCampOwner, function(req, res) {
     db.getConnection((err, connection) => {
         if (err) {
+            req.flash('error', err);
             res.redirect('/campground' + req.params.id);
         } else {
             connection.query('DELETE FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
