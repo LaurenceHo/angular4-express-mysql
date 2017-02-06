@@ -104,7 +104,6 @@ router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
         } else {
             res.redirect('/campground/' + req.params.id);
         }
-
     });
 });
 

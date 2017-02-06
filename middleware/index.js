@@ -26,7 +26,7 @@ middlewareObj.checkCampOwner = function (req, res, next) {
 
 middlewareObj.checkCommentOwner = function (req, res, next) {
     if (req.isAuthenticated()) {
-        var commentQuery = 'SELECT * FROM comments WHERE campground_id = ' + req.params.id;
+        var commentQuery = 'SELECT * FROM comments WHERE id = ' + req.params.comment_id;
         db.all(commentQuery, function (err, rows) {
             if (err) {
                 req.flash('error', err);

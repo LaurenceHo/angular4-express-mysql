@@ -5,81 +5,61 @@ var middleware = require('../middleware/index');
 
 
 // get create comment form
-router.get('/campground/:id/comments/new', middleware.isLoggedIn, function(req, res) {
-    db.getConnection((err, connection) => {
-        if (err) {
-            console.log(err);
-        } else {
-            connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
-                connection.release();
+router.get('/campground/:id/comments/new', middleware.isLoggedIn, function (req, res) {
+    var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
 
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render('comments/new', { campground: result[0] });
-                }
-            });
+    db.all(campQuery, function (err, rows) {
+        if (err) {
+            req.flash('error', err);
+            res.redirect('/campground/' + req.params.id);
+        } else {
+            res.render('comments/new', { campground: rows[0] });
         }
     });
 });
 
 // create a new comment by campground id
-router.post('/campground/:id/comments', middleware.isLoggedIn, function(req, res) {
-    req.body.comment.text = req.sanitize(req.body.comment.text);
+router.post('/campground/:id/comments', middleware.isLoggedIn, function (req, res) {
+    var campId = req.body.comment.campground_id;
+    var userId = req.body.comment.user_id;
+    var userName = req.body.comment.username;
+    var text = req.sanitize(req.body.comment.text);
 
-    db.getConnection((err, connection) => {
+    var insertSQL = "INSERT INTO comments (campground_id, user_id, username, text) VALUES ('" +
+        campId + "','" + userId + "','" + userName + "','" + text + "')";
+
+    db.run(insertSQL, function (err, result) {
         if (err) {
-            res.render('campgrounds/new');
+            req.flash('error', err);
         } else {
-            connection.query('INSERT INTO comments SET ?', req.body.comment, function(err, result) {
-                connection.release();
-
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Create new comment:' + result.insertId);
-                    res.redirect('/campground/' + req.params.id);
-                }
-            });
+            res.redirect('/campground/' + req.params.id);
         }
     });
 });
 
 // get edit comment form
-router.get('/campground/:id/comments/:comment_id/edit', middleware.checkCommentOwner, function(req, res) {
+router.get('/campground/:id/comments/:comment_id/edit', middleware.checkCommentOwner, function (req, res) {
     var campground = [],
-        comments = [];
+        comment = [];
 
-    db.getConnection((err, connection) => {
+    var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
+    var commentQuery = 'SELECT * FROM comments WHERE id = ' + req.params.comment_id;
+
+    db.all(campQuery, function (err, rows) {
         if (err) {
-            res.redirect('back');
+            req.flash('error', err);
         } else {
-            db.getConnection((err, connection) => {
+            campground = rows[0];
+
+            db.all(commentQuery, function (err, rows) {
                 if (err) {
-                    console.log(err);
+                    req.flash('error', err);
                 } else {
-                    connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            campground = result[0];
-                        }
-                    });
+                    comment = rows[0];
 
-                    connection.query('SELECT * FROM comments WHERE id = ?', [req.params.comment_id], function(err, result, fields) {
-                        connection.release();
-
-                        if (err) {
-                            console.log(err);
-                            res.redirect('/campground/' + req.params.id);
-                        } else {
-                            comment = result[0];
-
-                            res.render('comments/edit', {
-                                campground: campground,
-                                comment: comment
-                            });
-                        }
+                    res.render('comments/edit', {
+                        campground: campground,
+                        comment: comment
                     });
                 }
             });
@@ -87,39 +67,30 @@ router.get('/campground/:id/comments/:comment_id/edit', middleware.checkCommentO
     });
 });
 
-//edit one comment by campground id
-router.put('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function(req, res) {
-    req.body.comment.text = req.sanitize(req.body.comment.text);
+//edit one comment by comment id
+router.put('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function (req, res) {
+    var text = req.sanitize(req.body.comment.text);
+    var updateSQL = "UPDATE comments SET " +
+        "text = '" + text + "' WHERE id = " + req.params.comment_id;
 
-    db.getConnection((err, connection) => {
+    db.run(updateSQL, function (err, rows) {
         if (err) {
-            res.redirect('/campground' + req.params.id);
+            req.flash('error', err);
         } else {
-            connection.query('UPDATE comments SET ? WHERE id = ?', [req.body.comment, req.params.comment_id], function(err, result) {
-                connection.release();
-
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('Create new comment:' + result.insertId);
-                    res.redirect('/campground/' + req.params.id);
-                }
-            });
+            res.redirect('/campground/' + req.params.id);
         }
     });
 });
 
 // delete one comment
-router.delete('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function(req, res) {
-    db.getConnection((err, connection) => {
+router.delete('/campground/:id/comments/:comment_id', middleware.checkCommentOwner, function (req, res) {
+    var deleteSQL = 'DELETE FROM comments WHERE id = ' + req.params.comment_id;
+    db.run(deleteSQL, function (err) {
         if (err) {
-            res.redirect('back');
+            req.flash('error', err);
+            res.redirect('/campground' + req.params.id);
         } else {
-            connection.query('DELETE FROM comments WHERE id = ?', [req.params.comment_id], function(err, result, fields) {
-                connection.release();
-
-                res.redirect('/campground/' + req.params.id);
-            });
+            res.redirect('/campground');
         }
     });
 });
