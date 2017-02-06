@@ -47,8 +47,9 @@ module.exports = function (passport) {
                 var query = "SELECT * FROM users WHERE username = '" + username + "'";
 
                 db.all(query, function (err, rows) {
-                    if (err)
+                    if (err) {
                         return done(err);
+                    }
 
                     if (rows.length) {
                         return done(null, false, req.flash('error', 'That username is already taken.'));
@@ -62,8 +63,9 @@ module.exports = function (passport) {
                         var insertQuery = "INSERT INTO users ( username, password ) values ('" + newUserMysql.username + "','" + newUserMysql.password + "')";
 
                         db.run(insertQuery, function (err) {
-                            if (err)
+                            if (err) {
                                 return done(err);
+                            }
                             return done(null, newUserMysql);
                         });
                     }
@@ -91,17 +93,19 @@ module.exports = function (passport) {
                 var query = "SELECT * FROM users WHERE username = '" + username + "'";
 
                 db.all(query, function (err, rows) {
-                    if (err)
+                    if (err) {
                         return done(err);
+                    }
 
                     if (!rows.length) {
                         return done(null, false, req.flash('error', 'No user found.'));
                     } else {
                         // if the user is found but the password is wrong
-                        if (!bcrypt.compareSync(password, rows[0].password))
+                        if (!bcrypt.compareSync(password, rows[0].password)) {
                             return done(null, false, req.flash('error', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-                        else // all is well, return successful user
+                        } else { // all is well, return successful user
                             return done(null, rows[0], req.flash('success', 'Welcome to YelpCamp ' + username));
+                        }
                     }
                 });
             })
