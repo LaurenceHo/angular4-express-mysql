@@ -1,4 +1,4 @@
-var db = require('../db');
+var db = require('../db/sqlite');
 var express = require('express');
 var router = express.Router();
 var middleware = require('../middleware/index');

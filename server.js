@@ -8,8 +8,7 @@ var passport = require('passport');
 var flash = require('connect-flash');
 
 //initial database schema
-var db = require('./db');
-require('./db_schema.js')(db);
+require('./db/sqlite');
 require('./passport')(passport);
 
 var app = express();
@@ -54,6 +53,6 @@ app.get("*", function(req, res) {
     res.send("Sorry, page not found!");
 });
 
-app.listen(3000, function() {
-    console.log("Server is running on port 3000!");
+app.listen(8080, function() {
+    console.log("Server is running on port 8080!");
 });
