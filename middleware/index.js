@@ -1,28 +1,21 @@
 var db = require('../db/sqlite');
 var middlewareObj = {};
 
-middlewareObj.checkCampOwner = function(req, res, next) {
+middlewareObj.checkCampOwner = function (req, res, next) {
     if (req.isAuthenticated()) {
-        db.getConnection((err, connection) => {
+        var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
+
+        db.all(campQuery, function (err, rows) {
             if (err) {
                 req.flash('error', err);
                 res.redirect('back');
             } else {
-                connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], function(err, result, fields) {
-                    connection.release();
-
-                    if (err) {
-                        req.flash('error', err);
-                        res.redirect('back');
-                    } else {
-                        if (result[0].user_id === req.user.id) {
-                            next();
-                        } else {
-                            req.flash('error', 'You have no permission!');
-                            res.redirect('back');
-                        }
-                    }
-                });
+                if (rows[0].user_id === req.user.id) {
+                    next();
+                } else {
+                    req.flash('error', 'You have no permission!');
+                    res.redirect('back');
+                }
             }
         });
     } else {
@@ -31,28 +24,20 @@ middlewareObj.checkCampOwner = function(req, res, next) {
     }
 }
 
-middlewareObj.checkCommentOwner = function(req, res, next) {
+middlewareObj.checkCommentOwner = function (req, res, next) {
     if (req.isAuthenticated()) {
-        db.getConnection((err, connection) => {
+        var commentQuery = 'SELECT * FROM comments WHERE campground_id = ' + req.params.id;
+        db.all(commentQuery, function (err, rows) {
             if (err) {
                 req.flash('error', err);
                 res.redirect('back');
             } else {
-                connection.query('SELECT * FROM comments WHERE id = ?', [req.params.comment_id], function(err, result, fields) {
-                    connection.release();
-
-                    if (err) {
-                        req.flash('error', err);
-                        res.redirect('back');
-                    } else {
-                        if (result[0].user_id === req.user.id) {
-                            next();
-                        } else {
-                            req.flash('error', 'You have no permission!');
-                            res.redirect('back');
-                        }
-                    }
-                });
+                if (rows[0].user_id === req.user.id) {
+                    next();
+                } else {
+                    req.flash('error', 'You have no permission!');
+                    res.redirect('back');
+                }
             }
         });
     } else {
@@ -61,9 +46,10 @@ middlewareObj.checkCommentOwner = function(req, res, next) {
     }
 }
 
-middlewareObj.isLoggedIn = function(req, res, next) {
-    if (req.isAuthenticated())
+middlewareObj.isLoggedIn = function (req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
+    }
 
     req.flash('error', 'Please Login First!')
     res.redirect('/login');
