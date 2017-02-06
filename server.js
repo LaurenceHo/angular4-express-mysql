@@ -6,6 +6,7 @@ var parser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
+var path = require('path');
 
 //initial database schema
 require('./db/sqlite');
@@ -13,10 +14,11 @@ require('./passport')(passport);
 
 var app = express();
 app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
 app.use(cookieParser());
 app.use(parser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 
