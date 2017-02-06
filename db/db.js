@@ -1,6 +1,10 @@
+/**
+ * This file is for MySQL, and deprecated.
+ */
+
 const mysql = require('mysql');
 
-const db = (function() {
+const db = (function () {
     this.pool = mysql.createPool({
         connectionLimit: 12,
         host: 'localhost',
@@ -10,7 +14,7 @@ const db = (function() {
         charset: 'utf8'
     });
 
-    this.getConnection = function(cb) {
+    this.getConnection = function (cb) {
         this.pool.getConnection(cb)
     };
 

@@ -1,5 +1,8 @@
-module.exports = function(db) {
+/**
+ * This file is for MySQL, and deprecated.
+ */
 
+module.exports = function (db) {
     var sql_user = 'CREATE TABLE IF NOT EXISTS `users` (' +
         '`id` int(11) NOT NULL AUTO_INCREMENT,' +
         '`username` varchar(255) NOT NULL,' +
