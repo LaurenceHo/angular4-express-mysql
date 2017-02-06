@@ -18,7 +18,7 @@ var sql_camp = 'CREATE TABLE IF NOT EXISTS campgrounds (' +
     'image TEXT NOT NULL,' +
     'username TEXT NOT NULL,' +
     'user_id INTEGER NOT NULL,' +
-    'description TEXT,' +
+    'description TEXT VARCHAR(255),' +
     'FOREIGN KEY (user_id) REFERENCES users (id)' +
     ')';
 
@@ -26,7 +26,7 @@ var sql_commemt = 'CREATE TABLE IF NOT EXISTS comments (' +
     'id INTEGER PRIMARY KEY AUTOINCREMENT,' +
     'username TEXT NOT NULL,' +
     'user_id INTEGER NOT NULL,' +
-    'text TEXT NOT NULL,' +
+    'text TEXT VARCHAR(255) NOT NULL,' +
     'campground_id INTEGER NOT NULL,' +
     'FOREIGN KEY (user_id) REFERENCES users (id),' +
     'FOREIGN KEY (campground_id) REFERENCES campgrounds (id)' +
