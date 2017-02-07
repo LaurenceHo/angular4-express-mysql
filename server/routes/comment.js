@@ -1,7 +1,8 @@
-var db = require('../db/sqlite');
 var express = require('express');
 var router = express.Router();
-var middleware = require('../middleware/index');
+
+var db = require('../sqlite');
+var middleware = require('../middleware');
 
 
 // get create comment form

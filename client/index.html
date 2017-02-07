@@ -1,0 +1,39 @@
+<html>
+    <head>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <title>YelpCamp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"></link>
+    <link rel = "stylesheet" type = "text/css" href = "/main.css"></link>
+
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="libs/core-js/client/shim.min.js"></script>
+    <script src="libs/zone.js/dist/zone.js"></script>
+    <script src="libs/reflect-metadata/Reflect.js"></script>
+    <script src="libs/systemjs/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function(err){ console.error(err); });
+        </script>
+    </head>
+
+    <!-- 3. Display the application -->
+
+    <body>
+        <my-app>Loading...</my-app>
+
+        <center>
+        <footer>
+            <p>&copy; 2016 YelpCamp</p>
+        </footer>
+        </center>
+    </body>
+</html>

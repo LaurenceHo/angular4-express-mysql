@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 var path = require('path');
 
 //initial database schema
-require('./db/sqlite');
+require('./sqlite');
 require('./passport')(passport);
 
 var app = express();
@@ -18,7 +18,13 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(cookieParser());
 app.use(parser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/app', express.static(path.resolve(__dirname, '../dist/client/app')));
+app.use('/libs', express.static(path.resolve(__dirname, '../dist/client/libs')));
+app.use(express.static(path.resolve(__dirname, '../dist/client')));
+app.use(express.static(path.resolve(__dirname, '../node_modules')));
+app.use(express.static(path.resolve(__dirname, './public')));
+
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 
@@ -47,14 +53,15 @@ app.use(authRoutes);
 app.use(campgroundRoutes);
 app.use(commentRoutes);
 
-app.get("/", function(req, res) {
-    res.redirect('/campground');
+app.get('/', function(req, res) {
+    res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 app.get("*", function(req, res) {
     res.send("Sorry, page not found!");
 });
 
-app.listen(8080, function() {
-    console.log("Server is running on port 8080!");
+app.listen(3000, function() {
+    console.log('This express angular app is listening on port:' + 3000);
 });
+module.exports = app;

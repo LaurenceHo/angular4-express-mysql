@@ -1,4 +1,4 @@
-var db = require('../db/sqlite');
+var db = require('./sqlite');
 var middlewareObj = {};
 
 middlewareObj.checkCampOwner = function (req, res, next) {

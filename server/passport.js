@@ -1,7 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 
 var bcrypt = require('bcrypt-nodejs');
-var db = require('./db/sqlite');
+var db = require('./sqlite');
 
 module.exports = function (passport) {
     // =========================================================================

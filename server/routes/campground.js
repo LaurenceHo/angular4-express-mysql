@@ -1,7 +1,8 @@
-var db = require('../db/sqlite');
 var express = require('express');
 var router = express.Router();
-var middleware = require('../middleware/index');
+
+var db = require('../sqlite');
+var middleware = require('../middleware');
 
 
 // get all camp grounds
@@ -11,6 +12,7 @@ router.get('/campground', function (req, res) {
             req.flash('error', err);
         } else {
             res.render('campgrounds/index', { campgrounds: rows });
+            //res.send({ campgrounds: rows });
         }
     });
 });
