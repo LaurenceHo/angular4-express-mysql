@@ -11,6 +11,7 @@ import { BaseComponent } from './base.component';
 import { routing } from './app-routing.module';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
+import { CampDetailComponent } from './components/campgrounds/camp.detail.component';
 
 import { CampgroundService } from './services/campgounds.service';
 
@@ -23,7 +24,8 @@ import { CampgroundService } from './services/campgounds.service';
   ],
   declarations: [
     BaseComponent,
-    CampgroundsComponent
+    CampgroundsComponent,
+    CampDetailComponent
   ],
   providers: [
     CampgroundService

@@ -66,6 +66,8 @@ router.get('/campground/:id', function (req, res) {
                         campground: campground,
                         comments: comments
                     });
+
+                    //res.send({ campground: campground, comments: comments });
                 }
             });
         }

@@ -1,0 +1,58 @@
+<div class='container'>
+    <div class='row'>
+        <div class='col-md-3'>
+            <p class='lead'>YelpCamp</p>
+            <div class='list-group'>
+                <li class='list-group-item active'> Info 1 </li>
+                <li class='list-group-item'> Info 2 </li>
+                <li class='list-group-item'> Info 3 </li>
+            </div>
+        </div>
+        <div class='col-md-9'>
+            <div class='thumbnail'>
+                <img class='img-responsive' src={{campdetail.campground.image}}>
+                <div class='caption-full'>
+                    <h4 class='pull-right'>$9.00/night </h4>
+                    <h4>
+                        {{campdetail.campground.name}}
+                    </h4>
+                    <p>
+                        {{campdetail.campground.description}}
+                    </p>
+                    <p><em> Submitted By {{campdetail.campground.username}} </em></p>
+                    <!--<% if (currentUser && campground.user_id === currentUser.id) { %>-->
+                    <a class='btn btn-warning btn-xs' href='/campground/{{campdetail.campground.id}}/edit'>Edit</a>
+                    <form id='delete' action='/campground/<%= campground.id %>?_method=DELETE' method='POST'>
+                        <button class='btn btn-danger btn-xs'>Delete</button>
+                    </form>
+                    <!--<% } %>-->
+                </div>
+            </div>
+            <div class='well'>
+                <!--<% if(currentUser) { %>-->
+                <div class='text-right'>
+                    <a class='btn btn-success' href='/campground/{{campdetail.campground.id}}/comments/new'>Add New Comment</a>
+                </div>
+                <hr>
+                <!--<% } %>-->
+
+                <div class='row'>
+                    <div class='col-md-12' *ngFor="let comment of campdetail.comments">
+                        <strong> {{comment.username}} </strong>
+                        <span class='pull-right'>10 days ago</span>
+                        <p>
+                            {{comment.text}}
+                        </p>
+                        <!--<% if (currentUser && comment.user_id === currentUser.id) { %>-->
+                        <a class="btn btn-warning btn-xs" href="/campground/{{campdetail.campground.id}}/comments/{{comment.id}}/edit">Edit</a>
+                        <form id='delete' action='/campground/{{campdetail.campground.id}}/comments/{{comment.id}}?_method=DELETE' method='POST'>
+                            <button class='btn btn-danger btn-xs'>Delete</button>
+                        </form>
+                        <!--<% } %>-->
+                    </div>
+                </div>
+            </div>
+            <a href='/'>Go Back</a>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Campground } from "../models/campground";
+import { CampDetail } from "../models/camp.detail";
 
 @Injectable()
 export class CampgroundService {
@@ -18,6 +19,13 @@ export class CampgroundService {
 
     getCamps(): Promise<Campground[]> {
         return this.http.get(this.campgroundsUrl)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
+
+    getCamp(id: number): Promise<CampDetail> {
+        return this.http.get(this.campgroundsUrl + '/' + id)
             .toPromise()
             .then(response => response.json())
             .catch(this.handleError);
