@@ -8,8 +8,8 @@ import { Campground } from "../../models/campground";
 
 @Component({
     selector: 'my-camps',
-    templateUrl: './app/components/campgounds/campgounds.component.html',
-    styleUrls: ['./app/components/campgounds/campgounds.component.css']
+    templateUrl: './app/components/campgrounds/campgrounds.component.html',
+    styleUrls: ['./app/components/campgrounds/campgrounds.component.css']
 })
 
 export class CampgroundsComponent implements OnInit {

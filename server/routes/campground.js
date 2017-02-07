@@ -6,13 +6,12 @@ var middleware = require('../middleware');
 
 
 // get all camp grounds
-router.get('/campground', function (req, res) {
+router.get('/api/campground', function (req, res) {
     db.all('SELECT * FROM campgrounds', function (err, rows) {
         if (err) {
             req.flash('error', err);
         } else {
-            res.render('campgrounds/index', { campgrounds: rows });
-            //res.send({ campgrounds: rows });
+            res.send(rows);
         }
     });
 });

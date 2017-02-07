@@ -5,7 +5,7 @@
 export class Campground {
     id: number;
     name: string;
-    image: number;
+    image: string;
     description: string;
     username: string;
     user_id: number;

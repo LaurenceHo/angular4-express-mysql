@@ -23,7 +23,6 @@ app.use('/app', express.static(path.resolve(__dirname, '../dist/client/app')));
 app.use('/libs', express.static(path.resolve(__dirname, '../dist/client/libs')));
 app.use(express.static(path.resolve(__dirname, '../dist/client')));
 app.use(express.static(path.resolve(__dirname, '../node_modules')));
-app.use(express.static(path.resolve(__dirname, './public')));
 
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
@@ -61,7 +60,7 @@ app.get("*", function(req, res) {
     res.send("Sorry, page not found!");
 });
 
-app.listen(3000, function() {
-    console.log('This express angular app is listening on port:' + 3000);
+app.listen(8080, function() {
+    console.log('This express angular app is listening on port:' + 8080);
 });
 module.exports = app;

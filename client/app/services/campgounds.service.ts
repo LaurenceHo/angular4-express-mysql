@@ -1,6 +1,7 @@
 /**
  * Created by Laurence Ho on 07-02-2017.
  */
+/// <reference path="../../typings/index.d.ts" />
 
 import { Injectable } from '@angular/core';
 
@@ -23,7 +24,7 @@ export class CampgroundService {
     }
 
     private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    }
 }
