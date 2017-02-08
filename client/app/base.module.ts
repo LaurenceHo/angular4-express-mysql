@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { BaseComponent } from './base.component';
-import { routing } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
 import { CampDetailComponent } from './components/campgrounds/camp.detail.component';
@@ -20,7 +20,7 @@ import { CampgroundService } from './services/campgounds.service';
     BrowserModule,
     HttpModule,
     FormsModule,
-    routing
+    AppRoutingModule
   ],
   declarations: [
     BaseComponent,

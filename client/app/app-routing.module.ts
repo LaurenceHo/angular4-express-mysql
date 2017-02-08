@@ -1,6 +1,7 @@
 /**
  * Created by Laurence Ho on 07-02-2017.
  */
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
@@ -22,4 +23,8 @@ const appRoutes: Routes = [
     }
 ];
 
-export const routing = RouterModule.forRoot(appRoutes, { useHash: true });
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule { }
