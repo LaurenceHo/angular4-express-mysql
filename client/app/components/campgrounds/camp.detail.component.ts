@@ -6,27 +6,30 @@ import 'rxjs/add/operator/switchMap';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { CampgroundService } from "../../services/campgounds.service";
-import { CampDetail } from "../../models/camp.detail";
+import { CampgroundService, CampDetail } from "../../services/campgounds.service";
 
 @Component({
-    selector: 'my-camp-detail',
-    templateUrl: './app/components/campgrounds/camp.detail.component.html'
+    selector: 'campDetail',
+    templateUrl: './app/components/campgrounds/camp.detail.component.html',
+    styleUrls:['./app/components/campgrounds/campgrounds.component.css']
 })
 
 export class CampDetailComponent implements OnInit {
     error: any;
-    campdetail: CampDetail;
+    campDetail: CampDetail = new CampDetail();
 
     constructor(
         private campgroundService: CampgroundService,
         private route: ActivatedRoute) {
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.route.params
-            .switchMap((params: Params) => this.campgroundService.getCamp(+params['id']))
-            .subscribe(campdetail => this.campdetail = campdetail);
+            .switchMap((params: Params) => this.campgroundService.getCamp(params['id']))
+            .subscribe(data => {
+                this.campDetail = data;
+                console.log(this.campDetail);
+            });
     }
 
     goBack() {

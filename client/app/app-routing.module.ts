@@ -9,7 +9,7 @@ import { CampDetailComponent } from './components/campgrounds/camp.detail.compon
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/campground',
+        redirectTo: 'campground',
         pathMatch: 'full'
     },
     {

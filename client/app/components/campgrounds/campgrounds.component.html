@@ -2,7 +2,9 @@
     <header class='jumbotron'>
         <h1>Welcome to YelpCamp</h1>
         <p>View our hand-picked campgrounds from all over the world</p>
-        <p><a class='btn btn-primary btn-large' href='/campground/new'>Add New Campground</a></p>
+        <!--<% if(currentUser) { %>-->
+            <p><a class='btn btn-primary btn-large' href='/campground/new'>Add New Campground</a></p>
+        <!--<% } %>-->
     </header>
 
     <div class='row' style='display:flex; flex-wrap:wrap;'>
@@ -15,8 +17,7 @@
                     </h4>
                 </div>
                 <p>
-                    <!--<button class="btn btn-primary" (click)="gotoDetail(camp.id)"> More Info </button>-->
-                    <a href="/campground/{{camp.id}}" class="btn btn-primary"> More Info </a>
+                    <button class="btn btn-primary" (click)="gotoDetail(camp.id)"> More Info </button>
                 </p>
             </div>
         </div>

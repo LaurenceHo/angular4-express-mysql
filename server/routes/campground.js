@@ -43,7 +43,7 @@ router.post('/campground', middleware.isLoggedIn, function (req, res) {
 });
 
 // get one camp ground with comments
-router.get('/campground/:id', function (req, res) {
+router.get('/api/campground/:id', function (req, res) {
     var campground = [],
         comments = [];
 
@@ -61,13 +61,7 @@ router.get('/campground/:id', function (req, res) {
                     req.flash('error', err);
                 } else {
                     comments = rows;
-
-                    res.render('campgrounds/one', {
-                        campground: campground,
-                        comments: comments
-                    });
-
-                    //res.send({ campground: campground, comments: comments });
+                    res.send({ campground, comments });
                 }
             });
         }

@@ -5,10 +5,15 @@
 
 import { Injectable } from '@angular/core';
 
-import { Headers, Http, Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Campground } from "../models/campground";
-import { CampDetail } from "../models/camp.detail";
+import { Comment } from "../models/comment";
+
+export class CampDetail {
+    campground: Campground;
+    comments: Comment[];
+}
 
 @Injectable()
 export class CampgroundService {

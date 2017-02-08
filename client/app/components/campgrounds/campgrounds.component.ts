@@ -8,7 +8,7 @@ import { CampgroundService } from "../../services/campgounds.service";
 import { Campground } from "../../models/campground";
 
 @Component({
-    selector: 'my-camps',
+    selector: 'camps',
     templateUrl: './app/components/campgrounds/campgrounds.component.html',
     styleUrls: ['./app/components/campgrounds/campgrounds.component.css']
 })
