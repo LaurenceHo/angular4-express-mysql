@@ -9,6 +9,7 @@ This project demonstrates the basic CRUD functions combining Angular2, express, 
 Latest version of Node to be installed.
 
 ## Api Document (from Express)
+```
 1. getAllCamps    http://localhost:8080/api/campground
 2. getOneCamp     http://localhost:8080/api/campground/:id
 3. createCamp     http://localhost:8080/api/campground
@@ -21,6 +22,7 @@ Latest version of Node to be installed.
 10. login         http://localhost:8080/api/login
 11. logout        http://localhost:8080/api/logout
 12. profile       http://localhost:8080/api/profile
+```
 
 ### How do I get set up? ###
 
