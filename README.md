@@ -28,7 +28,7 @@ Latest version of Node to be installed.
 
 1.Clone the repo: 
 ```
-git clone git@bitbucket.org:LaurenceHo/yelpcamp.git
+git clone https://LaurenceHo@bitbucket.org/LaurenceHo/angular2-express-sqlite3.git
 ```
 or
 ```
