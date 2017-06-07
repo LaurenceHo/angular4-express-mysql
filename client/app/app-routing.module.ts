@@ -1,30 +1,33 @@
 /**
  * Created by Laurence Ho on 07-02-2017.
  */
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
-import { CampDetailComponent } from './components/campgrounds/camp.detail.component';
+import {CampgroundsComponent} from './components/campgrounds/campgrounds.component';
+import {CampDetailComponent} from './components/campgrounds/camp.detail.component';
+import {LoginComponent} from './components/user/user.login.component';
 
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'campground',
-        pathMatch: 'full'
-    },
-    {
-        path: 'campground',
+        pathMatch: 'full',
         component: CampgroundsComponent
     },
     {
-        path: 'detail/:id',
+        path: 'campground/:id',
         component: CampDetailComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     }
+
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(appRoutes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

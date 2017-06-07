@@ -26,10 +26,10 @@ export class CampgroundsComponent implements OnInit {
     }
 
     gotoDetail(id: number) {
-        this.router.navigate(['/detail', id]);
+        this.router.navigate(['/campground', id]);
     }
 
     addCampground() {
-        this.router.navigate(['/detail', 'new']);
+        this.router.navigate(['/campground', 'new']);
     }
 }
