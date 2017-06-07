@@ -3,13 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var middleware = require('../middleware');
 
-
-router.get('/login', function(req, res) {
-    res.render('login');
-});
-
-// process the login form
-router.post('/login', passport.authenticate('local-login', {
+router.post('/api/login', passport.authenticate('local-login', {
         successRedirect: '/profile', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
@@ -24,11 +18,7 @@ router.post('/login', passport.authenticate('local-login', {
     }
 );
 
-router.get('/signup', function(req, res) {
-    res.render('signup');
-});
-
-router.post('/signup', passport.authenticate('local-signup', {
+router.post('/api/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile', // redirect to the secure profile section
     failureRedirect: '/signup', // redirect back to the signup page if there is an error
     failureFlash: true // allow flash messages
@@ -40,7 +30,7 @@ router.get('/profile', middleware.isLoggedIn, function(req, res) {
     });
 });
 
-router.get('/logout', function(req, res) {
+router.get('/api/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
