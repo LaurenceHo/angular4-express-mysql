@@ -12,27 +12,29 @@ import {AppRoutingModule} from './app-routing.module';
 
 import {CampgroundsComponent} from './components/campgrounds/campgrounds.component';
 import {CampDetailComponent} from './components/campgrounds/camp.detail.component';
+import {UserComponent} from './components/user/user.component';
 
 import {CampgroundService} from './services/campgounds.service';
-import {LoginComponent} from './components/user/user.login.component';
+import {UserService} from './services/user.service';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        HttpModule,
-        FormsModule,
-        AppRoutingModule
-    ],
-    declarations: [
-        BaseComponent,
-        CampgroundsComponent,
-        CampDetailComponent,
-        LoginComponent
-    ],
-    providers: [
-        CampgroundService
-    ],
-    bootstrap: [BaseComponent]
+  imports: [
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  declarations: [
+    BaseComponent,
+    CampgroundsComponent,
+    CampDetailComponent,
+    UserComponent
+  ],
+  providers: [
+    CampgroundService,
+    UserService
+  ],
+  bootstrap: [BaseComponent]
 })
 export class BaseModule {
 }
