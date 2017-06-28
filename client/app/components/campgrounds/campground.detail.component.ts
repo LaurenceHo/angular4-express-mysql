@@ -10,11 +10,11 @@ import { CampgroundService, CampDetail } from "../../services/campgounds.service
 
 @Component({
     selector: 'campDetail',
-    templateUrl: './app/components/campgrounds/camp.detail.component.html',
+    templateUrl: './app/components/campgrounds/campground.detail.component.html',
     styleUrls:['./app/components/campgrounds/campgrounds.component.css']
 })
 
-export class CampDetailComponent implements OnInit {
+export class CampgroundDetailComponent implements OnInit {
     error: any;
     campDetail: CampDetail = new CampDetail();
 
@@ -30,9 +30,5 @@ export class CampDetailComponent implements OnInit {
                 this.campDetail = data;
                 console.log(this.campDetail);
             });
-    }
-
-    goBack() {
-        window.history.back();
     }
 }

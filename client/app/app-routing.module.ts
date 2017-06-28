@@ -5,8 +5,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
-import { CampDetailComponent } from './components/campgrounds/camp.detail.component';
+import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
 import { UserComponent } from './components/user/user.component';
+import { ProfileComponent } from './components/user/profile.component';
 
 const appRoutes: Routes = [
   {
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'campground/:id',
-    component: CampDetailComponent
+    component: CampgroundDetailComponent
   },
   {
     path: 'login',
@@ -33,6 +34,10 @@ const appRoutes: Routes = [
   {
     path: 'logout',
     component: UserComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   },
   {
     path: '**',

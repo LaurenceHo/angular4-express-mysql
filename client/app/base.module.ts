@@ -12,11 +12,12 @@ import { BaseComponent } from './base.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
-import { CampDetailComponent } from './components/campgrounds/camp.detail.component';
+import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
 import { UserComponent } from './components/user/user.component';
 
 import { CampgroundService } from './services/campgounds.service';
 import { UserService } from './services/user.service';
+import { ProfileComponent } from './components/user/profile.component';
 
 @NgModule({
 	imports: [
@@ -28,8 +29,9 @@ import { UserService } from './services/user.service';
 	declarations: [
 		BaseComponent,
 		CampgroundsComponent,
-		CampDetailComponent,
-		UserComponent
+		CampgroundDetailComponent,
+		UserComponent,
+		ProfileComponent
 	],
 	providers: [
 		CampgroundService,
