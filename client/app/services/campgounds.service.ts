@@ -1,7 +1,6 @@
 /**
  * Created by Laurence Ho on 07-02-2017.
  */
-/// <reference path="../../../index.d.ts" />
 
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
@@ -26,18 +25,13 @@ export class CampgroundService {
 		return this.http.get(this.campgroundsUrl)
 			.toPromise()
 			.then(response => response.json())
-			.catch(function (response) {
-				console.error('Error', response.status, response.data);
-			});
+			.catch(error => console.error('Error:' + JSON.stringify(error)));
 	}
 
 	getCamp(id: number): Promise<CampDetail> {
 		return this.http.get(this.campgroundsUrl + '/' + id)
 			.toPromise()
 			.then(response => response.json())
-			.catch(function (response) {
-				console.error('Error', response.status, response.data);
-			});
-
+			.catch(error => console.error('Error:' + JSON.stringify(error)));
 	}
 }

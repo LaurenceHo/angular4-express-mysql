@@ -1,7 +1,6 @@
 /**
  * Created by laurence-ho on 7/06/17.
  */
-/// <reference path="../../../index.d.ts" />
 
 import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { User } from '../models/user';
@@ -24,7 +23,7 @@ export class UserService {
 			return this.http.post(this.loginUrl, requestOptions)
 				.toPromise()
 				.then(response => response.json())
-				.catch(error => console.error('Error:' + JSON.stringify(error)));
+				.catch(error => console.error('Error: ', error));
 		} else {
 			return null;
 		}
@@ -37,7 +36,7 @@ export class UserService {
 			return this.http.post(this.signupUrl, requestOptions)
 				.toPromise()
 				.then(response => response.json())
-				.catch(error => console.error('Error:' + JSON.stringify(error)));
+				.catch(error => console.error('Error: ', error));
 		} else {
 			return null;
 		}
@@ -46,7 +45,7 @@ export class UserService {
 	doLogout() {
 		return this.http.get(this.logoutUrl)
 			.toPromise()
-			.catch(error => console.error('Error:' + JSON.stringify(error)));
+			.catch(error => console.error('Error: ', error));
 	}
 
 	private getRequest(body: any): RequestOptionsArgs {

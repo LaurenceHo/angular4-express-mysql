@@ -2,31 +2,40 @@
  * Created by laurence-ho on 7/06/17.
  */
 
-import {Component} from '@angular/core';
-import {User} from '../../models/user';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
+import { Component } from '@angular/core';
+import { User } from '../../models/user';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: 'login',
-  templateUrl: './app/components/user/user.component.html'
+	selector: 'login',
+	templateUrl: './app/components/user/user.component.html'
 })
 
 export class UserComponent {
-  constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {
-  }
+	constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {
+	}
 
-  user: User = new User();
+	username: string = '';
+	password: string = '';
 
-  doLogin() {
-    this.userService.doLogin(JSON.stringify(this.user)).then(user => this.user = user);
-  }
+	doLogin() {
+		let user: User = new User();
+		user.username = this.username;
+		user.password = this.password;
 
-  doSignup(){
-    this.userService.doSignup(JSON.stringify(this.user)).then(user => this.user = user);
-  }
+		this.userService.doLogin(JSON.stringify(user)).then(u => user = u);
+	}
 
-  doLogout(){
+	doSignup() {
+		let user: User = new User();
+		user.username = this.username;
+		user.password = this.password;
 
-  }
+		this.userService.doSignup(JSON.stringify(user)).then(u => user = u);
+	}
+
+	doLogout() {
+		this.userService.doLogout();
+	}
 }

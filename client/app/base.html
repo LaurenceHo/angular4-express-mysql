@@ -8,11 +8,11 @@
 				<!--<% if(!currentUser) { %>-->
 					<li><a routerLink='/login' routerLinkActive="active">Login</a></li>
 					<li><a routerLink='/signup' routerLinkActive="active">Sign Up</a></li>
-				<!--<% } else { %>
-					<li><a href = '#'> Signed In As <%= currentUser.username %></a></li>
-					<li><a href = '/profile'>Profile</a></li>
-					<li><a href = '/logout'>Logout</a></li>
-				<% } %>-->
+				<!--<% } else { %>-->
+					<!--<li><a href = '#'> Signed In As <%= currentUser.username %></a></li>-->
+					<li><a routerLink='/profile' routerLinkActive="active">Profile</a></li>
+					<li><a routerLink='/logout' routerLinkActive="active">Logout</a></li>
+				<!--<% } %>&ndash;&gt;-->
 			</ul>
 		</div>
 	</div>
