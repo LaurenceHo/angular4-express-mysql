@@ -1,13 +1,19 @@
 # Fullstack web application using Angular2, Express, Sqlite3, Gulp and Nodejs.
 
-##Introduction
+## Introduction
 This project demonstrates the basic CRUD functions combining Angular2, express, Sqlite3 and passport package. You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed application is built over node and uses latest node packages. This is my first fullstack Angular2 with nodejs web application, and it's still ongoing.
 
 ![Screen Shot 2016-10-22 at 19.41.26.png](https://bitbucket.org/repo/xbqg8L/images/3489819545-Screen%20Shot%202016-10-22%20at%2019.41.26.png)
 
 ## Prerequisites
-Latest version of Node to be installed.
+Latest version of Nodejs need to be installed.
 
+## Global packages
+```
+npm install ts-node -g
+npm install typescript-node -g
+```
+    
 ## Api Document (from Express)
 ```
 1. getAllCamps    http://localhost:8080/api/campground

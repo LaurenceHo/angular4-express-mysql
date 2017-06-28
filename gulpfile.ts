@@ -12,8 +12,7 @@ const gulp = require("gulp"),
     tslint = require('gulp-tslint'),
     concat = require('gulp-concat'),
     runSequence = require('run-sequence'),
-    nodemon = require('gulp-nodemon'),
-    gulpTypings = require("gulp-typings");
+    nodemon = require('gulp-nodemon');
 
 /**
  * Remove build directory.
@@ -76,15 +75,6 @@ gulp.task("libs", () => {
         'systemjs/dist/system.src.js'
     ], { cwd: "node_modules/**" }) /* Glob required here. */
         .pipe(gulp.dest("dist/client/libs"));
-});
-
-/**
- * Install typings for client.
- */
-gulp.task("installTypings", function () {
-    var stream = gulp.src(["./typings.json"])
-        .pipe(gulpTypings(null)); //will install all typingsfiles in pipeline.
-    return stream; // by returning stream gulp can listen to events from the stream and knows when it is finished.
 });
 
 /**
