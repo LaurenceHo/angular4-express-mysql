@@ -53,3 +53,6 @@ npm run deploy
 ```
 
 4.Visit in your browser: http://localhost:8080
+
+### Reference
+This project is based on https://github.com/moizKachwala/Angular2-express-mongoose-gulp-node-typescript. I learn a lot from this project.
