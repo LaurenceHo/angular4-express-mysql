@@ -12,6 +12,10 @@ const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
+    redirectTo: 'campground'
+  },
+  {
+    path: 'campground',
     component: CampgroundsComponent
   },
   {
