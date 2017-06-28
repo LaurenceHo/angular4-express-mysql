@@ -1,5 +1,5 @@
 {
- "compilerOptions": {
+  "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,10 +9,11 @@
     "removeComments": false,
     "noImplicitAny": false
   },
-  "exclude": [
-    "typings"
+  "lib": [
+    "dom",
+    "es6"
   ],
-  "types": [
-      "core-js"
+  "exclude": [
+    "node_modules"
   ]
 }
