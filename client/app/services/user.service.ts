@@ -3,7 +3,6 @@
  */
 
 import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
-import { User } from '../models/user';
 import { Injectable } from '@angular/core';
 //import * as _ from 'lodash';
 
@@ -16,30 +15,38 @@ export class UserService {
 	constructor(private http: Http) {
 	}
 
-	doLogin(body: any): Promise<User> {
-		let requestOptions: RequestOptionsArgs = this.getRequest(body);
+	doLogin(username: string, password: string): Promise<any> {
+		const _formParams: any = {};
 
-		if (requestOptions) {
-			return this.http.post(this.loginUrl, requestOptions)
-				.toPromise()
-				.then(response => response.json())
-				.catch(error => console.error('Error: ', error));
-		} else {
-			return null;
+		if (username !== undefined) {
+			_formParams['username'] = username;
 		}
+
+		if (password !== undefined) {
+			_formParams['password'] = password;
+		}
+
+		return this.http.request(this.loginUrl, this.getRequest(_formParams))
+			.toPromise()
+			.then(response => response.url)
+			.catch(error => console.error('Error: ', error));
 	}
 
-	doSignup(body: any): Promise<User> {
-		let requestOptions: RequestOptionsArgs = this.getRequest(body);
+	doSignup(username: string, password: string): Promise<any> {
+		const _formParams: any = {};
 
-		if (requestOptions) {
-			return this.http.post(this.signupUrl, requestOptions)
-				.toPromise()
-				.then(response => response.json())
-				.catch(error => console.error('Error: ', error));
-		} else {
-			return null;
+		if (username !== undefined) {
+			_formParams['username'] = username;
 		}
+
+		if (password !== undefined) {
+			_formParams['password'] = password;
+		}
+
+		return this.http.request(this.signupUrl, this.getRequest(_formParams))
+			.toPromise()
+			.then(response => response.url)
+			.catch(error => console.error('Error: ', error));
 	}
 
 	doLogout() {
@@ -63,9 +70,10 @@ export class UserService {
 
 		requestOptions.body = formBody.toString();
 		requestOptions.headers = headers;
+		requestOptions.method = 'post';
+
 		return requestOptions;
 
 		//}
-
 	}
 }

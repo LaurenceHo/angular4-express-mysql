@@ -3,7 +3,6 @@
  */
 
 import { Component } from '@angular/core';
-import { User } from '../../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -19,20 +18,32 @@ export class UserComponent {
 	username: string = '';
 	password: string = '';
 
-	doLogin() {
-		let user: User = new User();
-		user.username = this.username;
-		user.password = this.password;
+	doSomething() {
+		if (this.route.snapshot.url[0].path === 'login') {
+			this.doLogin();
+		} else {
+			this.doSignup();
+		}
+	}
 
-		this.userService.doLogin(JSON.stringify(user)).then(u => user = u);
+	doLogin() {
+		this.userService.doLogin(this.username, this.password).then((data) => {
+			if (data === 'http://localhost:8080/login') {
+				this.router.navigate(['/login']);
+			} else if (data === 'http://localhost:8080/profile') {
+				this.router.navigate(['/profile']);
+			}
+		});
 	}
 
 	doSignup() {
-		let user: User = new User();
-		user.username = this.username;
-		user.password = this.password;
-
-		this.userService.doSignup(JSON.stringify(user)).then(u => user = u);
+		this.userService.doSignup(this.username, this.password).then(data => {
+			if (data === 'http://localhost:8080/profile') {
+				this.router.navigate(['/profile']);
+			} else if (data === 'http://localhost:8080/signup') {
+				this.router.navigate(['/signup']);
+			}
+		});
 	}
 
 	doLogout() {
