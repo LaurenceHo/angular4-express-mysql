@@ -20,7 +20,7 @@ module.exports = function (passport) {
 		var query = "SELECT * FROM users WHERE username = '" + username + "'";
 		db.all(query, function (err, rows) {
 			if (err) {
-				req.flash('error', err);
+				console.error('error', err);
 			} else {
 				done(err, rows[0]);
 			}
@@ -52,7 +52,7 @@ module.exports = function (passport) {
 					}
 
 					if (rows.length) {
-						return done(null, false, req.flash('error', 'That username is already taken.'));
+						return done(null, false, { message: 'This username is already taken.' });
 					} else {
 						// if there is no user with that username, create the user
 						var newUserMysql = {
