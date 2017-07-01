@@ -23,7 +23,8 @@
 					<div *ngIf="userdata && userdata.id === campDetail?.campground?.user_id">
 						<a class='btn btn-warning btn-xs'
 						   href='/campground/{{campDetail?.campground?.id}}/edit'>Edit</a>
-						<button (click)="doDeleteCamp()" class='btn btn-danger btn-xs'>Delete
+						<button pButton type="button" (click)="doDeleteCamp(campDetail.campground.id)"
+						        class='btn btn-danger btn-xs' label="Delete">
 						</button>
 					</div>
 				</div>

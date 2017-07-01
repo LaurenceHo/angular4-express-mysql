@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { ButtonModule } from 'primeng/primeng';
 
 import { BaseComponent } from './base.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +25,8 @@ import { ProfileComponent } from './components/user/profile.component';
 		BrowserModule,
 		HttpModule,
 		FormsModule,
-		AppRoutingModule
+		AppRoutingModule,
+		ButtonModule
 	],
 	declarations: [
 		BaseComponent,

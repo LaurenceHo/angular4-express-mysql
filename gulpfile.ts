@@ -73,7 +73,8 @@ gulp.task("libs", () => {
 		'reflect-metadata/Reflect.js',
 		'reflect-metadata/Reflect.js.map',
 		'systemjs/dist/system.src.js',
-		'lodash/lodash.min.js'
+		'lodash/lodash.min.js',
+		'primeng/**'
 	], {cwd: "node_modules/**"}) /* Glob required here. */
 		.pipe(gulp.dest("dist/client/libs"));
 });

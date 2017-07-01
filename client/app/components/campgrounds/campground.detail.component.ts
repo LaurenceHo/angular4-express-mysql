@@ -32,9 +32,9 @@ export class CampgroundDetailComponent implements OnInit {
 		this.userdata = this.userService.getUserData();
 	}
 
-	doDeleteCamp() {
+	doDeleteCamp(id: number) {
 		if (this.route.snapshot.url[0].path === 'campground') {
-			this.campgroundService.deleteCamp(Number(this.route.snapshot.url[1].path)).then(data => {
+			this.campgroundService.deleteCamp(id).then(data => {
 				if (data.status === 200) {
 					this.router.navigate(['/campground']);
 				}
@@ -42,7 +42,7 @@ export class CampgroundDetailComponent implements OnInit {
 					if (error.status === 403) {
 						this.router.navigate(['/login']);
 					} else {
-						this.router.navigate(['/campground/' + this.route.snapshot.url[1].path]);
+						this.router.navigate(['/campground/' + id]);
 					}
 				}
 			);
