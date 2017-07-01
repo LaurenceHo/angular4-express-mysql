@@ -98,13 +98,13 @@ module.exports = function (passport) {
 					}
 
 					if (!rows.length) {
-						return done(null, false, req.flash('error', 'No user found.'));
+						return done(null, false, { message: 'Unknown user ' + username });
 					} else {
 						// if the user is found but the password is wrong
 						if (!bcrypt.compareSync(password, rows[0].password)) {
-							return done(null, false, req.flash('error', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+							return done(null, false, { message: 'Invalid password' }); // create the loginMessage and save it to session as flashdata
 						} else { // all is well, return successful user
-							return done(null, rows[0], req.flash('success', 'Welcome to YelpCamp ' + username));
+							return done(null, rows[0]);
 						}
 					}
 				});

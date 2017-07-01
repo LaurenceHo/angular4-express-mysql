@@ -4,7 +4,6 @@
 
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'login',
@@ -12,11 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class ProfileComponent {
-	constructor(private route: ActivatedRoute, private router: Router, private userService: UserService) {
-	}
+	id: number = 0;
+	username: string = '';
+	password: string = '';
 
-	//TODO
-	getProfile() {
-
+	constructor(private userService: UserService) {
+		this.userService.getProfile().then(data => {
+			this.id = data.id;
+			this.username = data.username;
+			this.password = data.password;
+		});
 	}
 }

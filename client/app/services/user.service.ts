@@ -4,15 +4,18 @@
 
 import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-//import * as _ from 'lodash';
+import { ActivatedRoute, Router } from '@angular/router';
+
+// import * as _ from 'lodash';
 
 @Injectable()
 export class UserService {
 	private loginUrl = 'api/login';
 	private signupUrl = 'api/signup';
 	private logoutUrl = 'api/logout';
+	private profileUrl = 'api/profile';
 
-	constructor(private http: Http) {
+	constructor(private route: ActivatedRoute, private router: Router, private http: Http) {
 	}
 
 	doLogin(username: string, password: string): Promise<any> {
@@ -28,8 +31,13 @@ export class UserService {
 
 		return this.http.request(this.loginUrl, this.getRequest(_formParams))
 			.toPromise()
-			.then(response => response.url)
-			.catch(error => console.error('Error: ', error));
+			.then(response => response)
+			.catch(error => {
+				console.error('Error: ', error);
+				if(error.status === 401) {
+					this.router.navigate(['/login']);
+				}
+			});
 	}
 
 	doSignup(username: string, password: string): Promise<any> {
@@ -46,7 +54,11 @@ export class UserService {
 		return this.http.request(this.signupUrl, this.getRequest(_formParams))
 			.toPromise()
 			.then(response => response.url)
-			.catch(error => console.error('Error: ', error));
+			.catch(error => {
+				console.error('Error: ', error);
+				this.router.navigate(['/signup']);
+			});
+
 	}
 
 	doLogout() {
@@ -55,11 +67,18 @@ export class UserService {
 			.catch(error => console.error('Error: ', error));
 	}
 
+	getProfile() {
+		return this.http.get(this.profileUrl)
+			.toPromise()
+			.then(response => response.json())
+			.catch(error => console.error('Error:' + JSON.stringify(error)));
+	}
+
 	private getRequest(body: any): RequestOptionsArgs {
 		const requestOptions: RequestOptionsArgs = {};
 		const headers = new Headers({'Accept': '*/*'});
 
-		//if (!_.isEmpty(body)) {
+		// if (!_.isEmpty(body)) {
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
 		const formBody = new URLSearchParams();
@@ -73,7 +92,6 @@ export class UserService {
 		requestOptions.method = 'post';
 
 		return requestOptions;
-
-		//}
+		// }
 	}
 }

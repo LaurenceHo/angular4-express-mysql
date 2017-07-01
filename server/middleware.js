@@ -22,7 +22,7 @@ middlewareObj.checkCampOwner = function (req, res, next) {
         req.flash('error', 'Please Login First!');
         res.redirect('/login');
     }
-}
+};
 
 middlewareObj.checkCommentOwner = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -44,7 +44,7 @@ middlewareObj.checkCommentOwner = function (req, res, next) {
         req.flash('error', 'Please Login First!');
         res.redirect('/login');
     }
-}
+};
 
 middlewareObj.isLoggedIn = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -53,6 +53,6 @@ middlewareObj.isLoggedIn = function (req, res, next) {
 
     req.flash('error', 'Please Login First!');
     res.redirect('/login');
-}
+};
 
 module.exports = middlewareObj;

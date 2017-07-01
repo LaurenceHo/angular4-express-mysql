@@ -27,10 +27,8 @@ export class UserComponent {
 	}
 
 	doLogin() {
-		this.userService.doLogin(this.username, this.password).then((data) => {
-			if (data === 'http://localhost:8080/login') {
-				this.router.navigate(['/login']);
-			} else if (data === 'http://localhost:8080/profile') {
+		this.userService.doLogin(this.username, this.password).then(data => {
+			if (data && data.status === 200) {
 				this.router.navigate(['/profile']);
 			}
 		});
@@ -38,10 +36,8 @@ export class UserComponent {
 
 	doSignup() {
 		this.userService.doSignup(this.username, this.password).then(data => {
-			if (data === 'http://localhost:8080/profile') {
+			if (data && data.status === 200) {
 				this.router.navigate(['/profile']);
-			} else if (data === 'http://localhost:8080/signup') {
-				this.router.navigate(['/signup']);
 			}
 		});
 	}
