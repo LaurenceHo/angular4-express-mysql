@@ -7,16 +7,16 @@ router.post('/api/login',
 	function (req, res, next) {
 		passport.authenticate('local-login', function (err, user, info) {
 			if (err) {
-				return res.status(401).send({ 'message': err.message });
+				return res.status(401).send({ message: err.message });
 			}
 			if (!user) {
-				return res.status(401).send({ 'message': info.message });
+				return res.status(401).send({ message: info.message });
 			}
 			req.logIn(user, function (err) {
 				if (err) {
-					return res.status(401).send({ 'message': err.message });
+					return res.status(401).send({ message: err.message });
 				}
-				return res.status(200).send({ 'message': 'OK' });
+				return res.status(200).json(req.user);
 			});
 		})(req, res, next);
 	},
@@ -29,11 +29,21 @@ router.post('/api/login',
 		res.redirect('/');
 	});
 
-router.post('/api/signup', passport.authenticate('local-signup', {
-	successRedirect: '/profile', // redirect to the secure profile section
-	failureRedirect: '/signup', // redirect back to the signup page if there is an error
-	failureFlash: true // allow flash messages
-}));
+router.post('/api/signup', function (req, res, next) {
+		passport.authenticate('local-signup',
+			function (err, user, info) {
+				if (err) {
+					return res.status(403).send({ 'message': err.message });
+				}
+
+				if (!user) {
+					return res.status(403).send({ 'message': info.message });
+				}
+
+				return res.status(200).send({ 'message': 'OK' });
+			})(req, res, next);
+	}
+);
 
 router.get('/api/profile', middleware.isLoggedIn, function (req, res) {
 	res.json(req.user);
