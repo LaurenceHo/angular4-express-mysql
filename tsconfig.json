@@ -12,6 +12,10 @@
       "es2015",
       "dom"
     ],
+    "types": [
+      "node",
+      "lodash"
+    ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "typeRoots": [

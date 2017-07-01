@@ -16,11 +16,13 @@ router.get('/api/campground', function (req, res) {
 	});
 });
 
+// TODO
 // get create camp ground form
 router.get('/campground/new', middleware.isLoggedIn, function (req, res) {
 	res.render('campgrounds/new');
 });
 
+// TODO
 // create one camp ground
 router.post('/campground', middleware.isLoggedIn, function (req, res) {
 	var user_id = req.body.campground.user_id;
@@ -52,7 +54,7 @@ router.get('/api/campground/:id', function (req, res) {
 
 	db.all(campQuery, function (err, rows) {
 		if (err) {
-			req.flash('error', err);
+			res.status(500).send({ message: err });
 		} else {
 			campground = rows[0];
 
@@ -68,6 +70,7 @@ router.get('/api/campground/:id', function (req, res) {
 	});
 });
 
+// TODO
 // get edit camp ground form
 router.get('/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
 	var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
@@ -82,6 +85,7 @@ router.get('/campground/:id/edit', middleware.checkCampOwner, function (req, res
 	});
 });
 
+// TODO
 // edit one camp ground
 router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
 	var name = req.sanitize(req.body.campground.name);
@@ -97,7 +101,6 @@ router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
 	db.run(updateCampSQL, function (err, rows) {
 		if (err) {
 			res.status(500).send({ message: err });
-			res.redirect('/');
 		} else {
 			res.redirect('/campground/' + req.params.id);
 		}
@@ -105,14 +108,13 @@ router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
 });
 
 // delete one camp ground
-router.delete('/campground/:id', middleware.checkCampOwner, function (req, res) {
+router.delete('/api/campground/:id', middleware.checkCampOwner, function (req, res) {
 	var deleteCampSQL = 'DELETE FROM campgrounds WHERE id = ' + req.params.id;
 	db.run(deleteCampSQL, function (err) {
 		if (err) {
-			res.status(500).send({ message: err });
-			res.redirect('/campground' + req.params.id);
+			res.status(500).send({ message: err, id: req.params.id });
 		} else {
-			res.redirect('/');
+			res.status(200).send({ message: 'OK' });
 		}
 	});
 });

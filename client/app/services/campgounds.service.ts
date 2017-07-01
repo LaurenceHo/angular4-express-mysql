@@ -25,13 +25,19 @@ export class CampgroundService {
 		return this.http.get(this.campgroundsUrl)
 			.toPromise()
 			.then(response => response.json())
-			.catch(error => console.error('Error:' + JSON.stringify(error)));
+			.catch(error => console.error('Error:' + error));
 	}
 
 	getCamp(id: number): Promise<CampDetail> {
 		return this.http.get(this.campgroundsUrl + '/' + id)
 			.toPromise()
 			.then(response => response.json())
-			.catch(error => console.error('Error:' + JSON.stringify(error)));
+			.catch(error => console.error('Error:' + error));
+	}
+
+	deleteCamp(id: number): Promise<any> {
+		return this.http.delete(this.campgroundsUrl + '/' + id)
+			.toPromise()
+			.then(response => response);
 	}
 }
