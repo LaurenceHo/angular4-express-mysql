@@ -5,7 +5,7 @@
 import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-// import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 export type InternalStateType = {
 	[key: string]: any
@@ -112,20 +112,20 @@ export class UserService {
 		const requestOptions: RequestOptionsArgs = {};
 		const headers = new Headers({'Accept': '*/*'});
 
-		// if (!_.isEmpty(body)) {
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		if (!_.isEmpty(body)) {
+			headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-		const formBody = new URLSearchParams();
+			const formBody = new URLSearchParams();
 
-		for (const formParam of Object.keys(body)) {
-			formBody.append(formParam, body[formParam]);
+			for (const formParam of Object.keys(body)) {
+				formBody.append(formParam, body[formParam]);
+			}
+
+			requestOptions.body = formBody.toString();
+			requestOptions.headers = headers;
+			requestOptions.method = 'post';
+
+			return requestOptions;
 		}
-
-		requestOptions.body = formBody.toString();
-		requestOptions.headers = headers;
-		requestOptions.method = 'post';
-
-		return requestOptions;
-		// }
 	}
 }

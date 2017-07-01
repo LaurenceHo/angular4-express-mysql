@@ -45,7 +45,7 @@ export class CampgroundDetailComponent implements OnInit {
 						this.router.navigate(['/campground/' + this.route.snapshot.url[1].path]);
 					}
 				}
-			)
+			);
 		}
 	}
 }

@@ -27,10 +27,12 @@ export class BaseComponent implements OnInit {
 						this.userdata = this.userService.getUserData();
 					} else {
 						this.userService.flush();
+						this.userdata = null;
 					}
 				}).catch(error => {
 					if (error.status === 403) {
 						this.userService.flush();
+						this.userdata = null;
 					}
 				});
 			}
