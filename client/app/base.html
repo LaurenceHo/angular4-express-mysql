@@ -1,30 +1,22 @@
 <nav class='navbar navbar-default'>
 	<div class='container-fluid'>
 		<div class='navbar-header'>
-			<a class='navbar-brand' href='/'>{{ title }}</a>
+			<a class='navbar-brand' href='/'>{{title}}</a>
 		</div>
 		<div class='collapse navbar-collapse'>
-			<ul class='nav navbar-nav navbar-right'>
-				<!--<% if(!currentUser) { %>-->
-					<li><a routerLink='/login' routerLinkActive="active">Login</a></li>
-					<li><a routerLink='/signup' routerLinkActive="active">Sign Up</a></li>
-				<!--<% } else { %>-->
-					<!--<li><a href = '#'> Signed In As <%= currentUser.username %></a></li>-->
-					<li><a routerLink='/profile' routerLinkActive="active">Profile</a></li>
-					<li><a routerLink='/logout' routerLinkActive="active">Logout</a></li>
-				<!--<% } %>&ndash;&gt;-->
+			<ul class='nav navbar-nav navbar-right' *ngIf="!userdata">
+				<li><a routerLink='/login' routerLinkActive="active">Login</a></li>
+				<li><a routerLink='/signup' routerLinkActive="active">Sign Up</a></li>
+			</ul>
+			<ul class='nav navbar-nav navbar-right' *ngIf="userdata">
+				<li><a href='#'> Signed In As {{userdata.username}}</a></li>
+				<li><a routerLink='/profile' routerLinkActive="active">Profile</a></li>
+				<li><a routerLink='/logout' routerLinkActive="active">Logout</a></li>
 			</ul>
 		</div>
 	</div>
 </nav>
 
 <div class="container">
-	<!-- show any messages that come back with authentication -->
-    <!--<% if (error && error.length > 0) { %>
-        <div class="alert alert-danger"><%= error %></div>
-    <% } %>
-    <% if (success && success.length > 0) { %>
-        <div class="alert alert-success"><%= success %></div>
-    <% } %>-->
 	<router-outlet></router-outlet>
 </div>

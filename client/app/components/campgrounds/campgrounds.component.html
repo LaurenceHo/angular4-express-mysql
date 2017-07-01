@@ -1,25 +1,23 @@
 <div class='container'>
-    <header class='jumbotron'>
-        <h1>Welcome to YelpCamp</h1>
-        <p>View our hand-picked campgrounds from all over the world</p>
-        <!--<% if(currentUser) { %>-->
-            <p><a class='btn btn-primary btn-large' href='/campground/new'>Add New Campground</a></p>
-        <!--<% } %>-->
-    </header>
+	<header class='jumbotron'>
+		<h1>Welcome to YelpCamp</h1>
+		<p>View our hand-picked campgrounds from all over the world</p>
+		<p *ngIf="userdata"><a class='btn btn-primary btn-large' href='/campground/new'>Add New Campground</a></p>
+	</header>
 
-    <div class='row' style='display:flex; flex-wrap:wrap;'>
-        <div class='col-md-3 col-sm-6' *ngFor="let camp of camps">
-            <div class='thumbnail'>
-                <img src={{camp.image}}>
-                <div class='caption'>
-                    <h4>
-                        {{camp.name}}
-                    </h4>
-                </div>
-                <p>
-                    <button class="btn btn-primary" (click)="gotoDetail(camp.id)"> More Info </button>
-                </p>
-            </div>
-        </div>
-    </div>
+	<div class='row' style='display:flex; flex-wrap:wrap;'>
+		<div class='col-md-3 col-sm-6' *ngFor="let camp of camps">
+			<div class='thumbnail'>
+				<img src={{camp.image}}>
+				<div class='caption'>
+					<h4>
+						{{camp.name}}
+					</h4>
+				</div>
+				<p>
+					<button class="btn btn-primary" (click)="gotoDetail(camp.id)"> More Info</button>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>

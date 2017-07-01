@@ -4,6 +4,14 @@
 		<h1 *ngIf="route.snapshot.url[0].path=='signup'"><span class="fa fa-user-o" aria-hidden="true"></span> Sign Up
 		</h1>
 
+		<div *ngIf="error && message.length > 0" class="alert alert-danger" role="alert">
+			{{message}}
+		</div>
+
+		<div *ngIf="signupSuccessful" class="alert alert-success" role="alert">
+			Signup account successfully, please login.
+		</div>
+
 		<form role="form" (ngSubmit)="doSomething()">
 			<div class="form-group">
 				<label>Username</label>
