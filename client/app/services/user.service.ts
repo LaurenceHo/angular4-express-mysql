@@ -42,6 +42,7 @@ export class UserService {
 
 	flush() {
 		this._state = {};
+		window.localStorage.removeItem(this.USER_DATA_KEY);
 	}
 
 	private _clone(object: InternalStateType) {
@@ -95,7 +96,6 @@ export class UserService {
 
 	doLogout() {
 		this.flush();
-		window.localStorage.removeItem(this.USER_DATA_KEY);
 
 		return this.http.get(this.logoutUrl)
 			.toPromise()
@@ -105,8 +105,7 @@ export class UserService {
 	getProfile() {
 		return this.http.get(this.profileUrl)
 			.toPromise()
-			.then(response => response.json())
-			.catch(error => console.error('Error:', error));
+			.then(response => response.json());
 	}
 
 	private getRequest(body: any): RequestOptionsArgs {

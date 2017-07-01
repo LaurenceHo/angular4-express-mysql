@@ -16,36 +16,36 @@ import { UserService } from '../../services/user.service';
 })
 
 export class CampgroundDetailComponent implements OnInit {
-	error: any;
 	campDetail: CampDetail = new CampDetail();
-
 	userdata: any;
 
 	constructor(private campgroundService: CampgroundService,
 	            private userService: UserService,
 	            private route: ActivatedRoute,
 	            private router: Router) {
-		this.userdata = userService.getUserData();
 	}
 
 	ngOnInit() {
 		this.route.params
 			.switchMap((params: Params) => this.campgroundService.getCamp(params['id']))
 			.subscribe(data => this.campDetail = data);
+		this.userdata = this.userService.getUserData();
 	}
 
 	doDeleteCamp() {
-		this.campgroundService.deleteCamp(Number(this.route.snapshot.url[1].path)).then(data => {
-			if (data.status === 200) {
-				this.router.navigate(['/campground']);
-			}
-		}).catch(error => {
-				if (error.status === 403) {
-					this.router.navigate(['/login']);
-				} else {
-					this.router.navigate(['/campground/' + this.route.snapshot.url[1].path]);
+		if (this.route.snapshot.url[0].path === 'campground') {
+			this.campgroundService.deleteCamp(Number(this.route.snapshot.url[1].path)).then(data => {
+				if (data.status === 200) {
+					this.router.navigate(['/campground']);
 				}
-			}
-		)
+			}).catch(error => {
+					if (error.status === 403) {
+						this.router.navigate(['/login']);
+					} else {
+						this.router.navigate(['/campground/' + this.route.snapshot.url[1].path]);
+					}
+				}
+			)
+		}
 	}
 }

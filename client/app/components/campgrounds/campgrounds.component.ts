@@ -1,11 +1,11 @@
 /**
  * Created by Laurence Ho on 07-02-2017.
  */
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {CampgroundService} from '../../services/campgounds.service';
-import {Campground} from '../../models/campground';
+import { CampgroundService } from '../../services/campgounds.service';
+import { Campground } from '../../models/campground';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -16,19 +16,18 @@ import { UserService } from '../../services/user.service';
 
 export class CampgroundsComponent implements OnInit {
     camps: Campground[];
-
     userdata: any;
 
     constructor(private router: Router, private campService: CampgroundService, private userService: UserService) {
-        this.userdata = userService.getUserData();
-    }
-
-    getCamps() {
-        this.campService.getCamps().then(camps => this.camps = camps);
     }
 
     ngOnInit() {
         this.getCamps();
+        this.userdata = this.userService.getUserData();
+    }
+
+    getCamps() {
+        this.campService.getCamps().then(camps => this.camps = camps);
     }
 
     gotoDetail(id: number) {
