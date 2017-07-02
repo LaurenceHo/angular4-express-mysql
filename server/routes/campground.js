@@ -5,7 +5,7 @@ var db = require('../sqlite');
 var middleware = require('../middleware');
 
 
-// get all camp grounds
+// get all campgrounds
 router.get('/api/campground', function (req, res) {
 	db.all('SELECT * FROM campgrounds', function (err, rows) {
 		if (err) {

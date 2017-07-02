@@ -1,7 +1,7 @@
-# Fullstack web application using Angular2, Express, Sqlite3, Gulp and Nodejs.
+# Fullstack web application using Angular4, Primeng, Express, Sqlite3, Gulp and Passport.
 
 ## Introduction
-This project demonstrates the basic CRUD functions combining Angular4, Primeng, express, Sqlite3 and passport package. You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed application is built over node and uses latest node packages. This is my first fullstack Angular4 with nodejs web application, and it's still ongoing.
+This project demonstrates the basic CRUD functions combining Angular4, Primeng, Express, Sqlite3, Gulp and Passport. You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed application is built over node and uses latest node packages. This is my first fullstack Angular4 with nodejs web application, and it's still ongoing.
 
 ![Screen Shot 2016-10-22 at 19.41.26.png](https://bitbucket.org/repo/xbqg8L/images/3489819545-Screen%20Shot%202016-10-22%20at%2019.41.26.png)
 
@@ -16,18 +16,18 @@ npm install typescript-node -g
     
 ## Api Document (from Express)
 ```
-1. getAllCamps    http://localhost:8080/api/campground
-2. getOneCamp     http://localhost:8080/api/campground/:id
-3. createCamp     http://localhost:8080/api/campground
-4. editCamp       http://localhost:8080/api/campground/:id
-5. deleteCamp     http://localhost:8080/api/campground/:id
-6. createComment  http://localhost:8080/api/campground/:id/comments
-7. editComment    http://localhost:8080/api/campground/:id/comments/:comment_id
-8. deleteComment  http://localhost:8080/api/campground/:id/comments/:comment_id
-9. signup         http://localhost:8080/api/signup
-10. login         http://localhost:8080/api/login
-11. logout        http://localhost:8080/api/logout
-12. profile       http://localhost:8080/api/profile
+1. getAllCampgrounds    (GET)    http://localhost:8080/api/campground
+2. getOneCampground     (GET)    http://localhost:8080/api/campground/detail/:id
+3. createCampground     (POST)   http://localhost:8080/api/campground
+4. editCampground       (PUT)    http://localhost:8080/api/campground/detail/:id
+5. deleteCampground     (DELETE) http://localhost:8080/api/campground/:id
+6. createComment        (POST)   http://localhost:8080/api/campground/detail/:id/comments
+7. editComment          (PUT)    http://localhost:8080/api/campground/detail/:id/comments/:comment_id
+8. deleteComment        (DELETE) http://localhost:8080/api/campground/detail/:id/comments/:comment_id
+9. signup               (POST)   http://localhost:8080/api/signup
+10. login               (POST)   http://localhost:8080/api/login
+11. logout              (GET)    http://localhost:8080/api/logout
+12. profile             (GET)    http://localhost:8080/api/profile
 ```
 
 ### How do I get set up? ###
