@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
 import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
+import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
 import { UserComponent } from './components/user/user.component';
 import { ProfileComponent } from './components/user/profile.component';
 
@@ -20,8 +21,16 @@ const appRoutes: Routes = [
     component: CampgroundsComponent
   },
   {
-    path: 'campground/:id',
+    path: 'campground/detail/:id',
     component: CampgroundDetailComponent
+  },
+  {
+    path: 'campground/new',
+    component: CampgroundFormComponent
+  },
+  {
+    path: 'campground/detail/:id/edit',
+    component: CampgroundFormComponent
   },
   {
     path: 'login',

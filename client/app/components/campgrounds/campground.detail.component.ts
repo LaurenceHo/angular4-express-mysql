@@ -6,7 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { CampDetail, CampgroundService } from '../../services/campgounds.service';
+import { CampgroundDetail, CampgroundService } from '../../services/campgounds.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { UserService } from '../../services/user.service';
 })
 
 export class CampgroundDetailComponent implements OnInit {
-	campDetail: CampDetail = new CampDetail();
+	campDetail: CampgroundDetail = new CampgroundDetail();
 	userdata: any;
 
 	constructor(private campgroundService: CampgroundService,
@@ -27,14 +27,14 @@ export class CampgroundDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.params
-			.switchMap((params: Params) => this.campgroundService.getCamp(params['id']))
+			.switchMap((params: Params) => this.campgroundService.getCampgroundDetail(params['id']))
 			.subscribe(data => this.campDetail = data);
 		this.userdata = this.userService.getUserData();
 	}
 
-	doDeleteCamp(id: number) {
+	doDeleteCampground(id: number) {
 		if (this.route.snapshot.url[0].path === 'campground') {
-			this.campgroundService.deleteCamp(id).then(data => {
+			this.campgroundService.deleteCampground(id).then(data => {
 				if (data.status === 200) {
 					this.router.navigate(['/campground']);
 				}
@@ -42,7 +42,7 @@ export class CampgroundDetailComponent implements OnInit {
 					if (error.status === 403) {
 						this.router.navigate(['/login']);
 					} else {
-						this.router.navigate(['/campground/' + id]);
+						this.router.navigate(['/campground/detail' + id]);
 					}
 				}
 			);

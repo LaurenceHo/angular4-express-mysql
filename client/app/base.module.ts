@@ -19,19 +19,23 @@ import { UserComponent } from './components/user/user.component';
 import { CampgroundService } from './services/campgounds.service';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/user/profile.component';
+import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
 
 @NgModule({
 	imports: [
+		//Angular Module
 		BrowserModule,
 		HttpModule,
 		FormsModule,
 		AppRoutingModule,
+		//Primeng Module
 		ButtonModule
 	],
 	declarations: [
 		BaseComponent,
 		CampgroundsComponent,
 		CampgroundDetailComponent,
+		CampgroundFormComponent,
 		UserComponent,
 		ProfileComponent
 	],

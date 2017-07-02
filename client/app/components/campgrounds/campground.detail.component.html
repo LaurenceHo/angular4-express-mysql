@@ -22,8 +22,8 @@
 					<p><em> Submitted By {{campDetail?.campground?.username}} </em></p>
 					<div *ngIf="userdata && userdata.id === campDetail?.campground?.user_id">
 						<a class='btn btn-warning btn-xs'
-						   href='/campground/{{campDetail?.campground?.id}}/edit'>Edit</a>
-						<button pButton type="button" (click)="doDeleteCamp(campDetail.campground.id)"
+						   routerLink='/campground/detail/{{campDetail?.campground?.id}}/edit'>Edit</a>
+						<button pButton type="button" (click)="doDeleteCampground(campDetail.campground.id)"
 						        class='btn btn-danger btn-xs' label="Delete">
 						</button>
 					</div>
@@ -54,7 +54,7 @@
 					</div>
 				</div>
 			</div>
-			<a href='/'>Go Back</a>
+			<a routerLink="/">Go Back</a>
 		</div>
 	</div>
 </div>

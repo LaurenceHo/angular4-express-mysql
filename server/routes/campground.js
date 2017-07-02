@@ -16,14 +16,7 @@ router.get('/api/campground', function (req, res) {
 	});
 });
 
-// TODO
-// get create camp ground form
-router.get('/campground/new', middleware.isLoggedIn, function (req, res) {
-	res.render('campgrounds/new');
-});
-
-// TODO
-// create one camp ground
+// FIXME create one campground
 router.post('/campground', middleware.isLoggedIn, function (req, res) {
 	var user_id = req.body.campground.user_id;
 	var username = req.body.campground.username;
@@ -44,7 +37,7 @@ router.post('/campground', middleware.isLoggedIn, function (req, res) {
 	});
 });
 
-// get one camp ground with comments
+// get one campground with comments
 router.get('/api/campground/:id', function (req, res) {
 	var campground = [],
 		comments = [];
@@ -63,31 +56,30 @@ router.get('/api/campground/:id', function (req, res) {
 					res.status(500).send({ message: err });
 				} else {
 					comments = rows;
-					res.send({ campground: campground, comments: comments });
+					res.status(200).send({ campground: campground, comments: comments });
 				}
 			});
 		}
 	});
 });
 
-// TODO
-// get edit camp ground form
-router.get('/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
+// get campground without comment
+router.get('/api/campground/detail/:id/edit', middleware.checkCampOwner, function (req, res) {
 	var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
 
 	db.all(campQuery, function (err, rows) {
 		if (err) {
 			res.status(500).send({ message: err });
-			res.redirect('/campground/' + req.params.id);
 		} else {
-			res.render('campgrounds/edit', { campground: rows[0] });
+			res.status(200).send({ campground: rows[0] });
 		}
 	});
 });
 
-// TODO
-// edit one camp ground
-router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
+//FIXME edit one campground
+router.put('/api/campground/detail/:id/edit', middleware.checkCampOwner, function (req, res) {
+	console.log('req: ', req.body);
+
 	var name = req.sanitize(req.body.campground.name);
 	var image = req.sanitize(req.body.campground.image);
 	var desc = req.sanitize(req.body.campground.description);
@@ -102,12 +94,12 @@ router.put('/campground/:id', middleware.checkCampOwner, function (req, res) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.redirect('/campground/' + req.params.id);
+			res.status(200).send({ message: 'OK', id: req.params.id });
 		}
 	});
 });
 
-// delete one camp ground
+// delete one campground
 router.delete('/api/campground/:id', middleware.checkCampOwner, function (req, res) {
 	var deleteCampSQL = 'DELETE FROM campgrounds WHERE id = ' + req.params.id;
 	db.run(deleteCampSQL, function (err) {

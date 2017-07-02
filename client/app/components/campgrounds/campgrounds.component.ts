@@ -22,19 +22,15 @@ export class CampgroundsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCamps();
+        this.getCampgrounds();
         this.userdata = this.userService.getUserData();
     }
 
-    getCamps() {
-        this.campService.getCamps().then(camps => this.camps = camps);
+    getCampgrounds() {
+        this.campService.getCampgrounds().then(camps => this.camps = camps);
     }
 
-    gotoDetail(id: number) {
-        this.router.navigate(['/campground', id]);
-    }
-
-    addCampground() {
-        this.router.navigate(['/campground', 'new']);
+    getCampgroundDetail(id: number) {
+        this.router.navigate(['/campground/detail', id]);
     }
 }
