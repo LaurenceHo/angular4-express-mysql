@@ -1,12 +1,12 @@
 # Fullstack web application using Angular2, Express, Sqlite3, Gulp and Nodejs.
 
 ## Introduction
-This project demonstrates the basic CRUD functions combining Angular2, express, Sqlite3 and passport package. You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed application is built over node and uses latest node packages. This is my first fullstack Angular2 with nodejs web application, and it's still ongoing.
+This project demonstrates the basic CRUD functions combining Angular4, Primeng, express, Sqlite3 and passport package. You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed application is built over node and uses latest node packages. This is my first fullstack Angular4 with nodejs web application, and it's still ongoing.
 
 ![Screen Shot 2016-10-22 at 19.41.26.png](https://bitbucket.org/repo/xbqg8L/images/3489819545-Screen%20Shot%202016-10-22%20at%2019.41.26.png)
 
 ## Prerequisites
-Latest version of Nodejs need to be installed.
+The latest version of Nodejs need to be installed.
 
 ## Global packages
 ```
