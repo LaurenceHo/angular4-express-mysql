@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="col-sm-6 col-sm-offset-3">
-		<h1 *ngIf="route.snapshot.url[0].path=='login'"><span class="fa fa-sign-in"></span> Login</h1>
-		<h1 *ngIf="route.snapshot.url[0].path=='signup'"><span class="fa fa-user-o" aria-hidden="true"></span> Sign Up
+		<h1 *ngIf="route.snapshot.url[0].path == 'login'"><span class="fa fa-sign-in"></span> Login</h1>
+		<h1 *ngIf="route.snapshot.url[0].path == 'signup'"><span class="fa fa-user-o" aria-hidden="true"></span> Sign Up
 		</h1>
 
 		<div *ngIf="error && message.length > 0" class="alert alert-danger" role="alert">
@@ -21,21 +21,21 @@
 				<label>Password</label>
 				<input type="password" class="form-control" name="password" [(ngModel)]="password" required>
 			</div>
-			<div class="form-group" *ngIf="route.snapshot.url[0].path=='login'">
+			<div class="form-group" *ngIf="route.snapshot.url[0].path == 'login'">
 				<label>Remember Me</label>
 				<input type="checkbox" class="form-control" name="remember" value="yes">
 			</div>
 
-			<button type="submit" class="btn btn-primary btn-lg" *ngIf="route.snapshot.url[0].path=='login'">Login
+			<button type="submit" class="btn btn-primary btn-lg" *ngIf="route.snapshot.url[0].path == 'login'">Login
 			</button>
-			<button type="submit" class="btn btn-warning btn-lg" *ngIf="route.snapshot.url[0].path=='signup'">Sign Up
+			<button type="submit" class="btn btn-warning btn-lg" *ngIf="route.snapshot.url[0].path == 'signup'">Sign Up
 			</button>
 		</form>
 
 		<hr>
 
-		<p *ngIf="route.snapshot.url[0].path=='login'">Need an account? <a routerLink="/signup">Sign Up</a></p>
-		<p *ngIf="route.snapshot.url[0].path=='signup'">Already have an account? <a routerLink="/login">Login</a></p>
+		<p *ngIf="route.snapshot.url[0].path == 'login'">Need an account? <a routerLink="/signup">Sign Up</a></p>
+		<p *ngIf="route.snapshot.url[0].path == 'signup'">Already have an account? <a routerLink="/login">Login</a></p>
 		<p>Or go <a routerLink="/">home</a>.</p>
 	</div>
 </div>
