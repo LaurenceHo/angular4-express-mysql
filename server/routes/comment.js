@@ -36,7 +36,7 @@ router.post('/comment', authentication.isLoggedIn, function (req, res) {
 	});
 });
 
-// FIXME edit one comment by comment id
+// edit one comment by comment id
 router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, function (req, res) {
 	var text = req.sanitize(req.body.text);
 	var updateSQL = "UPDATE comments SET " +
@@ -46,7 +46,7 @@ router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, functi
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			rres.status(200).send({ message: 'OK' });
+			res.status(200).send({ message: 'OK' });
 		}
 	});
 });
