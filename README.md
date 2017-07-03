@@ -14,16 +14,17 @@ npm install ts-node -g
 npm install typescript-node -g
 ```
     
-## Api Document (from Express)
+## Api Document (from Express's view)
 ```
 1. getAllCampgrounds    (GET)    http://localhost:8080/api/campground
-2. getOneCampground     (GET)    http://localhost:8080/api/campground/detail/:id
-3. createCampground     (POST)   http://localhost:8080/api/campground
-4. editCampground       (PUT)    http://localhost:8080/api/campground/detail/:id
+2. createCampground     (POST)   http://localhost:8080/api/campground
+3. getOneCampground     (GET)    http://localhost:8080/api/campground/:id
+4. getOneCampground     (GET)    http://localhost:8080/api/campground/:id/edit
+5. editCampground       (PUT)    http://localhost:8080/api/campground/:id/edit
 5. deleteCampground     (DELETE) http://localhost:8080/api/campground/:id
-6. createComment        (POST)   http://localhost:8080/api/campground/detail/:id/comments
-7. editComment          (PUT)    http://localhost:8080/api/campground/detail/:id/comments/:comment_id
-8. deleteComment        (DELETE) http://localhost:8080/api/campground/detail/:id/comments/:comment_id
+6. createComment        (POST)   http://localhost:8080/api/campground/:id/comments
+7. editComment          (PUT)    http://localhost:8080/api/campground/:id/comments/:comment_id
+8. deleteComment        (DELETE) http://localhost:8080/api/campground/:id/comments/:comment_id
 9. signup               (POST)   http://localhost:8080/api/signup
 10. login               (POST)   http://localhost:8080/api/login
 11. logout              (GET)    http://localhost:8080/api/logout

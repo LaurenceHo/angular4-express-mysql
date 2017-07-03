@@ -17,7 +17,7 @@ router.get('/api/campground', function (req, res) {
 });
 
 // FIXME create one campground
-router.post('/campground', middleware.isLoggedIn, function (req, res) {
+router.post('/api/campground', middleware.isLoggedIn, function (req, res) {
 	var user_id = req.body.campground.user_id;
 	var username = req.body.campground.username;
 
@@ -33,7 +33,7 @@ router.post('/campground', middleware.isLoggedIn, function (req, res) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.redirect('/');
+			res.status(200).send({ message: 'OK', result: result });
 		}
 	});
 });
@@ -65,7 +65,7 @@ router.get('/api/campground/:id', function (req, res) {
 });
 
 // get campground without comment
-router.get('/api/campground/detail/:id/edit', middleware.checkCampOwner, function (req, res) {
+router.get('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
 	var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
 
 	db.all(campQuery, function (err, rows) {
@@ -78,7 +78,7 @@ router.get('/api/campground/detail/:id/edit', middleware.checkCampOwner, functio
 });
 
 //FIXME edit one campground
-router.put('/api/campground/detail/:id/edit', middleware.checkCampOwner, function (req, res) {
+router.put('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
 	console.log('req: ', req.body);
 
 	var name = req.sanitize(req.body.campground.name);

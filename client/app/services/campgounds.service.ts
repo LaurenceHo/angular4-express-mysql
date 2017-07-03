@@ -17,7 +17,7 @@ export class CampgroundDetail {
 @Injectable()
 export class CampgroundService {
 
-	private campgroundsUrl = 'api/campground';  // URL to web api
+	private campgroundsUrl = 'api/campground/';  // URL to web api
 
 	constructor(private http: Http) {
 	}
@@ -30,27 +30,34 @@ export class CampgroundService {
 	}
 
 	getCampgroundDetail(id: number): Promise<CampgroundDetail> {
-		return this.http.get(this.campgroundsUrl + '/' + id)
+		return this.http.get(this.campgroundsUrl + id)
 			.toPromise()
 			.then(response => response.json())
 			.catch(error => console.error('Error:' + error));
 	}
 
 	getCampground(id: number): Promise<any> {
-		return this.http.get(this.campgroundsUrl + '/detail/' + id + '/edit')
+		return this.http.get(this.campgroundsUrl + id + '/edit')
 			.toPromise()
 			.then(response => response.json());
 	}
 
 	//FIXME
 	editCampground(campground: Campground): Promise<any> {
-		return this.http.put(this.campgroundsUrl + '/detail/' + campground.id + '/edit', this.getRequest(campground, 'put'))
+		return this.http.request(this.campgroundsUrl + campground.id + '/edit', this.getRequest(campground, 'put'))
+			.toPromise()
+			.then(response => response.json());
+	}
+
+	//FIXME
+	createCampground(campground: Campground): Promise<any> {
+		return this.http.request(this.campgroundsUrl, this.getRequest(campground, 'post'))
 			.toPromise()
 			.then(response => response.json());
 	}
 
 	deleteCampground(id: number): Promise<any> {
-		return this.http.delete(this.campgroundsUrl + '/' + id)
+		return this.http.delete(this.campgroundsUrl + id)
 			.toPromise()
 			.then(response => response);
 	}
