@@ -1,11 +1,9 @@
 var express = require('express');
 var session = require('express-session');
 var expressSanitizer = require('express-sanitizer');
-var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
-var flash = require('connect-flash');
 var path = require('path');
 
 //initial database schema
@@ -13,8 +11,6 @@ require('./sqlite');
 require('./passport')(passport);
 
 var app = express();
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,10 +18,11 @@ app.use(bodyParser.json());
 
 app.use('/app', express.static(path.resolve(__dirname, '../dist/client/app')));
 app.use('/libs', express.static(path.resolve(__dirname, '../dist/client/libs')));
+
+// for system.js to work. Can be removed if bundling.
 app.use(express.static(path.resolve(__dirname, '../dist/client')));
 app.use(express.static(path.resolve(__dirname, '../node_modules')));
 
-app.use(methodOverride('_method'));
 app.use(expressSanitizer());
 
 app.use(session({
@@ -35,23 +32,15 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
-app.use(function (req, res, next) {
-	res.locals.currentUser = req.user;
-	res.locals.error = req.flash('error');
-	res.locals.success = req.flash('success');
-
-	next();
-});
 
 //initial routes
-var authRoutes = require('./routes/auth.js');
+var userRoutes = require('./routes/user.js');
 var campgroundRoutes = require('./routes/campground.js');
 var commentRoutes = require('./routes/comment.js');
 
-app.use(authRoutes);
-app.use(campgroundRoutes);
-app.use(commentRoutes);
+app.use('/api', userRoutes);
+app.use('/api', campgroundRoutes);
+app.use('/api', commentRoutes);
 
 app.get('/', function (req, res) {
 	res.sendFile(path.resolve(__dirname, '../client/index.html'));

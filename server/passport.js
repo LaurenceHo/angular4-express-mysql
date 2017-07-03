@@ -41,8 +41,7 @@ module.exports = function (passport) {
 				passReqToCallback: true // allows us to pass back the entire request to the callback
 			},
 			function (req, username, password, done) {
-				console.log('---- User Signup ----');
-				console.log('username:' + username);
+				console.log('---- User Signup: ' + username + ' ----');
 
 				var query = "SELECT * FROM users WHERE username = '" + username + "'";
 
@@ -87,8 +86,7 @@ module.exports = function (passport) {
 				passReqToCallback: true // allows us to pass back the entire request to the callback
 			},
 			function (req, username, password, done) { // callback with email and password from our form
-				console.log('---- User login ----');
-				console.log('username:' + username);
+				console.log('---- User login: ' + username + ' ----');
 
 				var query = "SELECT * FROM users WHERE username = '" + username + "'";
 
@@ -98,7 +96,7 @@ module.exports = function (passport) {
 					}
 
 					if (!rows.length) {
-						return done(null, false, { message: 'Unknown user ' + username });
+						return done(null, false, { message: 'Unknown user: ' + username });
 					} else {
 						// if the user is found but the password is wrong
 						if (!bcrypt.compareSync(password, rows[0].password)) {
