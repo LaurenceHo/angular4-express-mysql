@@ -61,7 +61,7 @@ export class UserService {
 		return state.hasOwnProperty('user') ? state['user'] : undefined;
 	}
 
-	doLogin(username: string, password: string): Promise<any> {
+	doLogin(username: string, password: string, remember: boolean): Promise<any> {
 		const _formParams: any = {};
 
 		if (username !== undefined) {
@@ -70,6 +70,10 @@ export class UserService {
 
 		if (password !== undefined) {
 			_formParams['password'] = password;
+		}
+
+		if (remember !== undefined && remember === false) {
+			_formParams['remember'] = remember;
 		}
 
 		return this.http.request(this.loginUrl, this.getRequest(_formParams))

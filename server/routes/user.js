@@ -16,17 +16,16 @@ router.post('/login',
 				if (err) {
 					return res.status(401).send({ message: err.message });
 				}
+
+				var milliseconds = 1000 * 60 * 30;
+
+				if (req.body.remember) {
+					req.session.cookie.expires = new Date(Date.now() + milliseconds);
+					req.session.cookie.maxAge = milliseconds;
+				}
 				return res.status(200).json(req.user);
 			});
 		})(req, res, next);
-	},
-	function (req, res) {
-		if (req.body.remember) {
-			req.session.cookie.maxAge = 1000 * 60 * 3;
-		} else {
-			req.session.cookie.expires = false;
-		}
-		res.redirect('/');
 	});
 
 router.post('/signup', function (req, res, next) {
@@ -50,6 +49,7 @@ router.get('/profile', authentication.isLoggedIn, function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
+	req.session.destroy();
 	req.logout();
 });
 
