@@ -1,7 +1,8 @@
 {
   "name": "angular2-express-sqlite3",
   "version": "1.0.0",
-  "description": "Angular2, Sqlite3, Gulp, Typescript and Express",
+  "author": "Laurence Ho",
+  "description": "Fullstack web application using Angular4, Primeng, Express, Sqlite3, Gulp and Passport",
   "scripts": {
     "clean": "gulp clean",
     "compile": "gulp compile",
@@ -19,7 +20,6 @@
     "Gulp",
     "Typescript"
   ],
-  "author": "Laurence Ho",
   "license": "MIT",
   "dependencies": {
     "@angular/animations": "^4.2.4",
@@ -46,6 +46,7 @@
     "express": "^4.14.1",
     "express-sanitizer": "^1.0.2",
     "express-session": "^1.15.0",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "method-override": "^2.3.7",
     "passport": "^0.3.2",

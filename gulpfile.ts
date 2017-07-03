@@ -84,7 +84,8 @@ gulp.task("libs", () => {
  */
 gulp.task("css", () => {
 	return gulp.src([
-		'bootstrap/dist/**/**'
+		'bootstrap/dist/**/**',
+		'font-awesome/**/**'
 	], {cwd: "node_modules/**"}) /* Glob required here. */
 		.pipe(gulp.dest("dist/client/css"));
 });
