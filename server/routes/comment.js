@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../sqlite');
-var middleware = require('../middleware');
+var authentication = require('../authentication');
 
 // get one comment for edit
-router.get('/api/comment/:comment_id/edit', middleware.checkCommentOwner, function (req, res) {
+router.get('/comment/:comment_id/edit', authentication.checkCommentOwner, function (req, res) {
 	var commentQuery = 'SELECT * FROM comments WHERE id = ' + req.params.comment_id;
 
 	db.all(commentQuery, function (err, rows) {
@@ -18,7 +18,7 @@ router.get('/api/comment/:comment_id/edit', middleware.checkCommentOwner, functi
 });
 
 // create a new comment by campground id
-router.post('/api/comment', middleware.isLoggedIn, function (req, res) {
+router.post('/comment', authentication.isLoggedIn, function (req, res) {
 	var campId = req.body.campground_id;
 	var userId = req.body.user_id;
 	var userName = req.body.username;
@@ -37,7 +37,7 @@ router.post('/api/comment', middleware.isLoggedIn, function (req, res) {
 });
 
 // FIXME edit one comment by comment id
-router.put('/api/comment/:comment_id/edit', middleware.checkCommentOwner, function (req, res) {
+router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, function (req, res) {
 	var text = req.sanitize(req.body.text);
 	var updateSQL = "UPDATE comments SET " +
 		"text = '" + text + "' WHERE id = " + req.params.comment_id;
@@ -52,7 +52,7 @@ router.put('/api/comment/:comment_id/edit', middleware.checkCommentOwner, functi
 });
 
 // delete one comment
-router.delete('/api/comment/:comment_id', middleware.checkCommentOwner, function (req, res) {
+router.delete('/comment/:comment_id', authentication.checkCommentOwner, function (req, res) {
 	var deleteSQL = 'DELETE FROM comments WHERE id = ' + req.params.comment_id;
 	db.run(deleteSQL, function (err) {
 		if (err) {

@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var db = require('../sqlite');
-var middleware = require('../middleware');
+var authentication = require('../authentication');
 
 
 // get all campgrounds
-router.get('/api/campground', function (req, res) {
+router.get('/campground', function (req, res) {
 	db.all('SELECT * FROM campgrounds', function (err, rows) {
 		if (err) {
 			res.status(500).send({ message: err });
@@ -17,7 +17,7 @@ router.get('/api/campground', function (req, res) {
 });
 
 // create one campground
-router.post('/api/campground', middleware.isLoggedIn, function (req, res) {
+router.post('/campground', authentication.isLoggedIn, function (req, res) {
 	var user_id = req.body.user_id;
 	var username = req.body.username;
 
@@ -39,7 +39,7 @@ router.post('/api/campground', middleware.isLoggedIn, function (req, res) {
 });
 
 // get one campground with comments
-router.get('/api/campground/:id', function (req, res) {
+router.get('/campground/:id', function (req, res) {
 	var campground = [],
 		comments = [];
 
@@ -65,7 +65,7 @@ router.get('/api/campground/:id', function (req, res) {
 });
 
 // get campground without comment for edit
-router.get('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
+router.get('/campground/:id/edit', authentication.checkCampOwner, function (req, res) {
 	var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
 
 	db.all(campQuery, function (err, rows) {
@@ -78,7 +78,7 @@ router.get('/api/campground/:id/edit', middleware.checkCampOwner, function (req,
 });
 
 // edit one campground
-router.put('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
+router.put('/campground/:id/edit', authentication.checkCampOwner, function (req, res) {
 	var name = req.sanitize(req.body.name);
 	var image = req.sanitize(req.body.image);
 	var desc = req.sanitize(req.body.description);
@@ -101,7 +101,7 @@ router.put('/api/campground/:id/edit', middleware.checkCampOwner, function (req,
 });
 
 // delete one campground
-router.delete('/api/campground/:id', middleware.checkCampOwner, function (req, res) {
+router.delete('/campground/:id', authentication.checkCampOwner, function (req, res) {
 	var deleteCampSQL = 'DELETE FROM campgrounds WHERE id = ' + req.params.id;
 	db.run(deleteCampSQL, function (err) {
 		if (err) {
