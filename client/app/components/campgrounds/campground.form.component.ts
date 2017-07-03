@@ -45,16 +45,18 @@ export class CampgroundFormComponent implements OnInit {
 	doSubmit() {
 		if (this.route.snapshot.url[0].path === 'campground') {
 			if (this.route.snapshot.url[1].path === 'new') {
-				this.campgroundService.editCampground(this.campground)
-					.then(data => {
-						let id = data.id;
-						this.router.navigate(['/campground/detail', id]);
-					}).catch(error => {
-					if (error.status === 403) {
-						this.userService.flush();
-						this.router.navigate(['/login']);
-					}
-				});
+				this.campground.username = this.userdata.username;
+				this.campground.user_id = this.userdata.id;
+
+				this.campgroundService.createCampground(this.campground)
+					.then(data =>
+						this.router.navigate(['/campground']))
+					.catch(error => {
+						if (error.status === 403) {
+							this.userService.flush();
+							this.router.navigate(['/login']);
+						}
+					});
 			} else if (this.route.snapshot.url[1].path !== 'new' && this.route.snapshot.url[3].path === 'edit') {
 				this.campgroundService.editCampground(this.campground)
 					.then(data => {

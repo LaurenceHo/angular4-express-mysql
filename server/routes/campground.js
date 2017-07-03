@@ -16,15 +16,15 @@ router.get('/api/campground', function (req, res) {
 	});
 });
 
-// FIXME create one campground
+// create one campground
 router.post('/api/campground', middleware.isLoggedIn, function (req, res) {
-	var user_id = req.body.campground.user_id;
-	var username = req.body.campground.username;
+	var user_id = req.body.user_id;
+	var username = req.body.username;
 
-	var name = req.sanitize(req.body.campground.name);
-	var image = req.sanitize(req.body.campground.image);
-	var desc = req.sanitize(req.body.campground.description);
-	var price = req.sanitize(req.body.campground.price);
+	var name = req.sanitize(req.body.name);
+	var image = req.sanitize(req.body.image);
+	var desc = req.sanitize(req.body.description);
+	var price = req.sanitize(req.body.price);
 
 	var sql = "INSERT INTO campgrounds (name, image, description, price, user_id, username) VALUES ('" +
 		name + "','" + image + "','" + desc + "','" + price + "','" + user_id + "','" + username + "')";
@@ -33,7 +33,7 @@ router.post('/api/campground', middleware.isLoggedIn, function (req, res) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK', result: result });
+			res.status(200).send({ message: 'OK' });
 		}
 	});
 });
@@ -77,27 +77,25 @@ router.get('/api/campground/:id/edit', middleware.checkCampOwner, function (req,
 	});
 });
 
-//FIXME edit one campground
+// edit one campground
 router.put('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
-	console.log('req: ', req.body);
-
-	var name = req.sanitize(req.body.campground.name);
-	var image = req.sanitize(req.body.campground.image);
-	var desc = req.sanitize(req.body.campground.description);
-	var price = req.sanitize(req.body.campground.price);
+	var name = req.sanitize(req.body.name);
+	var image = req.sanitize(req.body.image);
+	var desc = req.sanitize(req.body.description);
+	var price = req.sanitize(req.body.price);
 
 	var updateCampSQL = "UPDATE campgrounds SET " +
 		"name = '" + name + "'," +
 		"image = '" + image + "'," +
 		"description = '" + desc + "'," +
 		"price = '" + price + "' " +
-		"WHERE id = " + req.params.id;
+		"WHERE id = " + req.body.id;
 
 	db.run(updateCampSQL, function (err, rows) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK', id: req.params.id });
+			res.status(200).send({ message: 'OK', id: req.body.id });
 		}
 	});
 });

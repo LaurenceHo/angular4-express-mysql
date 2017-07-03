@@ -42,14 +42,12 @@ export class CampgroundService {
 			.then(response => response.json());
 	}
 
-	//FIXME
 	editCampground(campground: Campground): Promise<any> {
 		return this.http.request(this.campgroundsUrl + campground.id + '/edit', this.getRequest(campground, 'put'))
 			.toPromise()
 			.then(response => response.json());
 	}
 
-	//FIXME
 	createCampground(campground: Campground): Promise<any> {
 		return this.http.request(this.campgroundsUrl, this.getRequest(campground, 'post'))
 			.toPromise()
