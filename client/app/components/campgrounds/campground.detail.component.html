@@ -12,7 +12,7 @@
 			<div class='thumbnail'>
 				<img class='img-responsive' src={{campDetail?.campground?.image}}>
 				<div class='caption-full'>
-					<h4 class='pull-right'>$9.00/night </h4>
+					<h4 class='pull-right'>${{campDetail?.campground?.price ? campDetail?.campground?.price : 'Unknown'}}/night </h4>
 					<h4>
 						{{campDetail?.campground?.name}}
 					</h4>

@@ -19,6 +19,7 @@ var sql_camp = 'CREATE TABLE IF NOT EXISTS campgrounds (' +
     'username TEXT NOT NULL,' +
     'user_id INTEGER NOT NULL,' +
     'description TEXT VARCHAR(255),' +
+	  'price INTEGER NOT NULL,' +
     'FOREIGN KEY (user_id) REFERENCES users (id)' +
     ')';
 

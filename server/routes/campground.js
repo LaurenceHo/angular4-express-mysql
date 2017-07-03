@@ -24,9 +24,10 @@ router.post('/campground', middleware.isLoggedIn, function (req, res) {
 	var name = req.sanitize(req.body.campground.name);
 	var image = req.sanitize(req.body.campground.image);
 	var desc = req.sanitize(req.body.campground.description);
+	var price = req.sanitize(req.body.campground.price);
 
-	var sql = "INSERT INTO campgrounds (name, image, description, user_id, username) VALUES ('" +
-		name + "','" + image + "','" + desc + "','" + user_id + "','" + username + "')";
+	var sql = "INSERT INTO campgrounds (name, image, description, price, user_id, username) VALUES ('" +
+		name + "','" + image + "','" + desc + "','" + price + "','" + user_id + "','" + username + "')";
 
 	db.run(sql, function (err, result) {
 		if (err) {
@@ -83,12 +84,14 @@ router.put('/api/campground/detail/:id/edit', middleware.checkCampOwner, functio
 	var name = req.sanitize(req.body.campground.name);
 	var image = req.sanitize(req.body.campground.image);
 	var desc = req.sanitize(req.body.campground.description);
+	var price = req.sanitize(req.body.campground.price);
 
 	var updateCampSQL = "UPDATE campgrounds SET " +
 		"name = '" + name + "'," +
 		"image = '" + image + "'," +
-		"description = '" + desc + "'" +
-		" WHERE id = " + req.params.id;
+		"description = '" + desc + "'," +
+		"price = '" + price + "' " +
+		"WHERE id = " + req.params.id;
 
 	db.run(updateCampSQL, function (err, rows) {
 		if (err) {
