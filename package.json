@@ -39,7 +39,6 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
-    "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
     "express": "^4.14.1",
     "express-sanitizer": "^1.0.2",
