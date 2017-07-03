@@ -27,7 +27,9 @@
 					<button class='btn btn-lg btn-primary btn-block'>Submit</button>
 				</div>
 			</form>
-			<a routerLink="/">Go Back</a>
+			<a *ngIf="route.snapshot.url[1].path == 'new'" routerLink="/">Go Back</a>
+			<a *ngIf="route.snapshot.url[1].path !== 'new' && route.snapshot.url[3].path == 'edit'"
+			   routerLink="/campground/detail/{{campground.id}}">Go Back</a>
 		</div>
 	</div>
 </div>

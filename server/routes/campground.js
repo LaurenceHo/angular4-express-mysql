@@ -64,7 +64,7 @@ router.get('/api/campground/:id', function (req, res) {
 	});
 });
 
-// get campground without comment
+// get campground without comment for edit
 router.get('/api/campground/:id/edit', middleware.checkCampOwner, function (req, res) {
 	var campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
 

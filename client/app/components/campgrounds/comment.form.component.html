@@ -1,0 +1,17 @@
+<div class='container'>
+	<div class='row'>
+		<h1 style='text-align: center'>Add New Comment to "{{campDetail?.campground?.name}}"</h1>
+		<div style='width:30% ; margin: 25px auto;'>
+			<form role="form" (ngSubmit)="doSubmit()">
+				<div class='form-group'>
+					<textarea class='form-control' name='text' rows="6" placeholder='comment'
+					          [(ngModel)]="comment.text"></textarea>
+				</div>
+				<div class='form-group'>
+					<button class='btn btn-lg btn-primary btn-block'>Submit</button>
+				</div>
+			</form>
+			<a routerLink='/campground/detail/{{campDetail?.campground?.id}}'>Go Back</a>
+		</div>
+	</div>
+</div>

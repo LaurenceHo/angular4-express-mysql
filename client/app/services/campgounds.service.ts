@@ -18,6 +18,7 @@ export class CampgroundDetail {
 export class CampgroundService {
 
 	private campgroundsUrl = 'api/campground/';  // URL to web api
+	private commentUrl = 'api/comment/';
 
 	constructor(private http: Http) {
 	}
@@ -59,6 +60,30 @@ export class CampgroundService {
 			.toPromise()
 			.then(response => response);
 	}
+
+	getComment(id: number): Promise<any> {
+		return this.http.get(this.commentUrl + id + '/edit')
+			.toPromise()
+			.then(response => response.json());
+	};
+
+	editComment(comment: Comment): Promise<any> {
+		return this.http.request(this.commentUrl + comment.id + '/edit', this.getRequest(comment, 'put'))
+			.toPromise()
+			.then(response => response.json());
+	}
+
+	createComment(comment: Comment): Promise<any> {
+		return this.http.request(this.commentUrl, this.getRequest(comment, 'post'))
+			.toPromise()
+			.then(response => response.json());
+	};
+
+	deleteComment(id: number): Promise<any> {
+		return this.http.delete(this.commentUrl + id)
+			.toPromise()
+			.then(response => response);
+	};
 
 	private getRequest(body: any, method: string): RequestOptionsArgs {
 		const requestOptions: RequestOptionsArgs = {};

@@ -48,4 +48,19 @@ export class CampgroundDetailComponent implements OnInit {
 			);
 		}
 	}
+
+	doDeleteComment(campground_id: number, comment_id: number) {
+		this.campgroundService.deleteComment(comment_id).then(data => {
+			if (data.status === 200) {
+				this.router.navigate(['/campground/detail', campground_id]);
+			}
+		}).catch(error => {
+				if (error.status === 403) {
+					this.router.navigate(['/login']);
+				} else {
+					this.router.navigate(['/campground/detail' + campground_id]);
+				}
+			}
+		);
+	}
 }

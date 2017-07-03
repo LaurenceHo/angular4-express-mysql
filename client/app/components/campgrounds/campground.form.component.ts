@@ -45,8 +45,8 @@ export class CampgroundFormComponent implements OnInit {
 	doSubmit() {
 		if (this.route.snapshot.url[0].path === 'campground') {
 			if (this.route.snapshot.url[1].path === 'new') {
-				this.campground.username = this.userdata.username;
 				this.campground.user_id = this.userdata.id;
+				this.campground.username = this.userdata.username;
 
 				this.campgroundService.createCampground(this.campground)
 					.then(data =>

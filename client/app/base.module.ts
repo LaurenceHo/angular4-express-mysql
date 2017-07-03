@@ -20,6 +20,7 @@ import { CampgroundService } from './services/campgounds.service';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/user/profile.component';
 import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
+import { CommentFormComponent } from './components/campgrounds/comment.form.component';
 
 @NgModule({
 	imports: [
@@ -36,6 +37,7 @@ import { CampgroundFormComponent } from './components/campgrounds/campground.for
 		CampgroundsComponent,
 		CampgroundDetailComponent,
 		CampgroundFormComponent,
+		CommentFormComponent,
 		UserComponent,
 		ProfileComponent
 	],

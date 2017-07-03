@@ -22,13 +22,14 @@ npm install typescript-node -g
 4. getOneCampground     (GET)    http://localhost:8080/api/campground/:id/edit
 5. editCampground       (PUT)    http://localhost:8080/api/campground/:id/edit
 5. deleteCampground     (DELETE) http://localhost:8080/api/campground/:id
-6. createComment        (POST)   http://localhost:8080/api/campground/:id/comments
-7. editComment          (PUT)    http://localhost:8080/api/campground/:id/comments/:comment_id
-8. deleteComment        (DELETE) http://localhost:8080/api/campground/:id/comments/:comment_id
-9. signup               (POST)   http://localhost:8080/api/signup
-10. login               (POST)   http://localhost:8080/api/login
-11. logout              (GET)    http://localhost:8080/api/logout
-12. profile             (GET)    http://localhost:8080/api/profile
+6. createComment        (POST)   http://localhost:8080/api/comment
+7. getComment           (GET)    http://localhost:8080/api/comment/:comment_id/edit
+8. editComment          (PUT)    http://localhost:8080/api/comment/:comment_id/edit
+9. deleteComment        (DELETE) http://localhost:8080/api/comment/:comment_id
+10. signup               (POST)   http://localhost:8080/api/signup
+11. login               (POST)   http://localhost:8080/api/login
+12. logout              (GET)    http://localhost:8080/api/logout
+13. profile             (GET)    http://localhost:8080/api/profile
 ```
 
 ### How do I get set up? ###

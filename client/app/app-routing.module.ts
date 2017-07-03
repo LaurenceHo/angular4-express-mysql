@@ -9,6 +9,7 @@ import { CampgroundDetailComponent } from './components/campgrounds/campground.d
 import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
 import { UserComponent } from './components/user/user.component';
 import { ProfileComponent } from './components/user/profile.component';
+import { CommentFormComponent } from './components/campgrounds/comment.form.component';
 
 const appRoutes: Routes = [
   {
@@ -31,6 +32,14 @@ const appRoutes: Routes = [
   {
     path: 'campground/detail/:id/edit',
     component: CampgroundFormComponent
+  },
+  {
+    path: 'campground/detail/:id/comment/new',
+    component: CommentFormComponent
+  },
+  {
+    path: 'campground/detail/:id/comment/:comment_id/edit',
+    component: CommentFormComponent
   },
   {
     path: 'login',

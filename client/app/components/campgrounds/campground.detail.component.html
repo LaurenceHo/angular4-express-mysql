@@ -12,7 +12,8 @@
 			<div class='thumbnail'>
 				<img class='img-responsive' src={{campDetail?.campground?.image}}>
 				<div class='caption-full'>
-					<h4 class='pull-right'>${{campDetail?.campground?.price ? campDetail?.campground?.price : 'Unknown'}}/night </h4>
+					<h4 class='pull-right'>${{campDetail?.campground?.price ? campDetail?.campground?.price :
+						'Unknown'}}/night </h4>
 					<h4>
 						{{campDetail?.campground?.name}}
 					</h4>
@@ -24,14 +25,14 @@
 						<a class='btn btn-warning btn-xs'
 						   routerLink='/campground/detail/{{campDetail?.campground?.id}}/edit'>Edit</a>
 						<button pButton type="button" (click)="doDeleteCampground(campDetail.campground.id)"
-						        class='btn btn-danger btn-xs' label="Delete">
-						</button>
+						        class='btn btn-danger btn-xs' label="Delete"></button>
 					</div>
 				</div>
 			</div>
 			<div class='well'>
 				<div class='text-right' *ngIf="userdata">
-					<a class='btn btn-success' href='/campground/{{campDetail?.campground?.id}}/comments/new'>Add New
+					<a class='btn btn-success'
+					   routerLink='/campground/detail/{{campDetail?.campground?.id}}/comment/new'>Add New
 						Comment</a>
 				</div>
 				<hr>
@@ -44,12 +45,11 @@
 						</p>
 						<div *ngIf="userdata && comment.user_id === userdata.id">
 							<a class="btn btn-warning btn-xs"
-							   href="/campground/{{campDetail?.campground?.id}}/comments/{{comment?.id}}/edit">Edit</a>
-							<form id='delete'
-							      action='/campground/{{campDetail?.campground?.id}}/comments/{{comment?.id}}?_method=DELETE'
-							      method='POST'>
-								<button class='btn btn-danger btn-xs'>Delete</button>
-							</form>
+							   routerLink="/campground/detail/{{campDetail?.campground?.id}}/comment/{{comment?.id}}/edit">Edit</a>
+							<button pButton type="button"
+							        (click)="doDeleteComment(campDetail?.campground?.id, comment?.id)"
+							        class='btn btn-danger btn-xs'
+							        label="Delete"></button>
 						</div>
 					</div>
 				</div>

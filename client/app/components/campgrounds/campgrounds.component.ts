@@ -2,7 +2,6 @@
  * Created by Laurence Ho on 07-02-2017.
  */
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { CampgroundService } from '../../services/campgounds.service';
 import { Campground } from '../../models/campground';
@@ -18,7 +17,7 @@ export class CampgroundsComponent implements OnInit {
     camps: Campground[];
     userdata: any;
 
-    constructor(private router: Router, private campService: CampgroundService, private userService: UserService) {
+    constructor(private campService: CampgroundService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -28,9 +27,5 @@ export class CampgroundsComponent implements OnInit {
 
     getCampgrounds() {
         this.campService.getCampgrounds().then(camps => this.camps = camps);
-    }
-
-    getCampgroundDetail(id: number) {
-        this.router.navigate(['/campground/detail', id]);
     }
 }
