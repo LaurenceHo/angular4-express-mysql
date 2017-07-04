@@ -17,9 +17,15 @@ router.post('/login',
 					return res.status(401).send({ message: err.message });
 				}
 
-				var milliseconds = 1000 * 60 * 30;
-
+				var milliseconds = 0;
 				if (req.body.remember) {
+					milliseconds = 1000 * 60 * 30; // 30 minutes
+
+					req.session.cookie.expires = new Date(Date.now() + milliseconds);
+					req.session.cookie.maxAge = milliseconds;
+				} else {
+					milliseconds = 1000 * 60 * 60 * 24; // 1 day
+
 					req.session.cookie.expires = new Date(Date.now() + milliseconds);
 					req.session.cookie.maxAge = milliseconds;
 				}
