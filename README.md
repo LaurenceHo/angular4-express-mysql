@@ -36,11 +36,11 @@ npm install typescript-node -g
 
 1.Clone the repo: 
 ```
-git clone https://LaurenceHo@bitbucket.org/LaurenceHo/angular2-express-sqlite3.git
+git clone https://LaurenceHo@bitbucket.org/LaurenceHo/angular4-express-sqlite3.git
 ```
 or
 ```
-git clone https://github.com/bluegray1015/angular2-express-sqlite3.git
+git clone https://github.com/bluegray1015/angular4-express-sqlite3.git
 ```
 
 2.Install npm package. Build and compile the dest folder: 
