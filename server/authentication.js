@@ -1,4 +1,4 @@
-var db = require('./sqlite');
+var db = require('./database/sqlite');
 var authentication = {};
 
 authentication.checkCampOwner = function (req, res, next) {

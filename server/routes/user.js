@@ -55,7 +55,9 @@ router.get('/profile', authentication.isLoggedIn, function (req, res) {
 });
 
 router.get('/logout', function (req, res) {
-	req.session.destroy();
+	req.session.destroy(function (err) {
+		console.error(err)
+	});
 	req.logout();
 });
 

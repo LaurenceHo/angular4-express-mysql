@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('../sqlite');
+var db = require('../database/sqlite');
 var authentication = require('../authentication');
 
 // get one comment for edit

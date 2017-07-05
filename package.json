@@ -1,5 +1,5 @@
 {
-  "name": "angular2-express-sqlite3",
+  "name": "angular4-express-sqlite3",
   "version": "1.0.0",
   "author": "Laurence Ho",
   "description": "Fullstack web application using Angular4, Primeng, Express, Sqlite3, Gulp and Passport",

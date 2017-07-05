@@ -4,7 +4,7 @@
  */
 
 var sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./server/yelpcamp.sqlite');
+const db = new sqlite3.Database('./server/database/yelpcamp.sqlite');
 
 var sql_user = 'CREATE TABLE IF NOT EXISTS users (' +
     'id INTEGER PRIMARY KEY AUTOINCREMENT,' +

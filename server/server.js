@@ -6,7 +6,7 @@ var passport = require('passport');
 var path = require('path');
 
 //initial database schema
-require('./sqlite');
+require('./database/sqlite');
 require('./passport')(passport);
 
 var app = express();
@@ -26,7 +26,7 @@ app.use(expressSanitizer());
 app.use(session({
 	secret: 'mySecretKey',
 	resave: true,
-	saveUnitialized: true
+	saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
