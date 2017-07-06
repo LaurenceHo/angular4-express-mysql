@@ -14,11 +14,11 @@
     "url": "git+https://LaurenceHo@bitbucket.org/LaurenceHo/yelpcamp.git"
   },
   "keywords": [
-    "Angular2",
+    "Angular4",
     "Express",
-    "Quick Start",
     "Gulp",
-    "Typescript"
+    "Typescript",
+    "Sqlite3"
   ],
   "license": "MIT",
   "dependencies": {
