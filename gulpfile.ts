@@ -17,14 +17,14 @@ const gulp = require("gulp"),
 /**
  * Remove build directory.
  */
-gulp.task('clean', (cb) => {
+gulp.task('clean', (cb: any) => {
 	return del(["dist"], cb);
 });
 
 gulp.task('build:client', function () {
-	var tsProject = tsc.createProject('client/tsconfig.json');
-	var tsResult = gulp.src('client/**/*.ts')
-		.pipe(sourcemaps.init())
+	let tsProject = tsc.createProject('client/tsconfig.json');
+	let tsResult = gulp.src('client/**/*.ts')
+		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(tsProject());
 	return tsResult.js
 		.pipe(sourcemaps.write())
@@ -48,7 +48,7 @@ gulp.task('tslint', () => {
  */
 gulp.task("compile", ["tslint"], () => {
 	let tsResult = gulp.src("client/**/*.ts")
-		.pipe(sourcemaps.init())
+		.pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(tsProject());
 	return tsResult.js
 		.pipe(sourcemaps.write("."))
@@ -114,7 +114,7 @@ gulp.task('start', function () {
  * 5. Copy the dependencies.
  */
 
-gulp.task("build", function (callback) {
+gulp.task("build", function (callback: any) {
 	runSequence('clean', 'build:client', 'clientResources', 'libs', 'css', callback);
 });
 
@@ -122,20 +122,20 @@ gulp.task("build", function (callback) {
  * Watch for changes in TypeScript, HTML and CSS files.
  */
 gulp.task('watch', function () {
-	gulp.watch(["client/**/*.ts"], ['compile']).on('change', function (e) {
+	gulp.watch(["client/**/*.ts"], ['compile']).on('change', function (e: any) {
 		console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
 	});
 
-	gulp.watch(["client/**/*.html", "client/**/*.css"], ['clientResources']).on('change', function (e) {
+	gulp.watch(["client/**/*.html", "client/**/*.css"], ['clientResources']).on('change', function (e: any) {
 		console.log('Resource file ' + e.path + ' has been changed. Updating.');
 	});
 
-	gulp.watch(["server/**/*.js"], ['compile']).on('change', function (e) {
+	gulp.watch(["server/**/*.js"], ['compile']).on('change', function (e: any) {
 		console.log('JavaScript file ' + e.path + ' has been changed. Compiling.');
 	});
 });
 
-gulp.task("build", function (callback) {
+gulp.task("build", function (callback: any) {
 	runSequence('clean', 'build:client', 'clientResources', 'libs', 'css', callback);
 });
 
