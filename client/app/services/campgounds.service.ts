@@ -65,7 +65,7 @@ export class CampgroundService {
 		return this.http.get(this.commentUrl + id + '/edit')
 			.toPromise()
 			.then(response => response.json());
-	};
+	}
 
 	editComment(comment: Comment): Promise<any> {
 		return this.http.request(this.commentUrl + comment.id + '/edit', this.getRequest(comment, 'put'))
@@ -77,13 +77,13 @@ export class CampgroundService {
 		return this.http.request(this.commentUrl, this.getRequest(comment, 'post'))
 			.toPromise()
 			.then(response => response.json());
-	};
+	}
 
 	deleteComment(id: number): Promise<any> {
 		return this.http.delete(this.commentUrl + id)
 			.toPromise()
 			.then(response => response);
-	};
+	}
 
 	private getRequest(body: any, method: string): RequestOptionsArgs {
 		const requestOptions: RequestOptionsArgs = {};

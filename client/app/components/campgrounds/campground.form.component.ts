@@ -40,7 +40,7 @@ export class CampgroundFormComponent implements OnInit {
 					}
 				});
 		}
-	};
+	}
 
 	doSubmit() {
 		if (this.route.snapshot.url[0].path === 'campground') {

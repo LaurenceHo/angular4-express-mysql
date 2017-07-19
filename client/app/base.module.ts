@@ -24,12 +24,12 @@ import { CommentFormComponent } from './components/campgrounds/comment.form.comp
 
 @NgModule({
 	imports: [
-		//Angular Module
+		// Angular Module
 		BrowserModule,
 		HttpModule,
 		FormsModule,
 		AppRoutingModule,
-		//Primeng Module
+		// Primeng Module
 		ButtonModule
 	],
 	declarations: [

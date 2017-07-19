@@ -7,7 +7,6 @@ import { UserService } from './services/user.service';
 import { NavigationEnd, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
-
 @Component({
 	selector: 'my-app',
 	templateUrl: './app/base.html'

@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
 		if (this.route.snapshot.url[0].path === 'logout') {
 			this.doLogout();
 		}
-	};
+	}
 
 	doSomething() {
 		if (this.route.snapshot.url[0].path === 'login') {
