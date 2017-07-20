@@ -27,11 +27,11 @@ router.post('/comment', authentication.isLoggedIn, function (req, res) {
 	var insertSQL = "INSERT INTO comments (campground_id, user_id, username, text) VALUES ('" +
 		campId + "','" + userId + "','" + userName + "','" + text + "')";
 
-	db.run(insertSQL, function (err, result) {
+	db.run(insertSQL, function (err) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK' });
+			res.status(200).send({ comment_id: this.lastID });
 		}
 	});
 });
@@ -42,11 +42,11 @@ router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, functi
 	var updateSQL = "UPDATE comments SET " +
 		"text = '" + text + "' WHERE id = " + req.params.comment_id;
 
-	db.run(updateSQL, function (err, rows) {
+	db.run(updateSQL, function (err) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK' });
+			res.status(200).send({ comment_id: req.params.comment_id });
 		}
 	});
 });
@@ -58,7 +58,7 @@ router.delete('/comment/:comment_id', authentication.checkCommentOwner, function
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK' });
+			res.status(200).send({ comment_id: req.params.comment_id });
 		}
 	});
 });

@@ -29,11 +29,11 @@ router.post('/campground', authentication.isLoggedIn, function (req, res) {
 	var sql = "INSERT INTO campgrounds (name, image, description, price, user_id, username) VALUES ('" +
 		name + "','" + image + "','" + desc + "','" + price + "','" + user_id + "','" + username + "')";
 
-	db.run(sql, function (err, result) {
+	db.run(sql, function (err) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK' });
+			res.status(200).send({ campground_id: this.lastID });
 		}
 	});
 });
@@ -91,11 +91,11 @@ router.put('/campground/:id/edit', authentication.checkCampOwner, function (req,
 		"price = '" + price + "' " +
 		"WHERE id = " + req.body.id;
 
-	db.run(updateCampSQL, function (err, rows) {
+	db.run(updateCampSQL, function (err) {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK', id: req.body.id });
+			res.status(200).send({ campground_id: req.body.id });
 		}
 	});
 });
@@ -105,9 +105,9 @@ router.delete('/campground/:id', authentication.checkCampOwner, function (req, r
 	var deleteCampSQL = 'DELETE FROM campgrounds WHERE id = ' + req.params.id;
 	db.run(deleteCampSQL, function (err) {
 		if (err) {
-			res.status(500).send({ message: err, id: req.params.id });
+			res.status(500).send({ message: err });
 		} else {
-			res.status(200).send({ message: 'OK' });
+			res.status(200).send({ campground_id: req.params.id });
 		}
 	});
 });
