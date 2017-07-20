@@ -30,22 +30,25 @@
 				</div>
 			</div>
 			<div class='well'>
-				<div class='text-right' *ngIf="userdata">
-					<a class='btn btn-success'
-					   routerLink='/campground/detail/{{campDetail?.campground?.id}}/comment/new'>Add New
-						Comment</a>
+				<h3> Comments </h3>
+				<div class='text-right' *ngIf="!userdata">
+					<a class='btn-sm btn-success' routerLink='/login'>Login or Join to post a comment</a>
 				</div>
+
+				<app-comment *ngIf="userdata" [comment]="selectedComment" (insertedComment)="updateUI($event)"></app-comment>
 				<hr>
 				<div class='row'>
 					<div class='col-md-12' *ngFor="let comment of campDetail?.comments">
 						<strong> {{comment.username}} </strong>
-						<span class='pull-right'>10 days ago</span>
+						<!--<span class='pull-right'></span>-->
 						<p>
 							{{comment.text}}
 						</p>
 						<div *ngIf="userdata && comment.user_id === userdata.id">
-							<a class="btn btn-warning btn-xs"
-							   routerLink="/campground/detail/{{campDetail?.campground?.id}}/comment/{{comment?.id}}/edit">Edit</a>
+							<button pButton type="button"
+							        class="btn btn-warning btn-xs"
+							        (click)="doEditComment(comment)"
+							        label="Edit"></button>
 							<button pButton type="button"
 							        (click)="doDeleteComment(campDetail?.campground?.id, comment?.id)"
 							        class='btn btn-danger btn-xs'

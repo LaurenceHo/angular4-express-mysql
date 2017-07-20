@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 
 export class CampgroundDetail {
 	campground: Campground;
-	comments: Comment[];
+	comments: any[];
 }
 
 @Injectable()

@@ -1,21 +1,12 @@
-<div class='container'>
-	<div class='row'>
-		<h1 style='text-align: center' *ngIf="route.snapshot.url[4].path == 'new'">Add New Comment to
-			"{{campDetail?.campground?.name}}"</h1>
-		<h1 style='text-align: center'
-		    *ngIf="route.snapshot.url[4].path !== 'new' && route.snapshot.url[5].path == 'edit'">Edit Comment to to
-			"{{campDetail?.campground?.name}}"</h1>
-		<div style='width:30% ; margin: 25px auto;'>
-			<form role="form" (ngSubmit)="doSubmit()">
-				<div class='form-group'>
-					<textarea class='form-control' name='text' rows="6" placeholder='comment'
+<p><i class="fa fa-pencil" aria-hidden="true"></i> Leave your comment: </p>
+<div>
+	<form role="form" (ngSubmit)="doSubmit()">
+		<div class='form-group'>
+					<textarea class='form-control' name='text' rows="10" placeholder='comment'
 					          [(ngModel)]="comment.text"></textarea>
-				</div>
-				<div class='form-group'>
-					<button class='btn btn-lg btn-primary btn-block'>Submit</button>
-				</div>
-			</form>
-			<a routerLink='/campground/detail/{{campDetail?.campground?.id}}'>Go Back</a>
 		</div>
-	</div>
+		<div class='form-group' style='width:30%; margin-left:auto;margin-right:auto;'>
+			<button class='btn btn-primary btn-block'>Submit</button>
+		</div>
+	</form>
 </div>

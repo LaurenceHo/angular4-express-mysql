@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
 		this.userService.doLogin(this.username, this.password, this.remember).then(data => {
 			if (data && data.status === 200) {
 				this.userService.setUserData(JSON.parse(data._body));
-				this.router.navigate(['/profile']);
+				this.router.navigate(['/campground']);
 			}
 		}).catch(error => {
 			this.error = true;

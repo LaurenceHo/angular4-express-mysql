@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CampgroundDetail, CampgroundService } from '../../services/campgounds.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CampgroundService } from '../../services/campgounds.service';
 import { UserService } from '../../services/user.service';
 import { Comment } from '../../models/comment';
 
@@ -9,15 +9,17 @@ import { Comment } from '../../models/comment';
  */
 
 @Component({
-	selector: 'camps',
+	selector: 'app-comment',
 	templateUrl: './app/components/campgrounds/comment.form.component.html',
 	styleUrls: ['./app/components/campgrounds/campgrounds.component.css']
 })
 
 export class CommentFormComponent implements OnInit {
-	campDetail: CampgroundDetail = new CampgroundDetail();
-	comment: Comment = new Comment();
+	@Input() comment: Comment;
+	@Output() insertedComment = new EventEmitter<Comment>();
+
 	userdata: any;
+	campground_id: number;
 
 	constructor(private campgroundService: CampgroundService,
 	            private userService: UserService,
@@ -32,45 +34,42 @@ export class CommentFormComponent implements OnInit {
 			this.router.navigate(['/login']);
 		}
 
-		this.route.params
-			.switchMap((params: Params) => this.campgroundService.getCampgroundDetail(params['id']))
-			.subscribe(data => this.campDetail = data);
+		if (!isNaN(Number(this.route.snapshot.url[2].path))) {
+			this.campground_id = Number(this.route.snapshot.url[2].path);
+		}
 
-		if (this.route.snapshot.url[5].path === 'edit') {
-			this.campgroundService.getComment(Number(this.route.snapshot.url[4].path))
-				.then(data => this.comment = data.comment)
-				.catch(error => {
+		if (!this.comment) {
+			this.comment = new Comment();
+		}
+	}
+
+	doSubmit() {
+		this.comment.user_id = this.userdata.id;
+		this.comment.username = this.userdata.username;
+		this.comment.campground_id = this.campground_id;
+
+		if (this.comment.text) {
+			if (!this.comment.id) {
+				this.campgroundService.createComment(this.comment)
+					.then(data => {
+						this.campgroundService.getComment(data.comment_id)
+							.then(comment => this.insertedComment.emit(comment));
+					}).catch(error => {
 					if (error.status === 403) {
 						this.userService.flush();
 						this.router.navigate(['/login']);
 					}
 				});
-		}
-	}
-
-	doSubmit() {
-		if (this.route.snapshot.url[4].path === 'new') {
-			this.comment.user_id = this.userdata.id;
-			this.comment.username = this.userdata.username;
-			this.comment.campground_id = this.campDetail.campground.id;
-
-			this.campgroundService.createComment(this.comment)
-				.then(data => this.router.navigate(['/campground/detail', this.campDetail.campground.id])
+			} else {
+				this.campgroundService.editComment(this.comment)
+					.then(data => console.log(data))
 					.catch(error => {
 						if (error.status === 403) {
 							this.userService.flush();
 							this.router.navigate(['/login']);
 						}
-					}));
-		} else if (this.route.snapshot.url[4].path !== 'new' && this.route.snapshot.url[5].path === 'edit') {
-			this.campgroundService.editComment(this.comment)
-				.then(data => this.router.navigate(['/campground/detail', this.campDetail.campground.id]))
-				.catch(error => {
-					if (error.status === 403) {
-						this.userService.flush();
-						this.router.navigate(['/login']);
-					}
-				});
+					});
+			}
 		}
 	}
 }
