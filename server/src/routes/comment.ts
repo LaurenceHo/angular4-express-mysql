@@ -32,11 +32,10 @@ router.post('/comment', authentication.isLoggedIn, (req: any, res: any) => {
 		campId + '\',\'' + userId + '\',\'' + userName + '\',\'' + text + '\')';
 
 	db.run(insertSQL, (err: any) => {
-		let result = this;
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({comment_id: result.lastID});
+			res.status(200).send({comment_id: this.lastID});// FIXME, cannot get "this" callback
 		}
 	});
 });

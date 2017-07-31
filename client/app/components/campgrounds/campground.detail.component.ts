@@ -38,18 +38,11 @@ export class CampgroundDetailComponent implements OnInit {
 
 	doDeleteCampground(id: number) {
 		if (this.route.snapshot.url[0].path === 'campground') {
-			this.campgroundService.deleteCampground(id).then(data => {
+			this.campgroundService.deleteCampground(id).subscribe(data => {
 				if (data.status === 200) {
 					this.router.navigate(['/campground']);
 				}
-			}).catch(error => {
-					if (error.status === 403) {
-						this.router.navigate(['/login']);
-					} else {
-						this.router.navigate(['/campground/detail' + id]);
-					}
-				}
-			);
+			});
 		}
 	}
 
@@ -57,23 +50,15 @@ export class CampgroundDetailComponent implements OnInit {
 		this.selectedComment = comment;
 	}
 
-	doDeleteComment(campground_id: number, comment_id: number) {
+	doDeleteComment(comment_id: number) {
 		this.campgroundService.deleteComment(comment_id)
-			.then(data => {
+			.subscribe(data => {
 				if (data.status === 200) {
 					_.remove(this.campDetail.comments, (comment) => {
 						return comment.id === comment_id;
 					});
 				}
-			})
-			.catch(error => {
-					if (error.status === 403) {
-						this.router.navigate(['/login']);
-					} else {
-						this.router.navigate(['/campground/detail' + campground_id]);
-					}
-				}
-			);
+			});
 	}
 
 	updateUI(comment: Comment) {

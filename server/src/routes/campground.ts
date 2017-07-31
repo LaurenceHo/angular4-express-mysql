@@ -36,7 +36,7 @@ router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({campground_id: this.lastID});
+			res.status(200).send({campground_id: this.lastID});// FIXME, cannot get "this" callback
 		}
 	});
 });

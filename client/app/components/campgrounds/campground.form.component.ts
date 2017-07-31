@@ -32,13 +32,7 @@ export class CampgroundFormComponent implements OnInit {
 
 		if (this.route.snapshot.url[1].path !== 'new' && this.route.snapshot.url[3].path === 'edit') {
 			this.campgroundService.getCampground(Number(this.route.snapshot.url[2].path))
-				.then(data => this.campground = data.campground)
-				.catch(error => {
-					if (error.status === 403) {
-						this.userService.flush();
-						this.router.navigate(['/login']);
-					}
-				});
+				.subscribe(data => this.campground = data.campground);
 		}
 	}
 
@@ -50,25 +44,13 @@ export class CampgroundFormComponent implements OnInit {
 
 				this.campgroundService.createCampground(this.campground)
 				// FIXME
-				// .then(data => this.router.navigate(['/campground/detail', data.campground_id]))
-					.then(data => this.router.navigate(['/']))
-					.catch(error => {
-						if (error.status === 403) {
-							this.userService.flush();
-							this.router.navigate(['/login']);
-						}
-					});
+				// .subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]))
+					.subscribe(data => this.router.navigate(['/']));
 			} else if (this.route.snapshot.url[1].path !== 'new' && this.route.snapshot.url[3].path === 'edit') {
 				this.campgroundService.editCampground(this.campground)
 				// FIXME
-				// .then(data => this.router.navigate(['/campground/detail', data.campground_id]))
-					.then(data => this.router.navigate(['/']))
-					.catch(error => {
-						if (error.status === 403) {
-							this.userService.flush();
-							this.router.navigate(['/login']);
-						}
-					});
+				// .subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]))
+					.subscribe(data => this.router.navigate(['/']));
 			}
 		}
 	}

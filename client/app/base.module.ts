@@ -21,6 +21,7 @@ import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/user/profile.component';
 import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
 import { CommentFormComponent } from './components/campgrounds/comment.form.component';
+import { ApiService } from './services/api.service';
 
 @NgModule({
 	imports: [
@@ -42,6 +43,7 @@ import { CommentFormComponent } from './components/campgrounds/comment.form.comp
 		ProfileComponent
 	],
 	providers: [
+		ApiService,
 		CampgroundService,
 		UserService,
 		{provide: LocationStrategy, useClass: HashLocationStrategy}

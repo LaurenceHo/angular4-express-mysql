@@ -56,27 +56,14 @@ export class CommentFormComponent implements OnInit {
 				// FIXME
 				// .then(data => {
 				// 	this.campgroundService.getComment(data.comment_id)
-				// 		.then(comment => this.insertedComment.emit(comment));
+				// 		.subscribe(comment => this.insertedComment.emit(comment));
 				// })
-					.then(data => console.log(data))
-					.catch(error => {
-						if (error.status === 403) {
-							this.userService.flush();
-							this.router.navigate(['/login']);
-						}
-					});
+					.subscribe(data => console.log(data));
 			} else {
 				this.campgroundService.editComment(this.comment)
-					.then(data => console.log(data))
-					.catch(error => {
-						if (error.status === 403) {
-							this.userService.flush();
-							this.router.navigate(['/login']);
-						}
-					});
+					.subscribe(data => console.log(data));// FIXME
 			}
 		}
-
 		this.commentForm.reset();
 	}
 }

@@ -3,11 +3,11 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptionsArgs } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { Campground } from '../models/campground';
 import { Comment } from '../models/comment';
-import * as _ from 'lodash';
+import { ApiService } from './api.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 
 export class CampgroundDetail {
 	campground: Campground;
@@ -20,83 +20,86 @@ export class CampgroundService {
 	private campgroundsUrl = 'api/campground/';  // URL to web api
 	private commentUrl = 'api/comment/';
 
-	constructor(private http: Http) {
+	constructor(private apiService: ApiService) {
 	}
 
-	getCampgrounds(): Promise<Campground[]> {
-		return this.http.get(this.campgroundsUrl)
-			.toPromise()
-			.then(response => response.json())
-			.catch(error => console.error('Error:' + error));
+	getCampgrounds(): Observable<Campground[]> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+
+		return this.apiService.perform('get', this.campgroundsUrl, _bodyData, _params, _formParams);
 	}
 
-	getCampgroundDetail(id: number): Promise<CampgroundDetail> {
-		return this.http.get(this.campgroundsUrl + id)
-			.toPromise()
-			.then(response => response.json())
-			.catch(error => console.error('Error:' + error));
+	getCampgroundDetail(id: number): Observable<CampgroundDetail> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+
+		return this.apiService.perform('get', this.campgroundsUrl + id, _bodyData, _params, _formParams);
 	}
 
-	getCampground(id: number): Promise<any> {
-		return this.http.get(this.campgroundsUrl + id + '/edit')
-			.toPromise()
-			.then(response => response.json());
+	getCampground(id: number): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+		const url = this.campgroundsUrl + id + '/edit';
+
+		return this.apiService.perform('get', url, _bodyData, _params, _formParams);
 	}
 
-	editCampground(campground: Campground): Promise<any> {
-		return this.http.request(this.campgroundsUrl + campground.id + '/edit', this.getRequest(campground, 'put'))
-			.toPromise()
-			.then(response => response.json());
+	editCampground(campground: Campground): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const url = this.campgroundsUrl + campground.id + '/edit';
+
+		return this.apiService.perform('put', url, campground, _params, _formParams);
 	}
 
-	createCampground(campground: Campground): Promise<any> {
-		return this.http.request(this.campgroundsUrl, this.getRequest(campground, 'post'))
-			.toPromise()
-			.then(response => response.json());
+	createCampground(campground: Campground): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+
+		return this.apiService.perform('post', this.campgroundsUrl, campground, _params, _formParams);
 	}
 
-	deleteCampground(id: number): Promise<any> {
-		return this.http.delete(this.campgroundsUrl + id)
-			.toPromise()
-			.then(response => response);
+	deleteCampground(id: number): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+
+		return this.apiService.perform('delete', this.campgroundsUrl + id, _bodyData, _params, _formParams);
 	}
 
-	getComment(id: number): Promise<any> {
-		return this.http.get(this.commentUrl + id + '/edit')
-			.toPromise()
-			.then(response => response.json());
+	getComment(id: number): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+		const url = this.commentUrl + id + '/edit';
+
+		return this.apiService.perform('get', url, _bodyData, _params, _formParams);
 	}
 
-	editComment(comment: Comment): Promise<any> {
-		return this.http.request(this.commentUrl + comment.id + '/edit', this.getRequest(comment, 'put'))
-			.toPromise()
-			.then(response => response.json());
+	editComment(comment: Comment): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const url = this.commentUrl + comment.id + '/edit';
+
+		return this.apiService.perform('put', url, comment, _params, _formParams);
 	}
 
-	createComment(comment: Comment): Promise<any> {
-		return this.http.request(this.commentUrl, this.getRequest(comment, 'post'))
-			.toPromise()
-			.then(response => response.json());
+	createComment(comment: Comment): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+
+		return this.apiService.perform('post', this.commentUrl, comment, _params, _formParams);
 	}
 
-	deleteComment(id: number): Promise<any> {
-		return this.http.delete(this.commentUrl + id)
-			.toPromise()
-			.then(response => response);
-	}
+	deleteComment(id: number): Observable<any> {
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
 
-	private getRequest(body: any, method: string): RequestOptionsArgs {
-		const requestOptions: RequestOptionsArgs = {};
-		const headers = new Headers({'Accept': '*/*'});
-
-		if (!_.isEmpty(body)) {
-			headers.append('Content-Type', 'application/json');
-
-			requestOptions.body = JSON.stringify(body);
-			requestOptions.headers = headers;
-			requestOptions.method = method.toLowerCase();
-
-			return requestOptions;
-		}
+		return this.apiService.perform('delete', this.commentUrl + id, _bodyData, _params, _formParams);
 	}
 }
