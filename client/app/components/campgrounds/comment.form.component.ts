@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CampgroundService } from '../../services/campgounds.service';
 import { UserService } from '../../services/user.service';
 import { Comment } from '../../models/comment';
+import { NgForm } from '@angular/forms';
 
 /**
  * Created by laurence-ho on 3/07/17.
@@ -15,6 +16,7 @@ import { Comment } from '../../models/comment';
 })
 
 export class CommentFormComponent implements OnInit {
+	@ViewChild('f') commentForm: NgForm;
 	@Input() comment: Comment;
 	@Output() insertedComment = new EventEmitter<Comment>();
 
@@ -51,15 +53,18 @@ export class CommentFormComponent implements OnInit {
 		if (this.comment.text) {
 			if (!this.comment.id) {
 				this.campgroundService.createComment(this.comment)
-					.then(data => {
-						this.campgroundService.getComment(data.comment_id)
-							.then(comment => this.insertedComment.emit(comment));
-					}).catch(error => {
-					if (error.status === 403) {
-						this.userService.flush();
-						this.router.navigate(['/login']);
-					}
-				});
+				// FIXME
+				// .then(data => {
+				// 	this.campgroundService.getComment(data.comment_id)
+				// 		.then(comment => this.insertedComment.emit(comment));
+				// })
+					.then(data => console.log(data))
+					.catch(error => {
+						if (error.status === 403) {
+							this.userService.flush();
+							this.router.navigate(['/login']);
+						}
+					});
 			} else {
 				this.campgroundService.editComment(this.comment)
 					.then(data => console.log(data))
@@ -71,5 +76,7 @@ export class CommentFormComponent implements OnInit {
 					});
 			}
 		}
+
+		this.commentForm.reset();
 	}
 }

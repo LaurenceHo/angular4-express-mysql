@@ -49,7 +49,9 @@ export class CampgroundFormComponent implements OnInit {
 				this.campground.username = this.userdata.username;
 
 				this.campgroundService.createCampground(this.campground)
-					.then(data => this.router.navigate(['/campground/detail', data.campground_id]))
+				// FIXME
+				// .then(data => this.router.navigate(['/campground/detail', data.campground_id]))
+					.then(data => this.router.navigate(['/']))
 					.catch(error => {
 						if (error.status === 403) {
 							this.userService.flush();
@@ -58,7 +60,9 @@ export class CampgroundFormComponent implements OnInit {
 					});
 			} else if (this.route.snapshot.url[1].path !== 'new' && this.route.snapshot.url[3].path === 'edit') {
 				this.campgroundService.editCampground(this.campground)
-					.then(data => this.router.navigate(['/campground/detail', data.campground_id]))
+				// FIXME
+				// .then(data => this.router.navigate(['/campground/detail', data.campground_id]))
+					.then(data => this.router.navigate(['/']))
 					.catch(error => {
 						if (error.status === 403) {
 							this.userService.flush();
