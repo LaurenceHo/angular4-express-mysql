@@ -1,12 +1,14 @@
 <p><i class="fa fa-pencil" aria-hidden="true"></i> Leave your comment: </p>
 <div>
-	<form role="form" (ngSubmit)="doSubmit()">
+	<form (ngSubmit)="doSubmit()" #f="ngForm">
 		<div class='form-group'>
 					<textarea class='form-control' name='text' rows="10" placeholder='comment'
 					          [(ngModel)]="comment.text"></textarea>
 		</div>
 		<div class='form-group' style='width:30%; margin-left:auto;margin-right:auto;'>
-			<button class='btn btn-primary btn-block'>Submit</button>
+			<button class='btn btn-primary btn-block'
+			        pButton
+			        label="Submit"></button>
 		</div>
 	</form>
 </div>

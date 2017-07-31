@@ -6,7 +6,7 @@
 			Edit "{{campground.name}}"</h1>
 
 		<div style='width:40%;margin: 25px auto;'>
-			<form role="form" (ngSubmit)="doSubmit()">
+			<form (ngSubmit)="doSubmit()">
 				<div class='form-group'>
 					<input class='form-control' type='text' name='name' placeholder='name'
 					       [(ngModel)]="campground.name">
@@ -24,10 +24,12 @@
 					          [(ngModel)]="campground.description"></textarea>
 				</div>
 				<div class='form-group'>
-					<button class='btn btn-lg btn-primary btn-block'>Submit</button>
+					<button class='btn btn-lg btn-primary btn-block'
+					        pButton
+					        label="Submit"></button>
 				</div>
 			</form>
-			<a *ngIf="route.snapshot.url[1].path == 'new'" href="#">Go Back</a>
+			<a *ngIf="route.snapshot.url[1].path == 'new'" routerLink="/">Go Back</a>
 			<a *ngIf="route.snapshot.url[1].path !== 'new' && route.snapshot.url[3].path == 'edit'"
 			   routerLink="/campground/detail/{{campground.id}}">Go Back</a>
 		</div>

@@ -12,7 +12,7 @@
 			Signup account successfully, please login.
 		</div>
 
-		<form role="form" (ngSubmit)="doSomething()">
+		<form (ngSubmit)="doSomething()">
 			<div class="form-group">
 				<label>Username</label>
 				<input type="text" class="form-control" name="username" [(ngModel)]="username" required>
@@ -26,9 +26,14 @@
 				<input type="checkbox" class="form-control" name="remember" value="yes" [(ngModel)]="remember">
 			</div>
 
-			<button type="submit" class="btn btn-primary btn-lg" *ngIf="route.snapshot.url[0].path == 'login'">Login
-			</button>
-			<button type="submit" class="btn btn-warning btn-lg" *ngIf="route.snapshot.url[0].path == 'signup'">Sign Up
+			<button class="btn btn-primary btn-lg"
+			        *ngIf="route.snapshot.url[0].path == 'login'"
+			        pButton
+			        label="Login"></button>
+			<button class="btn btn-warning btn-lg"
+			        *ngIf="route.snapshot.url[0].path == 'signup'"
+			        pButton
+			        label="Sign Up">
 			</button>
 		</form>
 
@@ -36,6 +41,6 @@
 
 		<p *ngIf="route.snapshot.url[0].path == 'login'">Need an account? <a routerLink="/signup">Sign Up</a></p>
 		<p *ngIf="route.snapshot.url[0].path == 'signup'">Already have an account? <a routerLink="/login">Login</a></p>
-		<p>Or go <a href="#">home</a>.</p>
+		<p>Or <a routerLink="/">go home</a></p>
 	</div>
 </div>
