@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
 	ngOnInit() {
 		if (this.route.snapshot.url[0].path === 'login') {
 			if (this.userService.getUserData()) {
-				this.router.navigate(['/profile']);
+				this.router.navigate(['/login']);
 			}
 		}
 
