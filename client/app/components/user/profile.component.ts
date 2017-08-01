@@ -4,7 +4,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
 
 @Component({
 	selector: 'login',
@@ -16,19 +15,15 @@ export class ProfileComponent implements OnInit {
 	username: string = '';
 	password: string = '';
 
-	constructor(private userService: UserService, private router: Router) {
+	constructor(private userService: UserService) {
 	}
 
 	ngOnInit() {
-		this.userService.getProfile().then(data => {
-			this.id = data.id;
-			this.username = data.username;
-			this.password = data.password;
-		}).catch(error => {
-			if (error.status === 403) {
-				this.userService.flush();
-				this.router.navigate(['/login']);
-			}
-		});
+		this.userService.getProfile()
+			.subscribe(data => {
+				this.id = data.id;
+				this.username = data.username;
+				this.password = data.password;
+			});
 	}
 }

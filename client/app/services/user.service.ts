@@ -2,10 +2,10 @@
  * Created by laurence-ho on 7/06/17.
  */
 
-import { Headers, Http, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-
-import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+import { ApiService } from './api.service';
 
 export type InternalStateType = {
 	[key: string]: any
@@ -21,7 +21,7 @@ export class UserService {
 	private logoutUrl = 'api/logout';
 	private profileUrl = 'api/profile';
 
-	constructor(private http: Http) {
+	constructor(private apiService: ApiService) {
 		const userdata = window.localStorage.getItem(this.USER_DATA_KEY);
 		if (userdata) {
 			try {
@@ -51,7 +51,7 @@ export class UserService {
 
 	setUserData(data: any) {
 		if (data) {
-			window.localStorage.setItem(this.USER_DATA_KEY, JSON.stringify(data));
+			window.localStorage.setItem(this.USER_DATA_KEY, data);
 			return this._state['user'] = data;
 		}
 	}
@@ -61,7 +61,9 @@ export class UserService {
 		return state.hasOwnProperty('user') ? state['user'] : undefined;
 	}
 
-	doLogin(username: string, password: string, remember: boolean): Promise<any> {
+	doLogin(username: string, password: string, remember: boolean): Observable<any> {
+		const _params: any = {};
+		const _bodyData: any = {};
 		const _formParams: any = {};
 
 		if (username !== undefined) {
@@ -76,12 +78,12 @@ export class UserService {
 			_formParams['remember'] = remember;
 		}
 
-		return this.http.request(this.loginUrl, this.getRequest(_formParams))
-			.toPromise()
-			.then(response => response);
+		return this.apiService.perform('post', this.loginUrl, _bodyData, _params, _formParams);
 	}
 
-	doSignup(username: string, password: string): Promise<any> {
+	doSignup(username: string, password: string): Observable<any> {
+		const _params: any = {};
+		const _bodyData: any = {};
 		const _formParams: any = {};
 
 		if (username !== undefined) {
@@ -92,44 +94,24 @@ export class UserService {
 			_formParams['password'] = password;
 		}
 
-		return this.http.request(this.signupUrl, this.getRequest(_formParams))
-			.toPromise()
-			.then(response => response);
-
+		return this.apiService.perform('post', this.signupUrl, _bodyData, _params, _formParams);
 	}
 
 	doLogout() {
 		this.flush();
 
-		return this.http.get(this.logoutUrl)
-			.toPromise()
-			.catch(error => console.error('Error: ', error));
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
+
+		return this.apiService.perform('get', this.logoutUrl, _bodyData, _params, _formParams);
 	}
 
 	getProfile() {
-		return this.http.get(this.profileUrl)
-			.toPromise()
-			.then(response => response.json());
-	}
+		const _params: any = {};
+		const _formParams: any = {};
+		const _bodyData: any = {};
 
-	private getRequest(body: any): RequestOptionsArgs {
-		const requestOptions: RequestOptionsArgs = {};
-		const headers = new Headers({'Accept': '*/*'});
-
-		if (!_.isEmpty(body)) {
-			headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-			const formBody = new URLSearchParams();
-
-			for (const formParam of Object.keys(body)) {
-				formBody.append(formParam, body[formParam]);
-			}
-
-			requestOptions.body = formBody.toString();
-			requestOptions.headers = headers;
-			requestOptions.method = 'post';
-
-			return requestOptions;
-		}
+		return this.apiService.perform('get', this.profileUrl, _bodyData, _params, _formParams);
 	}
 }

@@ -20,21 +20,17 @@ export class BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-				this.userService.getProfile().then(data => {
-					if (data) {
-						this.userdata = this.userService.getUserData();
-					} else {
-						this.userService.flush();
-						this.userdata = null;
-					}
-				}).catch(error => {
-					if (error.status === 403) {
-						this.userService.flush();
-						this.userdata = null;
-					}
-				});
-			}
-		);
+		this.router.events.filter(event => event instanceof NavigationEnd)
+			.subscribe(event => {
+					this.userService.getProfile().subscribe(data => {
+						if (data) {
+							this.userdata = this.userService.getUserData();
+						} else {
+							this.userService.flush();
+							this.userdata = null;
+						}
+					});
+				}
+			);
 	}
 }

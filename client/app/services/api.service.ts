@@ -5,12 +5,11 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
-import { UserService } from './user.service';
 
 @Injectable()
 export class ApiService {
 
-	constructor(private http: Http, private router: Router, private userService: UserService) {
+	constructor(private http: Http, private router: Router) {
 	}
 
 	perform(method: string, urlPath: string, body: any, params: any, formParams: any): Observable<any> {
@@ -57,10 +56,6 @@ export class ApiService {
 
 		return this.http.request(urlPath, requestOptions)
 			.catch((error) => {
-				if (error.status === 403) {
-					this.userService.flush();
-					this.router.navigate(['/login']);
-				}
 				// FIXME, need to handle error
 				return Observable.throw(error);
 			})

@@ -46,29 +46,19 @@ export class UserComponent implements OnInit {
 	}
 
 	doLogin() {
-		this.userService.doLogin(this.username, this.password, this.remember).then(data => {
-			if (data && data.status === 200) {
-				this.userService.setUserData(JSON.parse(data._body));
+		this.userService.doLogin(this.username, this.password, this.remember)
+			.subscribe(data => {
+				this.userService.setUserData(data);
 				this.router.navigate(['/campground']);
-			}
-		}).catch(error => {
-			this.error = true;
-			let body = error._body;
-			this.message = JSON.parse(body).message;
-		});
+			});
 	}
 
 	doSignup() {
-		this.userService.doSignup(this.username, this.password).then(data => {
-			this.signupSuccessful = true;
-			if (data && data.status === 200) {
+		this.userService.doSignup(this.username, this.password)
+			.subscribe(data => {
+				this.signupSuccessful = true;
 				this.router.navigate(['/profile']);
-			}
-		}).catch(error => {
-			this.error = true;
-			let body = error._body;
-			this.message = JSON.parse(body).message;
-		});
+			});
 	}
 
 	doLogout() {
