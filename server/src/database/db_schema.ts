@@ -11,6 +11,7 @@ const schema = (db: any) => {
 		'`name` varchar(255) NOT NULL,' +
 		'`image` varchar(255) NOT NULL,' +
 		'`username` varchar(255) NOT NULL,' +
+		'`price` int(11),' +
 		'`user_id` int(11) NOT NULL,' +
 		'`description` TEXT,' +
 		'PRIMARY KEY(`id`),' +

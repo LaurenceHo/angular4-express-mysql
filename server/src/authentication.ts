@@ -2,22 +2,28 @@
  * Created by laurence-ho on 21/07/17.
  */
 
-const db = require('./database/database');
+const db = require('./database/db_config');
 let authentication: any = {};
 
 authentication.checkCampOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		let campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
-
-		db.all(campQuery, (err: any, rows: any) => {
+		db.getConnection((err: any, connection: any) => {
 			if (err) {
 				res.status(500).send({message: err});
 			} else {
-				if (rows[0].user_id === req.user.id) {
-					next();
-				} else {
-					res.status(403).send({message: 'You have no permission'});
-				}
+				connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, rows: any) => {
+					connection.release();
+
+					if (err) {
+						res.status(500).send({message: err});
+					} else {
+						if (rows[0].user_id === req.user.id) {
+							next();
+						} else {
+							res.status(403).send({message: 'You have no permission'});
+						}
+					}
+				});
 			}
 		});
 	} else {
@@ -27,17 +33,23 @@ authentication.checkCampOwner = (req: any, res: any, next: any) => {
 
 authentication.checkCommentOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		let commentQuery = 'SELECT * FROM comments WHERE id = ' + req.params.comment_id;
-
-		db.all(commentQuery, (err: any, rows: any) => {
+		db.getConnection((err: any, connection: any) => {
 			if (err) {
 				res.status(500).send({message: err});
 			} else {
-				if (rows[0].user_id === req.user.id) {
-					next();
-				} else {
-					res.status(403).send({message: 'You have no permission'});
-				}
+				connection.query('SELECT * FROM comments WHERE id = ?', [req.params.comment_id], (err: any, rows: any) => {
+					connection.release();
+
+					if (err) {
+						res.status(500).send({message: err});
+					} else {
+						if (rows[0].user_id === req.user.id) {
+							next();
+						} else {
+							res.status(403).send({message: 'You have no permission'});
+						}
+					}
+				});
 			}
 		});
 	} else {

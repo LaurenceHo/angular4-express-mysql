@@ -3,10 +3,11 @@
  */
 
 import { Passport } from 'passport';
+
 let LocalStrategy = require('passport-local').Strategy;
 
 let bcrypt = require('bcrypt-nodejs');
-let db = require('./database/database');
+let db = require('./database/db_config');
 
 export = (passport: Passport) => {
 	// =========================================================================
@@ -17,17 +18,26 @@ export = (passport: Passport) => {
 
 	// used to serialize the user for the session
 	passport.serializeUser((user: any, done: any) => {
-		done(null, user.username);
+		done(null, user.id);
 	});
 
 	// used to deserialize the user
-	passport.deserializeUser((username, done) => {
-		let query = 'SELECT * FROM users WHERE username = \'' + username + '\'';
-		db.all(query, (err: any, rows: any) => {
+	passport.deserializeUser((id, done) => {
+		db.getConnection((err: any, connection: any) => {
 			if (err) {
 				console.error('error', err);
+				return done(err);
 			} else {
-				done(err, rows[0]);
+				connection.query('SELECT * FROM users WHERE id = ?', [id], (err: any, rows: any) => {
+					connection.release();
+
+					if (err) {
+						console.error('error', err);
+						return done(err);
+					} else {
+						done(null, rows[0]);
+					}
+				});
 			}
 		});
 	});
@@ -48,29 +58,40 @@ export = (passport: Passport) => {
 			(req: any, username: string, password: string, done: any) => {
 				console.log('---- User Signup: ' + username + ' ----');
 
-				let query = 'SELECT * FROM users WHERE username = \'' + username + '\'';
-
-				db.all(query, (err: any, rows: any) => {
+				db.getConnection((err: any, connection: any) => {
 					if (err) {
+						console.error('error', err);
 						return done(err);
-					}
-
-					if (rows.length) {
-						return done(null, false, {message: 'This username is already taken.'});
 					} else {
-						// if there is no user with that username, create the user
-						let newUserMysql = {
-							username: username,
-							password: bcrypt.hashSync(password, null, null) // use the generateHash function in our user model
-						};
-
-						let insertQuery = 'INSERT INTO users ( username, password ) values (\'' + newUserMysql.username + '\',\'' + newUserMysql.password + '\')';
-
-						db.run(insertQuery, (err: any) => {
+						connection.query('SELECT * FROM users WHERE username = ?', [username], (err: any, rows: any) => {
 							if (err) {
+								console.error('error', err);
 								return done(err);
 							}
-							return done(null, newUserMysql);
+
+							if (rows.length) {
+								return done(err, false, {message: 'This username is already taken.'});
+							} else {
+								// if there is no user with that username, create the user
+								let newUserMysql = {
+									username: username,
+									password: bcrypt.hashSync(password, null, null) // use the generateHash function in our user model
+								};
+
+								let insertQuery = 'INSERT INTO users ( username, password ) values (?,?)';
+
+								connection.query(insertQuery, [newUserMysql.username, newUserMysql.password], (err: any, rows: any) => {
+									connection.release();
+									if (err) {
+										console.error('error', err);
+										return done(err);
+									}
+
+									newUserMysql = rows;
+
+									return done(null, newUserMysql);
+								});
+							}
 						});
 					}
 				});
@@ -93,22 +114,31 @@ export = (passport: Passport) => {
 			(req: any, username: string, password: string, done: any) => { // callback with email and password from our form
 				console.log('---- User login: ' + username + ' ----');
 
-				var query = 'SELECT * FROM users WHERE username = \'' + username + '\'';
-
-				db.all(query, (err: any, rows: any) => {
+				db.getConnection((err: any, connection: any) => {
 					if (err) {
+						console.error('error', err);
 						return done(err);
-					}
-
-					if (!rows.length) {
-						return done(null, false, {message: 'Unknown user: ' + username});
 					} else {
-						// if the user is found but the password is wrong
-						if (!bcrypt.compareSync(password, rows[0].password)) {
-							return done(null, false, {message: 'Invalid password'}); // create the loginMessage and save it to session as flashdata
-						} else { // all is well, return successful user
-							return done(null, rows[0]);
-						}
+						connection.query('SELECT * FROM users WHERE username = ?', [username], (err: any, rows: any) => {
+							connection.release();
+
+							if (err) {
+								console.error('error', err);
+								return done(err);
+							}
+
+							if (rows.length) {
+								// if the user is found but the password is wrong
+								if (!bcrypt.compareSync(password, rows[0].password)) {
+									return done(err, false, {message: 'User name or password is wrong'});
+								} else {
+									// all is well, return successful user
+									return done(null, rows[0]);
+								}
+							} else {
+								return done(err, false, {message: 'User name or password is wrong'});
+							}
+						});
 					}
 				});
 			})
