@@ -4,14 +4,15 @@
 
 import express = require('express');
 import session = require('express-session');
-const expressSanitizer = require('express-sanitizer');
 import bodyParser = require('body-parser');
 import path = require('path');
-
 import passport = require('passport');
+const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
-require('./database/database');
+const database = require('./database/db_config');
+require('./database/db_schema')(database);
+
 require('./passport')(passport);
 
 const app = express();

@@ -91,14 +91,6 @@ gulp.task('serverResources', () => {
 });
 
 /**
- * Copy database for express server
- */
-gulp.task('databaseResource', () => {
-	return gulp.src(['*.sqlite'])
-		.pipe(gulp.dest('dist/server/database'));
-});
-
-/**
  * Copy all required libraries into build directory.
  */
 gulp.task('libs', () => {
@@ -150,7 +142,7 @@ gulp.task('start', () => {
  */
 
 gulp.task('build', function (callback: any) {
-	runSequence('clean', 'build:server', 'build:client', 'clientResources', 'serverResources', 'databaseResource', 'libs', 'css', callback);
+	runSequence('clean', 'build:server', 'build:client', 'clientResources', 'serverResources', 'libs', 'css', callback);
 });
 
 /**
