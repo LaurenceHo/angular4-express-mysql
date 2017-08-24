@@ -43,14 +43,10 @@ export class CampgroundFormComponent implements OnInit {
 				this.campground.username = this.userdata.username;
 
 				this.campgroundService.createCampground(this.campground)
-				// FIXME
-				// .subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]))
-					.subscribe(data => this.router.navigate(['/']));
+					.subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]));
 			} else if (this.route.snapshot.url[1].path !== 'new' && this.route.snapshot.url[3].path === 'edit') {
 				this.campgroundService.editCampground(this.campground)
-				// FIXME
-				// .subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]))
-					.subscribe(data => this.router.navigate(['/']));
+					.subscribe(data => this.router.navigate(['/campground/detail', data.campground_id]));
 			}
 		}
 	}

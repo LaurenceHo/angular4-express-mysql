@@ -3,40 +3,51 @@
  */
 
 import * as express from 'express';
+
 const router = express.Router();
 
-const db = require('../database/database');
+const db = require('../database/db_config');
 const authentication = require('../authentication');
 
 // get all campgrounds
 router.get('/campground', (req: any, res: any) => {
-	db.all('SELECT * FROM campgrounds', (err: any, rows: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.send(rows);
+			connection.query('SELECT * FROM campgrounds', (err: any, results: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.send(results);
+				}
+			});
 		}
 	});
 });
 
 // create one campground
 router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
-	let user_id = req.body.user_id;
-	let username = req.body.username;
+	req.body.name = req.sanitize(req.body.name);
+	req.body.image = req.sanitize(req.body.image);
+	req.body.description = req.sanitize(req.body.description);
+	req.body.price = req.sanitize(req.body.price);
 
-	let name = req.sanitize(req.body.name);
-	let image = req.sanitize(req.body.image);
-	let desc = req.sanitize(req.body.description);
-	let price = req.sanitize(req.body.price);
-
-	let sql = 'INSERT INTO campgrounds (name, image, description, price, user_id, username) VALUES (\'' +
-		name + '\',\'' + image + '\',\'' + desc + '\',\'' + price + '\',\'' + user_id + '\',\'' + username + '\')';
-
-	db.run(sql, (err: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({campground_id: this.lastID});// FIXME, cannot get "this" callback
+			connection.query('INSERT INTO campgrounds SET ?', req.body, (err: any, result: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.status(200).send({campground_id: result.insertId});
+				}
+			});
 		}
 	});
 });
@@ -46,20 +57,25 @@ router.get('/campground/:id', (req: any, res: any) => {
 	let campground: any = [],
 		comments: any = [];
 
-	let campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
-	let commentQuery = 'SELECT * FROM comments WHERE campground_id = ' + req.params.id;
-
-	db.all(campQuery, (err: any, rows: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			campground = rows[0];
-
-			db.all(commentQuery, (err: any, rows: any) => {
+			connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, result: any) => {
 				if (err) {
 					res.status(500).send({message: err});
 				} else {
-					comments = rows;
+					campground = result[0];
+				}
+			});
+
+			connection.query('SELECT * FROM comments WHERE campground_id = ?', [req.params.id], (err: any, result: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					comments = result;
 					res.status(200).send({campground: campground, comments: comments});
 				}
 			});
@@ -69,49 +85,62 @@ router.get('/campground/:id', (req: any, res: any) => {
 
 // get campground without comment for edit
 router.get('/campground/:id/edit', authentication.checkCampOwner, (req: any, res: any) => {
-	let campQuery = 'SELECT * FROM campgrounds WHERE id = ' + req.params.id;
-
-	db.all(campQuery, (err: any, rows: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({campground: rows[0]});
+			connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, result: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.status(200).send({campground: result[0]});
+				}
+			});
 		}
 	});
 });
 
 // edit one campground
 router.put('/campground/:id/edit', authentication.checkCampOwner, (req: any, res: any) => {
-	let name = req.sanitize(req.body.name);
-	let image = req.sanitize(req.body.image);
-	let desc = req.sanitize(req.body.description);
-	let price = req.sanitize(req.body.price);
+	req.body.name = req.sanitize(req.body.name);
+	req.body.image = req.sanitize(req.body.image);
+	req.body.description = req.sanitize(req.body.description);
+	req.body.price = req.sanitize(req.body.price);
 
-	let updateCampSQL = 'UPDATE campgrounds SET ' +
-		'name = \'' + name + '\',' +
-		'image = \'' + image + '\',' +
-		'description = \'' + desc + '\',' +
-		'price = \'' + price + '\' ' +
-		'WHERE id = ' + req.body.id;
-
-	db.run(updateCampSQL, (err: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({campground_id: req.body.id});
+			connection.query('UPDATE campgrounds SET ? WHERE id = ?', [req.body, req.params.id], (err: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.status(200).send({campground_id: req.params.id});
+				}
+			});
 		}
 	});
 });
 
 // delete one campground
 router.delete('/campground/:id', authentication.checkCampOwner, (req: any, res: any) => {
-	let deleteCampSQL = 'DELETE FROM campgrounds WHERE id = ' + req.params.id;
-
-	db.run(deleteCampSQL, (err: any) => {
+	db.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
-			res.status(200).send({campground_id: req.params.id});
+			connection.query('DELETE FROM campgrounds WHERE id = ?', [req.params.id], (err: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.status(200).send({campground_id: req.params.id});
+				}
+			});
 		}
 	});
 });
