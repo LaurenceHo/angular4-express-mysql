@@ -2,7 +2,7 @@
  * Created by laurence-ho on 21/07/17.
  */
 
-const db = require('./database/db_config');
+const db = require('./database/db.service');
 let authentication: any = {};
 
 authentication.checkCampOwner = (req: any, res: any, next: any) => {

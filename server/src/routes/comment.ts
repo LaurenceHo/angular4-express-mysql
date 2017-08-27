@@ -6,7 +6,7 @@ import * as express from 'express';
 
 const router = express.Router();
 
-const db = require('../database/db_config');
+const db = require('../database/db.service');
 const authentication = require('../authentication');
 
 // get one comment for edit

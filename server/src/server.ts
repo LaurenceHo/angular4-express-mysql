@@ -10,8 +10,8 @@ import passport = require('passport');
 const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
-const database = require('./database/db_config');
-require('./database/db_schema')(database);
+const database = require('./database/db.service');
+require('./database/db.schema')(database);
 
 require('./passport')(passport);
 

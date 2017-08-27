@@ -7,7 +7,7 @@ import { Passport } from 'passport';
 let LocalStrategy = require('passport-local').Strategy;
 
 let bcrypt = require('bcrypt-nodejs');
-let db = require('./database/db_config');
+let db = require('./database/db.service');
 
 export = (passport: Passport) => {
 	// =========================================================================
