@@ -18,9 +18,6 @@ const gulp = require('gulp'),
  * Remove build directory.
  */
 gulp.task('clean', (cb: any) => {
-	// Backup database
-	gulp.src(['dist/server/database/*.sqlite']).pipe(gulp.dest(''));
-
 	return del(['dist'], cb);
 });
 
