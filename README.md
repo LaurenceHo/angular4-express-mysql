@@ -11,7 +11,6 @@ The latest version of Nodejs need to be installed.
 ## Global packages
 ```
 npm install ts-node -g
-npm install typescript-node -g
 ```
     
 ## Api Document (from Express's view)
