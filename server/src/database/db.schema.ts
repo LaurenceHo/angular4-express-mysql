@@ -1,4 +1,4 @@
-const schema = (db: any) => {
+export const schema = (db: any) => {
 	let sql_user = 'CREATE TABLE IF NOT EXISTS `users` (' +
 		'`id` int(11) NOT NULL AUTO_INCREMENT,' +
 		'`username` varchar(255) NOT NULL,' +
@@ -53,5 +53,3 @@ const schema = (db: any) => {
 		}
 	});
 };
-
-export = schema;

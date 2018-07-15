@@ -11,7 +11,6 @@ const gulp = require('gulp'),
 	tsProject = tsc.createProject('tsconfig.json'),
 	tslint = require('gulp-tslint'),
 	concat = require('gulp-concat'),
-	runSequence = require('run-sequence'),
 	nodemon = require('gulp-nodemon');
 
 /**
@@ -40,7 +39,7 @@ gulp.task('build:server', () => {
 gulp.task('build:client', () => {
 	let tsProject = tsc.createProject('client/tsconfig.json');
 	let tsResult = gulp.src('client/**/*.ts')
-		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(tsProject());
 	return tsResult.js
 		.pipe(sourcemaps.write())
@@ -62,9 +61,9 @@ gulp.task('tslint', () => {
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.
  */
-gulp.task('compile', ['tslint'], () => {
+gulp.task('compile', gulp.series('tslint'), () => {
 	let tsResult = gulp.src('client/**/*.ts')
-		.pipe(sourcemaps.init({loadMaps: true}))
+		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(tsProject());
 	return tsResult.js
 		.pipe(sourcemaps.write('.'))
@@ -99,7 +98,7 @@ gulp.task('libs', () => {
 		'systemjs/dist/system.src.js',
 		'lodash/lodash.min.js',
 		'primeng/**'
-	], {cwd: 'node_modules/**'}) /* Glob required here. */
+	], { cwd: 'node_modules/**' }) /* Glob required here. */
 		.pipe(gulp.dest('dist/client/libs'));
 });
 
@@ -110,7 +109,7 @@ gulp.task('css', () => {
 	return gulp.src([
 		'bootstrap/dist/**/**',
 		'font-awesome/**/**'
-	], {cwd: 'node_modules/**'}) /* Glob required here. */
+	], { cwd: 'node_modules/**' }) /* Glob required here. */
 		.pipe(gulp.dest('dist/client/css'));
 });
 
@@ -138,23 +137,21 @@ gulp.task('start', () => {
  * 5. Copy the dependencies.
  */
 
-gulp.task('build', function (callback: any) {
-	runSequence('clean', 'build:server', 'build:client', 'clientResources', 'serverResources', 'libs', 'css', callback);
-});
+gulp.task('build', gulp.series('clean', 'build:server', 'build:client', 'clientResources', 'serverResources', 'libs', 'css'));
 
 /**
  * Watch for changes in TypeScript, HTML and CSS files.
  */
 gulp.task('watch', () => {
-	gulp.watch(['client/**/*.ts'], ['compile']).on('change', (e: any) => {
+	gulp.watch(['client/**/*.ts'], gulp.series('compile')).on('change', (e: any) => {
 		console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
 	});
 
-	gulp.watch(['client/**/*.html', 'client/**/*.css'], ['clientResources']).on('change', (e: any) => {
+	gulp.watch(['client/**/*.html', 'client/**/*.css'], gulp.series('clientResources')).on('change', (e: any) => {
 		console.log('Resource file ' + e.path + ' has been changed. Updating.');
 	});
 
-	gulp.watch(['server/src/**/*.ts'], ['compile']).on('change', (e: any) => {
+	gulp.watch(['server/src/**/*.ts'], gulp.series('compile')).on('change', (e: any) => {
 		console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
 	});
 });

@@ -1,6 +1,6 @@
-import mysql = require('mysql');
+const mysql = require('mysql');
 
-const db = (() => {
+export const db = (() => {
 	this.pool = mysql.createPool({
 		connectionLimit: 12,
 		host: 'localhost',
@@ -34,5 +34,3 @@ const db = (() => {
 
 	return this;
 })();
-
-export = db;

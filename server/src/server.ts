@@ -2,22 +2,21 @@
  * Created by laurence-ho on 21/07/17.
  */
 
-import express = require('express');
-import session = require('express-session');
-import bodyParser = require('body-parser');
-import path = require('path');
-import passport = require('passport');
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const path = require('path');
+const passport = require('passport');
 const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
 const database = require('./database/db.service');
-require('./database/db.schema')(database);
-
+require('./database/db.schema').schema(database);
 require('./passport')(passport);
 
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/app', express.static(path.resolve(__dirname, '../client/app')));
