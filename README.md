@@ -48,7 +48,7 @@ npm run build
 
 3.Launch the server: 
 ```
-npm run deploy
+npm run start-all
 ```
 
 4.Visit in your browser: http://localhost:8080
