@@ -6,7 +6,7 @@ import * as express from 'express';
 const router = express.Router();
 
 const passport = require('passport');
-const authentication = require('../authentication');
+const authentication = require('../Authentication');
 
 router.post('/login', (req: any, res: any, next: any) => {
 	passport.authenticate('local-login', (err: any, user: any, info: any) => {

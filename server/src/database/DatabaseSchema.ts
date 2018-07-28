@@ -18,7 +18,7 @@ export const schema = (db: any) => {
 		'CONSTRAINT `FK_USER_CAMP` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)' +
 		') ENGINE = InnoDB DEFAULT CHARSET = utf8';
 
-	let sql_commemt = 'CREATE TABLE IF NOT EXISTS `comments` (' +
+	let sql_comment = 'CREATE TABLE IF NOT EXISTS `comments` (' +
 		'`id` int(11) NOT NULL AUTO_INCREMENT,' +
 		'`username` varchar(255) NOT NULL,' +
 		'`user_id` int(11) NOT NULL,' +
@@ -43,7 +43,7 @@ export const schema = (db: any) => {
 					console.log(err);
 				}
 			});
-			connection.query(sql_commemt, (err: any) => {
+			connection.query(sql_comment, (err: any) => {
 				if (err) {
 					console.log(err);
 				}

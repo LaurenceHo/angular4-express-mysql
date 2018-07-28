@@ -1,4 +1,4 @@
-export interface campground {
+export interface Campground {
 	id: number,
 	name: string,
 	image: string,

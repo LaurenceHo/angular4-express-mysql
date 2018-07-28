@@ -7,7 +7,7 @@ import { Passport } from 'passport';
 let LocalStrategy = require('passport-local').Strategy;
 
 let bcrypt = require('bcrypt-nodejs');
-let db = require('./database/db.service');
+let database = require('./database/DatabaseService');
 
 export = (passport: Passport) => {
 	// =========================================================================
@@ -23,7 +23,7 @@ export = (passport: Passport) => {
 
 	// used to deserialize the user
 	passport.deserializeUser((id, done) => {
-		db.getConnection((err: any, connection: any) => {
+		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				console.error('error', err);
 				return done(err);
@@ -58,7 +58,7 @@ export = (passport: Passport) => {
 			(req: any, username: string, password: string, done: any) => {
 				console.log('---- User Signup: ' + username + ' ----');
 
-				db.getConnection((err: any, connection: any) => {
+				database.getConnection((err: any, connection: any) => {
 					if (err) {
 						console.error('error', err);
 						return done(err);
@@ -114,7 +114,7 @@ export = (passport: Passport) => {
 			(req: any, username: string, password: string, done: any) => { // callback with email and password from our form
 				console.log('---- User login: ' + username + ' ----');
 
-				db.getConnection((err: any, connection: any) => {
+				database.getConnection((err: any, connection: any) => {
 					if (err) {
 						console.error('error', err);
 						return done(err);

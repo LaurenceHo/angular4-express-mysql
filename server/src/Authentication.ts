@@ -2,12 +2,12 @@
  * Created by laurence-ho on 21/07/17.
  */
 
-const db = require('./database/db.service');
+const database = require('./database/DatabaseService');
 let authentication: any = {};
 
 authentication.checkCampOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		db.getConnection((err: any, connection: any) => {
+		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				res.status(500).send({message: err});
 			} else {
@@ -33,7 +33,7 @@ authentication.checkCampOwner = (req: any, res: any, next: any) => {
 
 authentication.checkCommentOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		db.getConnection((err: any, connection: any) => {
+		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				res.status(500).send({message: err});
 			} else {

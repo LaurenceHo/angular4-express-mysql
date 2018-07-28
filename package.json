@@ -7,7 +7,7 @@
     "clean": "gulp clean",
     "compile": "gulp compile",
     "build": "gulp build",
-    "start-all": "concurrently --kill-others \"gulp watch\" \"node ./dist/server/server.js\"",
+    "start-all": "concurrently --kill-others \"gulp watch\" \"node ./dist/server/Server.js\"",
     "start-server": "gulp start"
   },
   "repository": {

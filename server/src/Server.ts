@@ -10,9 +10,9 @@ const passport = require('passport');
 const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
-const database = require('./database/db.service');
-require('./database/db.schema').schema(database);
-require('./passport')(passport);
+const database = require('./database/DatabaseService');
+require('./database/DatabaseSchema').schema(database);
+require('./Passport')(passport);
 
 const app = express();
 
@@ -37,9 +37,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //initial routes
-const userRoutes = require('./routes/user');
-const campgroundRoutes = require('./routes/campground');
-const commentRoutes = require('./routes/comment');
+const userRoutes = require('./routes/User');
+const campgroundRoutes = require('./routes/Campground');
+const commentRoutes = require('./routes/Comment');
 
 app.use('/api', userRoutes);
 app.use('/api', campgroundRoutes);

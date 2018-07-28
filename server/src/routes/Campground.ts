@@ -3,21 +3,36 @@
  */
 
 import * as express from 'express';
-import CampgroundRepository from '../repository/campgroundRepository';
+// import CampgroundRepository from '../repository/CampgroundRepository';
 
 const router = express.Router();
 
-const db = require('../database/db.service');
-const authentication = require('../authentication');
+const database = require('../database/DatabaseService');
+const authentication = require('../Authentication');
 
 // get all campgrounds
 router.get('/campground', (req: any, res: any) => {
-	const campgroundRepository = new CampgroundRepository();
-	try {
-		res.send(campgroundRepository.findAll());
-	} catch (err) {
-		res.status(500).send({ message: err })
-	}
+	database.getConnection((err: any, connection: any) => {
+		if (err) {
+			res.status(500).send({message: err});
+		} else {
+			connection.query('SELECT * FROM campgrounds', (err: any, results: any) => {
+				connection.release();
+
+				if (err) {
+					res.status(500).send({message: err});
+				} else {
+					res.send(results);
+				}
+			});
+		}
+	});
+	// const campgroundRepository = new CampgroundRepository();
+	// try {
+	// 	res.send(campgroundRepository.findAll());
+	// } catch (err) {
+	// 	res.status(500).send({ message: err })
+	// }
 });
 
 // create one campground
@@ -27,7 +42,7 @@ router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
 	req.body.description = req.sanitize(req.body.description);
 	req.body.price = req.sanitize(req.body.price);
 
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
@@ -49,7 +64,7 @@ router.get('/campground/:id', (req: any, res: any) => {
 	let campground: any = [],
 		comments: any = [];
 
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
@@ -77,7 +92,7 @@ router.get('/campground/:id', (req: any, res: any) => {
 
 // get campground without comment for edit
 router.get('/campground/:id/edit', authentication.checkCampOwner, (req: any, res: any) => {
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
@@ -101,7 +116,7 @@ router.put('/campground/:id/edit', authentication.checkCampOwner, (req: any, res
 	req.body.description = req.sanitize(req.body.description);
 	req.body.price = req.sanitize(req.body.price);
 
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {
@@ -120,7 +135,7 @@ router.put('/campground/:id/edit', authentication.checkCampOwner, (req: any, res
 
 // delete one campground
 router.delete('/campground/:id', authentication.checkCampOwner, (req: any, res: any) => {
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({ message: err });
 		} else {

@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-export const db = (() => {
+export const database = (() => {
 	this.pool = mysql.createPool({
 		connectionLimit: 12,
 		host: 'localhost',

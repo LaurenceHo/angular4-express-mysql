@@ -6,12 +6,12 @@ import * as express from 'express';
 
 const router = express.Router();
 
-const db = require('../database/db.service');
-const authentication = require('../authentication');
+const database = require('../database/DatabaseService');
+const authentication = require('../Authentication');
 
 // get one comment for edit
 router.get('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: any, res: any) => {
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
@@ -32,7 +32,7 @@ router.get('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: 
 router.post('/comment', authentication.isLoggedIn, (req: any, res: any) => {
 	req.body.text = req.sanitize(req.body.text);
 
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
@@ -53,7 +53,7 @@ router.post('/comment', authentication.isLoggedIn, (req: any, res: any) => {
 router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: any, res: any) => {
 	req.body.text = req.sanitize(req.body.text);
 
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
@@ -72,7 +72,7 @@ router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: 
 
 // delete one comment
 router.delete('/comment/:comment_id', authentication.checkCommentOwner, (req: any, res: any) => {
-	db.getConnection((err: any, connection: any) => {
+	database.getConnection((err: any, connection: any) => {
 		if (err) {
 			res.status(500).send({message: err});
 		} else {
