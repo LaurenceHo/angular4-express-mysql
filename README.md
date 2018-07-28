@@ -1,12 +1,11 @@
-# Fullstack web application using Angular4, Primeng, Express, Mysql, Gulp and Passport.
+# Fullstack web application using Angular4, Bootstrap4, Primeng, Express, Mysql, Gulp and Passport.
 
 ## Introduction
-This project demonstrates the basic CRUD functions combining Angular4, Primeng, Express, Mysql, Gulp and Passport. 
-You can use this project creating and editing campground. It also uses Gulp for running task and TsLint. The seed 
-application is built over node and using latest node packages. This is my first fullstack Angular4 with Nodejs web 
-application, and it's still ongoing.
+This project demonstrates the basic CRUD functions combining Angular4, Bootstrap4, Primeng, Express, Mysql, Gulp4 and Passport. 
+It also uses Gulp for running task and TsLint. You can use this web application doing user signup/login, campground create/edit/delete, 
+and comment create/edit/delete.
 
-![Screen Shot 2016-10-22 at 19.41.26.png](https://bitbucket.org/repo/xbqg8L/images/3489819545-Screen%20Shot%202016-10-22%20at%2019.41.26.png)
+![Screen Shot](https://bitbucket.org/repo/xbqg8L/images/3191778081-Screen%20Shot%202018-07-28%20at%2018.45.57.png)
 
 ## Prerequisites
 1. The latest version of Nodejs need to be installed.
@@ -61,4 +60,4 @@ npm run start-all
 4.Visit in your browser: http://localhost:8080
 
 ### Reference
-This project is based on https://github.com/moizKachwala/Angular2-express-mongoose-gulp-node-typescript. I learn a lot from this project.
+This project is based on https://github.com/moizKachwala/Angular2-express-mongoose-gulp-node-typescript. I learnt a lot from this project.

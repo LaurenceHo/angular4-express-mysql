@@ -1,3 +1,16 @@
+.campground-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    border: lightgray 1px solid;
+    border-radius: 5px;
+    position: relative;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
 .thumbnail img {
     width: 100%;
 }
@@ -7,5 +20,5 @@
 }
 
 #delete {
-	display: inline;
+    display: inline;
 }

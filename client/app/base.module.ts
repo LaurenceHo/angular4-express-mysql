@@ -7,21 +7,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ButtonModule } from 'primeng/primeng';
+import { ButtonModule, ProgressSpinnerModule } from 'primeng/primeng';
 
 import { BaseComponent } from './base.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
-import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
-import { UserComponent } from './components/user/user.component';
-
+import { ApiService } from './services/api.service';
 import { CampgroundService } from './services/campgounds.service';
 import { UserService } from './services/user.service';
+
+import { UserComponent } from './components/user/user.component';
 import { ProfileComponent } from './components/user/profile.component';
+import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
+import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
 import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
 import { CommentFormComponent } from './components/campgrounds/comment.form.component';
-import { ApiService } from './services/api.service';
 
 @NgModule({
 	imports: [
@@ -31,7 +31,8 @@ import { ApiService } from './services/api.service';
 		FormsModule,
 		AppRoutingModule,
 		// Primeng Module
-		ButtonModule
+		ButtonModule,
+		ProgressSpinnerModule
 	],
 	declarations: [
 		BaseComponent,
@@ -46,7 +47,7 @@ import { ApiService } from './services/api.service';
 		ApiService,
 		CampgroundService,
 		UserService,
-		{provide: LocationStrategy, useClass: HashLocationStrategy}
+		{ provide: LocationStrategy, useClass: HashLocationStrategy }
 	],
 	bootstrap: [BaseComponent]
 })

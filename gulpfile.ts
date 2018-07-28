@@ -5,6 +5,8 @@
 'use strict';
 
 const gulp = require('gulp'),
+	browserSync = require('browser-sync').create(),
+	sass = require('gulp-sass'),
 	del = require('del'),
 	tsc = require('gulp-typescript'),
 	sourcemaps = require('gulp-sourcemaps'),
@@ -67,7 +69,8 @@ gulp.task('compile', gulp.series('tslint'), () => {
 		.pipe(tsProject());
 	return tsResult.js
 		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest('dist/client'));
+		.pipe(gulp.dest('dist/client'))
+		.pipe(browserSync.stream());
 });
 
 /**
@@ -75,7 +78,8 @@ gulp.task('compile', gulp.series('tslint'), () => {
  */
 gulp.task('clientResources', () => {
 	return gulp.src(['client/**/*', '!**/*.ts', '!client/*.json'])
-		.pipe(gulp.dest('dist/client'));
+		.pipe(gulp.dest('dist/client'))
+		.pipe(browserSync.stream());
 });
 
 /**
@@ -105,12 +109,31 @@ gulp.task('libs', () => {
 /**
  * Copy all required libraries into build directory.
  */
-gulp.task('css', () => {
+gulp.task('font-awesome', () => {
 	return gulp.src([
-		'bootstrap/dist/**/**',
 		'font-awesome/**/**'
 	], { cwd: 'node_modules/**' }) /* Glob required here. */
-		.pipe(gulp.dest('dist/client/css'));
+		.pipe(gulp.dest('dist/client/vendors'));
+});
+
+/**
+ * Copy and compile bootstrap
+ */
+gulp.task('sass', () => {
+	return gulp.src([
+		'bootstrap/scss/bootstrap.scss'
+	], { cwd: 'node_modules/**' })
+		.pipe(sass())
+		.pipe(gulp.dest('dist/client/vendors'));
+});
+
+gulp.task('bootstrap', () => {
+	return gulp.src([
+		'bootstrap/dist/js/bootstrap.min.js',
+		'jquery/dist/jquery.slim.js',
+		'popper.js/dist/popper.min.js'
+	], { cwd: 'node_modules/**' })
+		.pipe(gulp.dest('dist/client/vendors'));
 });
 
 /**
@@ -137,17 +160,25 @@ gulp.task('start', () => {
  * 5. Copy the dependencies.
  */
 
-gulp.task('build', gulp.series('clean', 'build:server', 'build:client', 'clientResources', 'serverResources', 'libs', 'css'));
+gulp.task(
+	'build',
+	gulp.series(
+		'clean',
+		'build:server',
+		'build:client',
+		'clientResources',
+		'serverResources',
+		'libs',
+		'font-awesome',
+		'sass',
+		'bootstrap'
+	)
+);
 
 /**
  * Watch for changes in TypeScript, HTML and CSS files.
  */
 gulp.task('watch', () => {
-	gulp.watch(['client/**/*.ts'], gulp.series('compile')).on('change', (e: any) => {
-		console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
-	});
-
-	gulp.watch(['client/**/*.html', 'client/**/*.css'], gulp.series('clientResources')).on('change', (e: any) => {
-		console.log('Resource file ' + e.path + ' has been changed. Updating.');
-	});
+	gulp.watch(['client/**/*.ts'], gulp.series('compile')).on('change', browserSync.reload);
+	gulp.watch(['client/**/*.html', 'client/**/*.css'], gulp.series('clientResources')).on('change', browserSync.reload);
 });
