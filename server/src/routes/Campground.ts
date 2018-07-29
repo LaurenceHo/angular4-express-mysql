@@ -3,11 +3,10 @@
  */
 
 import * as express from 'express';
+import * as authentication from '../Authentication';
 import CampgroundRepository from '../repository/CampgroundRepository';
 
 const router = express.Router();
-
-const authentication = require('../Authentication');
 const campgroundRepository = new CampgroundRepository();
 
 // get all campgrounds

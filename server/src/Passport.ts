@@ -2,12 +2,10 @@
  * Created by laurence-ho on 21/07/17.
  */
 
+import * as bcrypt from 'bcrypt-nodejs';
 import { Passport } from 'passport';
-
-let LocalStrategy = require('passport-local').Strategy;
-
-let bcrypt = require('bcrypt-nodejs');
-let database = require('./database/DatabaseService');
+import { Strategy } from 'passport-local';
+import { database } from './database/DatabaseService';
 
 export = (passport: Passport) => {
 	// =========================================================================
@@ -22,7 +20,7 @@ export = (passport: Passport) => {
 	});
 
 	// used to deserialize the user
-	passport.deserializeUser((id, done) => {
+	passport.deserializeUser((id: any, done: any) => {
 		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				console.error('error', err);
@@ -49,7 +47,7 @@ export = (passport: Passport) => {
 	// by default, if there was no name, it would just be called 'local'
 
 	passport.use('local-signup',
-		new LocalStrategy({
+		new Strategy({
 				// by default, local strategy uses username and password, we will override with email
 				usernameField: 'username',
 				passwordField: 'password',
@@ -70,12 +68,12 @@ export = (passport: Passport) => {
 							}
 
 							if (rows.length) {
-								return done(err, false, {message: 'This username is already taken.'});
+								return done(err, false, { message: 'This username is already taken.' });
 							} else {
 								// if there is no user with that username, create the user
 								let newUserMysql = {
 									username: username,
-									password: bcrypt.hashSync(password, null, null) // use the generateHash function in our user model
+									password: bcrypt.hashSync(password, null) // use the generateHash function in our user model
 								};
 
 								let insertQuery = 'INSERT INTO users ( username, password ) values (?,?)';
@@ -105,7 +103,7 @@ export = (passport: Passport) => {
 	// by default, if there was no name, it would just be called 'local'
 
 	passport.use('local-login',
-		new LocalStrategy({
+		new Strategy({
 				// by default, local strategy uses username and password, we will override with email
 				usernameField: 'username',
 				passwordField: 'password',
@@ -130,13 +128,13 @@ export = (passport: Passport) => {
 							if (rows.length) {
 								// if the user is found but the password is wrong
 								if (!bcrypt.compareSync(password, rows[0].password)) {
-									return done(err, false, {message: 'User name or password is wrong'});
+									return done(err, false, { message: 'User name or password is wrong' });
 								} else {
 									// all is well, return successful user
 									return done(null, rows[0]);
 								}
 							} else {
-								return done(err, false, {message: 'User name or password is wrong'});
+								return done(err, false, { message: 'User name or password is wrong' });
 							}
 						});
 					}

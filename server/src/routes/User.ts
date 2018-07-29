@@ -3,22 +3,22 @@
  */
 
 import * as express from 'express';
-const router = express.Router();
+import * as passport from 'passport';
+import * as authentication from '../Authentication';
 
-const passport = require('passport');
-const authentication = require('../Authentication');
+const router = express.Router();
 
 router.post('/login', (req: any, res: any, next: any) => {
 	passport.authenticate('local-login', (err: any, user: any, info: any) => {
 		if (err) {
-			return res.status(401).send({message: err.message});
+			return res.status(401).send({ message: err.message });
 		}
 		if (!user) {
-			return res.status(401).send({message: info.message});
+			return res.status(401).send({ message: info.message });
 		}
 		req.logIn(user, (err: any) => {
 			if (err) {
-				return res.status(401).send({message: err.message});
+				return res.status(401).send({ message: err.message });
 			}
 
 			let milliseconds = 0;
@@ -41,14 +41,14 @@ router.post('/login', (req: any, res: any, next: any) => {
 router.post('/signup', (req: any, res: any, next: any) => {
 		passport.authenticate('local-signup', (err: any, user: any, info: any) => {
 			if (err) {
-				return res.status(403).send({'message': err.message});
+				return res.status(403).send({ 'message': err.message });
 			}
 
 			if (!user) {
-				return res.status(403).send({'message': info.message});
+				return res.status(403).send({ 'message': info.message });
 			}
 
-			return res.status(200).send({'message': 'OK'});
+			return res.status(200).send({ 'message': 'OK' });
 		})(req, res, next);
 	}
 );

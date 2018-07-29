@@ -11,11 +11,11 @@ and comment create/edit/delete.
 1. The latest version of Nodejs need to be installed.
 2. MySQL
 
-### Docker MySQL container
+### Docker MySQL container preparation
 1. Run `docker pull mysql:5`
 2. Run `docker run --name mysql5 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5`
 3. Run `docker run -it --link mysql5:mysql --rm mysql:5 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'`
-4. Setup database and username
+4. Setup database and user
     
 ## Api Document (from Express's view)
 ```
@@ -37,7 +37,7 @@ and comment create/edit/delete.
 
 ### How do I get set up? ###
 
-1.Clone the repo: 
+* Clone the repo: 
 ```
 git clone https://LaurenceHo@bitbucket.org/LaurenceHo/angular4-express-mysql.git
 ```
@@ -46,18 +46,26 @@ or
 git clone https://github.com/LaurenceHo/angular4-express-mysql.git
 ```
 
-2.Install npm package. Build and compile the dist folder: 
+* Install npm package. Build and compile the dist folder: 
 ```
 npm install
 npm run build
 ```
 
-3.Launch the server: 
+* Launch the whole web application: 
 ```
 npm run start-all
 ```
 
-4.Visit in your browser: http://localhost:8080
+* If you want to run client and server separately:
+
+Run `npm run start-server` and `npm run start-client`
+
+* Visit in your browser: `http://localhost:8080`
 
 ### Reference
 This project is based on https://github.com/moizKachwala/Angular2-express-mongoose-gulp-node-typescript. I learnt a lot from this project.
+
+### Existing major issues:
+1. browserSync cannot reload the browser automatically when modifying client side code.
+2. When user refreshes the browser, the login session would be gone, and user needs to login again. 

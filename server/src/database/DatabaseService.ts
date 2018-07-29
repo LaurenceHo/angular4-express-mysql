@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+import * as mysql from 'mysql';
 
 export const database = (() => {
 	this.pool = mysql.createPool({
@@ -14,16 +14,20 @@ export const database = (() => {
 		this.pool.getConnection(cb);
 	};
 
-	this.query = (sql: any, values: any) => new Promise((resolve, reject) => {
+	this.query = (sql: string, values: any) => new Promise((resolve, reject) => {
 		this.pool.getConnection((err: any, connection: any) => {
 			if (err) {
-				console.log(err);
+				reject(err);
+				throw err;
 			} else {
 				connection.query(sql, values, (err: any, results: any) => {
+					console.log('SQL: ', sql);
+					console.log('Query values: ', values);
 					connection.release();
 
 					if (err) {
-						console.log(err);
+						reject(err);
+						throw err;
 					} else {
 						resolve(results);
 					}

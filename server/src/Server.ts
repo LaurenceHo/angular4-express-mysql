@@ -1,16 +1,20 @@
 /**
  * Created by laurence-ho on 21/07/17.
  */
+import * as express from 'express';
+import * as session from 'express-session';
+import * as bodyParser from 'body-parser';
+import * as path from 'path';
+import * as passport from 'passport';
 
-const express = require('express');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const path = require('path');
-const passport = require('passport');
+import { database } from './database/DatabaseService';
+import * as userRoutes from './routes/User';
+import * as campgroundRoutes from './routes/Campground';
+import * as commentRoutes from './routes/Comment';
+
 const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
-const database = require('./database/DatabaseService');
 require('./database/DatabaseSchema').schema(database);
 require('./Passport')(passport);
 
@@ -37,10 +41,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //initial routes
-const userRoutes = require('./routes/User');
-const campgroundRoutes = require('./routes/Campground');
-const commentRoutes = require('./routes/Comment');
-
 app.use('/api', userRoutes);
 app.use('/api', campgroundRoutes);
 app.use('/api', commentRoutes);
