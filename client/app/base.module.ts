@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ButtonModule, ProgressSpinnerModule } from 'primeng/primeng';
+import { ButtonModule } from 'primeng/primeng';
 
 import { BaseComponent } from './base.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +32,6 @@ import { CommentFormComponent } from './components/campgrounds/comment.form.comp
 		AppRoutingModule,
 		// Primeng Module
 		ButtonModule,
-		ProgressSpinnerModule
 	],
 	declarations: [
 		BaseComponent,

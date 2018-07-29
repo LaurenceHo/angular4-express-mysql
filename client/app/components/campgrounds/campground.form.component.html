@@ -26,10 +26,11 @@
 					<textarea class='form-control' rows='8' name='description' placeholder='description'
                               [(ngModel)]="campground.description"></textarea>
                 </div>
-                <div class='form-group'>
-                    <button class='btn btn-lg btn-primary btn-block'
+                <div class='form-group' style='width:50%; margin-left:auto; margin-right:auto;'>
+                    <button class='ui-button-primary btn-block'
                             pButton
-                            label="Submit"></button>
+                            label="Submit">
+                    </button>
                 </div>
             </form>
             <a *ngIf="route.snapshot.url[1].path == 'new'" routerLink="/">Go Back</a>

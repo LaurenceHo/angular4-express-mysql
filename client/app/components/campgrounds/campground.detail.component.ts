@@ -36,6 +36,14 @@ export class CampgroundDetailComponent implements OnInit {
 		this.userdata = this.userService.getUserData();
 	}
 
+	doLogin() {
+		this.router.navigateByUrl('/login');
+	}
+
+	doEditCampground(id: number) {
+		this.router.navigateByUrl('/campground/detail/' + id + '/edit');
+	}
+
 	doDeleteCampground(id: number) {
 		if (this.route.snapshot.url[0].path === 'campground') {
 			this.campgroundService.deleteCampground(id).subscribe(data => {
