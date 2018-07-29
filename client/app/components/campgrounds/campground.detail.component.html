@@ -1,63 +1,76 @@
-<div class='container'>
-	<div class='row'>
-		<div class='col-md-3'>
-			<p class='lead'>YelpCamp</p>
-			<div class='list-group'>
-				<li class='list-group-item active'> Info 1</li>
-				<li class='list-group-item'> Info 2</li>
-				<li class='list-group-item'> Info 3</li>
-			</div>
-		</div>
-		<div class='col-md-9' *ngIf="campDetail">
-			<div class='thumbnail'>
-				<img class='img-responsive' src={{campDetail?.campground?.image}}>
-				<div class='caption-full'>
-					<h4 class='pull-right'>${{campDetail?.campground?.price ? campDetail?.campground?.price :
-						'Unknown'}}/night </h4>
-					<h4>
-						{{campDetail?.campground?.name}}
-					</h4>
-					<p>
-						{{campDetail?.campground?.description}}
-					</p>
-					<p><em> Submitted By {{campDetail?.campground?.username}} </em></p>
-					<div *ngIf="userdata && userdata.id === campDetail?.campground?.user_id">
-						<a class='btn btn-warning btn-xs'
-						   routerLink='/campground/detail/{{campDetail?.campground?.id}}/edit'>Edit</a>
-						<button pButton type="button" (click)="doDeleteCampground(campDetail.campground.id)"
-						        class='btn btn-danger btn-xs' label="Delete"></button>
-					</div>
-				</div>
-			</div>
-			<div class='well'>
-				<h3> Comments </h3>
-				<div class='text-right' *ngIf="!userdata">
-					<a class='btn-sm btn-success' routerLink='/login'>Login or Join to post a comment</a>
-				</div>
+<div class='container' style="padding-top: 2rem">
+    <div class='row'>
+        <div class='col-md-3'>
+            <p class='lead'>YelpCamp</p>
+            <ul class='list-group'>
+                <li class='list-group-item active'>Campground Info</li>
+                <li class='list-group-item'>Other Info</li>
+            </ul>
+        </div>
+        <div class='col-md-9' *ngIf="campDetail">
+            <div class='thumbnail'>
+                <img class='img-responsive' src={{campDetail?.campground?.image}}>
+                <div class='caption-full'>
+                    <h4 class='pull-right'>${{campDetail?.campground?.price ? campDetail?.campground?.price :
+                        'Unknown'}}NZD/night </h4>
+                    <h4>
+                        {{campDetail?.campground?.name}}
+                    </h4>
+                    <p>
+                        {{campDetail?.campground?.description}}
+                    </p>
+                    <p><em> Submitted By {{campDetail?.campground?.username}} </em></p>
+                    <div *ngIf="userdata && userdata.id === campDetail?.campground?.user_id">
+                        <button pButton type="button"
+                                class="ui-button-warning"
+                                (click)="doEditCampground(campDetail?.campground?.id)"
+                                label="Edit">
+                        </button>
+                        <button pButton type="button"
+                                class='ui-button-danger'
+                                (click)="doDeleteCampground(campDetail.campground.id)"
+                                label="Delete">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class='well'>
+                <h3> Comments </h3>
+                <div class='text-right' *ngIf="!userdata">
+                    <button pButton type="button"
+                            class='ui-button-success'
+                            (click)="doLogin()"
+                            label="Login or Join to post a comment">
+                    </button>
+                </div>
 
-				<app-comment *ngIf="userdata" [comment]="selectedComment" (insertedComment)="updateUI($event)"></app-comment>
-				<hr>
-				<div class='row'>
-					<div class='col-md-12' *ngFor="let comment of campDetail?.comments">
-						<strong> {{comment.username}} </strong>
-						<!--<span class='pull-right'></span>-->
-						<p>
-							{{comment.text}}
-						</p>
-						<div *ngIf="userdata && comment.user_id === userdata.id">
-							<button pButton type="button"
-							        class="btn btn-warning btn-xs"
-							        (click)="doEditComment(comment)"
-							        label="Edit"></button>
-							<button pButton type="button"
-							        (click)="doDeleteComment(campDetail?.campground?.id, comment?.id)"
-							        class='btn btn-danger btn-xs'
-							        label="Delete"></button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<a routerLink="/">Go Back</a>
-		</div>
-	</div>
+                <app-comment *ngIf="userdata"
+                             [comment]="selectedComment"
+                             (insertedComment)="updateUI($event)">
+                </app-comment>
+                <hr>
+                <div class='row'>
+                    <div class='col-md-12' *ngFor="let comment of campDetail?.comments">
+                        <strong> {{comment.username}} </strong>
+                        <p>
+                            {{comment.text}}
+                        </p>
+                        <div *ngIf="userdata && comment.user_id === userdata.id">
+                            <button pButton type="button"
+                                    class="ui-button-warning"
+                                    (click)="doEditComment(comment)"
+                                    label="Edit">
+                            </button>
+                            <button pButton type="button"
+                                    class='ui-button-danger'
+                                    (click)="doDeleteComment(comment?.id)"
+                                    label="Delete">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a routerLink="/">Go Back</a>
+        </div>
+    </div>
 </div>

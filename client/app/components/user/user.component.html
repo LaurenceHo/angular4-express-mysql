@@ -28,11 +28,11 @@
                     <input type="checkbox" class="form-control" name="remember" value="yes" [(ngModel)]="remember">
                 </div>
 
-                <button class="btn btn-primary btn-lg"
+                <button class="ui-button-primary"
                         *ngIf="route.snapshot.url[0].path == 'login'"
                         pButton
                         label="Login"></button>
-                <button class="btn btn-warning btn-lg"
+                <button class="ui-button-warning"
                         *ngIf="route.snapshot.url[0].path == 'signup'"
                         pButton
                         label="Sign Up">

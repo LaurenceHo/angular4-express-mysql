@@ -4,11 +4,11 @@
 }
 
 .thumbnail {
-    border: lightgray 1px solid;
-    border-radius: 5px;
+    border: lightgray 0.05rem solid;
+    border-radius: 0.3rem;
     position: relative;
-    padding: 5px;
-    margin-bottom: 20px;
+    padding: 0.4rem;
+    margin-bottom: 1.8rem;
 }
 
 .thumbnail img {
@@ -16,7 +16,7 @@
 }
 
 .thumbnail .caption-full {
-    padding: 9px;
+    padding: 2rem;
 }
 
 #delete {

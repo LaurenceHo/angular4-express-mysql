@@ -3,6 +3,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit {
 	username: string = '';
 	password: string = '';
 
-	constructor(private userService: UserService) {
+	constructor(private userService: UserService, private router: Router) {
 	}
 
 	ngOnInit() {
@@ -25,5 +26,9 @@ export class ProfileComponent implements OnInit {
 				this.username = data.username;
 				this.password = data.password;
 			});
+	}
+
+	doLogout() {
+		this.router.navigateByUrl('/logout');
 	}
 }
