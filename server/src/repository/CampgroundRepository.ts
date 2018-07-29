@@ -1,10 +1,11 @@
 import { Campground } from '../model/Campground';
+import { Comment } from '../model/Comment';
 import { BaseRepository } from './BaseRepository';
 
 const database = require('../database/DatabaseService');
 
 export default class CampgroundRepository implements BaseRepository<Campground> {
-	findAll(): any {
+	findAll(callback: any): void {
 		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				throw err;
@@ -15,18 +16,44 @@ export default class CampgroundRepository implements BaseRepository<Campground> 
 					if (err) {
 						throw err;
 					} else {
-						return results;
+						callback(results);
 					}
 				});
 			}
 		});
 	}
 
-	findOneById(): any {
-		return undefined;
+	findOneById(id: number, callback: any): void {
+		database.getConnection((err: any, connection: any) => {
+			if (err) {
+				throw err;
+			} else {
+				let campground: any = [],
+					comments: any = [];
+
+				connection.query('SELECT * FROM campgrounds WHERE id = ?', [id], (err: any, result: Campground) => {
+					if (err) {
+						throw err;
+					} else {
+						campground = result[0];
+					}
+				});
+
+				connection.query('SELECT * FROM comments WHERE campground_id = ?', [id], (err: any, result: Comment[]) => {
+					connection.release();
+
+					if (err) {
+						throw err;
+					} else {
+						comments = result;
+						callback({ campground: campground, comments: comments });
+					}
+				});
+			}
+		});
 	}
 
-	createOne(campground: Campground): number {
+	createOne(campground: Campground, callback: any): void {
 		database.getConnection((err: any, connection: any) => {
 			if (err) {
 				throw err;
@@ -37,19 +64,42 @@ export default class CampgroundRepository implements BaseRepository<Campground> 
 					if (err) {
 						throw err;
 					} else {
-						return ({ campgroundId: result.insertId });
+						callback({ campground_id: result.insertId });
 					}
 				});
 			}
 		});
-
-		return undefined;
 	}
 
-	updateOne(): void {
+	updateOne(campground: Campground): void {
+		database.getConnection((err: any, connection: any) => {
+			if (err) {
+				throw err;
+			} else {
+				connection.query('UPDATE campgrounds SET ? WHERE id = ?', [campground, campground.id], (err: any) => {
+					connection.release();
+
+					if (err) {
+						throw err;
+					}
+				});
+			}
+		});
 	}
 
-	deleteOne(): void {
-	}
+	deleteOne(id: number): void {
+		database.getConnection((err: any, connection: any) => {
+			if (err) {
+				throw err;
+			} else {
+				connection.query('DELETE FROM campgrounds WHERE id = ?', [id], (err: any) => {
+					connection.release();
 
+					if (err) {
+						throw err;
+					}
+				});
+			}
+		});
+	}
 }

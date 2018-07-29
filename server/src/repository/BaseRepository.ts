@@ -1,12 +1,12 @@
 export interface BaseRepository<T> {
 
-	findAll(): any;
+	findAll(callback: any): void;
 
-	findOneById(id: number): any;
+	findOneById(id: number, callback: any): void;
 
-	createOne(item: T): number;
+	createOne(item: T, callback: any): void;
 
-	updateOne(id: number, item: T): void;
+	updateOne(item: T): void;
 
 	deleteOne(id: number): void;
 

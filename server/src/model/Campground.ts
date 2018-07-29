@@ -2,8 +2,8 @@ export interface Campground {
 	id: number,
 	name: string,
 	image: string,
-	username: string,
-	userId: number,
+	description: string,
 	price: number,
-	description: string
+	username: string,
+	user_id: number,
 }

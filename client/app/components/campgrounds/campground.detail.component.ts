@@ -47,7 +47,7 @@ export class CampgroundDetailComponent implements OnInit {
 	doDeleteCampground(id: number) {
 		if (this.route.snapshot.url[0].path === 'campground') {
 			this.campgroundService.deleteCampground(id).subscribe(data => {
-				if (data.status === 200) {
+				if (data.message === 'OK') {
 					this.router.navigate(['/campground']);
 				}
 			});

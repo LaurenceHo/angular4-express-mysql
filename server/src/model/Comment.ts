@@ -1,7 +1,7 @@
 export interface Comment {
 	id: number,
-	username: string,
-	userId: number,
 	text: string,
-	campgroundId: number
+	campground_id: number,
+	username: string,
+	user_id: number
 }

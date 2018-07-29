@@ -3,36 +3,22 @@
  */
 
 import * as express from 'express';
-// import CampgroundRepository from '../repository/CampgroundRepository';
+import CampgroundRepository from '../repository/CampgroundRepository';
 
 const router = express.Router();
 
-const database = require('../database/DatabaseService');
 const authentication = require('../Authentication');
+const campgroundRepository = new CampgroundRepository();
 
 // get all campgrounds
 router.get('/campground', (req: any, res: any) => {
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({message: err});
-		} else {
-			connection.query('SELECT * FROM campgrounds', (err: any, results: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({message: err});
-				} else {
-					res.send(results);
-				}
-			});
-		}
-	});
-	// const campgroundRepository = new CampgroundRepository();
-	// try {
-	// 	res.send(campgroundRepository.findAll());
-	// } catch (err) {
-	// 	res.status(500).send({ message: err })
-	// }
+	try {
+		campgroundRepository.findAll((callback: any) => {
+			res.status(200).send(callback);
+		});
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
 // create one campground
@@ -42,71 +28,34 @@ router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
 	req.body.description = req.sanitize(req.body.description);
 	req.body.price = req.sanitize(req.body.price);
 
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({ message: err });
-		} else {
-			connection.query('INSERT INTO campgrounds SET ?', req.body, (err: any, result: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					res.status(200).send({ campground_id: result.insertId });
-				}
-			});
-		}
-	});
+	try {
+		campgroundRepository.createOne(req.body, (callback: any) => {
+			callback.message = 'OK';
+			res.status(200).send(callback);
+		});
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
-// get one campground with comments
 router.get('/campground/:id', (req: any, res: any) => {
-	let campground: any = [],
-		comments: any = [];
-
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({ message: err });
-		} else {
-			connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, result: any) => {
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					campground = result[0];
-				}
-			});
-
-			connection.query('SELECT * FROM comments WHERE campground_id = ?', [req.params.id], (err: any, result: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					comments = result;
-					res.status(200).send({ campground: campground, comments: comments });
-				}
-			});
-		}
-	});
+	try {
+		campgroundRepository.findOneById(req.params.id, (callback: any) => {
+			res.status(200).send(callback);
+		});
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
-// get campground without comment for edit
 router.get('/campground/:id/edit', authentication.checkCampOwner, (req: any, res: any) => {
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({ message: err });
-		} else {
-			connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, result: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					res.status(200).send({ campground: result[0] });
-				}
-			});
-		}
-	});
+	try {
+		campgroundRepository.findOneById(req.params.id, (callback: any) => {
+			res.status(200).send(callback);
+		});
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
 // edit one campground
@@ -116,40 +65,22 @@ router.put('/campground/:id/edit', authentication.checkCampOwner, (req: any, res
 	req.body.description = req.sanitize(req.body.description);
 	req.body.price = req.sanitize(req.body.price);
 
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({ message: err });
-		} else {
-			connection.query('UPDATE campgrounds SET ? WHERE id = ?', [req.body, req.params.id], (err: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					res.status(200).send({ campground_id: req.params.id });
-				}
-			});
-		}
-	});
+	try {
+		campgroundRepository.updateOne(req.body);
+		res.status(200).send({ message: 'OK' });
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
 // delete one campground
 router.delete('/campground/:id', authentication.checkCampOwner, (req: any, res: any) => {
-	database.getConnection((err: any, connection: any) => {
-		if (err) {
-			res.status(500).send({ message: err });
-		} else {
-			connection.query('DELETE FROM campgrounds WHERE id = ?', [req.params.id], (err: any) => {
-				connection.release();
-
-				if (err) {
-					res.status(500).send({ message: err });
-				} else {
-					res.status(200).send({ campground_id: req.params.id });
-				}
-			});
-		}
-	});
+	try {
+		campgroundRepository.deleteOne(req.params.id);
+		res.status(200).send({ message: 'OK' });
+	} catch (err) {
+		res.status(500).send({ message: err })
+	}
 });
 
 export = router;
