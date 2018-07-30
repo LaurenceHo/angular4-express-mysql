@@ -1,11 +1,13 @@
 import { BaseRepository } from './BaseRepository';
 import { Campground } from '../model/Campground';
 import { Comment } from '../model/Comment';
-import { database } from '../database/DatabaseService';
+import DatabaseService from '../database/DatabaseService';
+
+const database = new DatabaseService();
 
 export default class CampgroundRepository implements BaseRepository<Campground> {
 	findAll(callback: any): void {
-		database.query('SELECT * FROM campgrounds').then((results: Campground[]) => callback(results));
+		database.query('SELECT * FROM campgrounds', null).then((results: Campground[]) => callback(results));
 	}
 
 	findOneById(id: number, callback: any): void {

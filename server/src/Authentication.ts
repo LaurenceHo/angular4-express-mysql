@@ -2,31 +2,27 @@
  * Created by laurence-ho on 21/07/17.
  */
 
-import { database } from './database/DatabaseService';
+import CampgroundRepository from './repository/CampgroundRepository';
+import CommentRepository from './repository/CommentRepository';
+
+const campgroundRepository = new CampgroundRepository();
+const commentRepository = new CommentRepository();
 
 let authentication: any = {};
 
 authentication.checkCampOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		database.getConnection((err: any, connection: any) => {
-			if (err) {
-				res.status(500).send({ message: err });
-			} else {
-				connection.query('SELECT * FROM campgrounds WHERE id = ?', [req.params.id], (err: any, rows: any) => {
-					connection.release();
-
-					if (err) {
-						res.status(500).send({ message: err });
-					} else {
-						if (rows[0].user_id === req.user.id) {
-							next();
-						} else {
-							res.status(403).send({ message: 'You have no permission' });
-						}
-					}
-				});
-			}
-		});
+		try {
+			campgroundRepository.findOneById(req.params.id, (callback: any) => {
+				if (callback.campground.user_id !== req.user.id) {
+					res.status(403).send({ message: 'You have no permission' });
+				} else {
+					next();
+				}
+			});
+		} catch (err) {
+			res.status(500).send({ message: err })
+		}
 	} else {
 		res.status(403).send({ message: 'Please Login First' });
 	}
@@ -34,25 +30,17 @@ authentication.checkCampOwner = (req: any, res: any, next: any) => {
 
 authentication.checkCommentOwner = (req: any, res: any, next: any) => {
 	if (req.isAuthenticated()) {
-		database.getConnection((err: any, connection: any) => {
-			if (err) {
-				res.status(500).send({ message: err });
-			} else {
-				connection.query('SELECT * FROM comments WHERE id = ?', [req.params.comment_id], (err: any, rows: any) => {
-					connection.release();
-
-					if (err) {
-						res.status(500).send({ message: err });
-					} else {
-						if (rows[0].user_id === req.user.id) {
-							next();
-						} else {
-							res.status(403).send({ message: 'You have no permission' });
-						}
-					}
-				});
-			}
-		});
+		try {
+			commentRepository.findOneById(req.params.comment_id, (callback: any) => {
+				if (callback.comment.user_id !== req.user.id) {
+					res.status(403).send({ message: 'You have no permission' });
+				} else {
+					next();
+				}
+			});
+		} catch (err) {
+			res.status(500).send({ message: err })
+		}
 	} else {
 		res.status(403).send({ message: 'Please Login First' });
 	}

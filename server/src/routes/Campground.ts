@@ -13,6 +13,7 @@ const campgroundRepository = new CampgroundRepository();
 router.get('/campground', (req: any, res: any) => {
 	try {
 		campgroundRepository.findAll((callback: any) => {
+			callback.message = 'OK';
 			res.status(200).send(callback);
 		});
 	} catch (err) {
@@ -40,6 +41,7 @@ router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
 router.get('/campground/:id', (req: any, res: any) => {
 	try {
 		campgroundRepository.findOneById(req.params.id, (callback: any) => {
+			callback.message = 'OK';
 			res.status(200).send(callback);
 		});
 	} catch (err) {
@@ -50,6 +52,7 @@ router.get('/campground/:id', (req: any, res: any) => {
 router.get('/campground/:id/edit', authentication.checkCampOwner, (req: any, res: any) => {
 	try {
 		campgroundRepository.findOneById(req.params.id, (callback: any) => {
+			callback.message = 'OK';
 			res.status(200).send(callback);
 		});
 	} catch (err) {

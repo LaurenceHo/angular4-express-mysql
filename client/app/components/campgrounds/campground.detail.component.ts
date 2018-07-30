@@ -61,8 +61,8 @@ export class CampgroundDetailComponent implements OnInit {
 	doDeleteComment(comment_id: number) {
 		this.campgroundService.deleteComment(comment_id)
 			.subscribe(data => {
-				if (data.status === 200) {
-					_.remove(this.campDetail.comments, (comment) => {
+				if (data.message === 'OK') {
+					_.remove(this.campDetail.comments, comment => {
 						return comment.id === comment_id;
 					});
 				}

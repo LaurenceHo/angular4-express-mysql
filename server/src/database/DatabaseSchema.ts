@@ -1,4 +1,7 @@
-export const schema = (db: any) => {
+import DatabaseService from './DatabaseService';
+const database = new DatabaseService();
+
+export const schema = () => {
 	let sql_user = 'CREATE TABLE IF NOT EXISTS `users` (' +
 		'`id` int(11) NOT NULL AUTO_INCREMENT,' +
 		'`username` varchar(255) NOT NULL,' +
@@ -29,27 +32,7 @@ export const schema = (db: any) => {
 		'CONSTRAINT `FK_CAMP_COMMENT` FOREIGN KEY (`campground_id`) REFERENCES `campgrounds` (`id`)' +
 		') ENGINE = InnoDB DEFAULT CHARSET = utf8';
 
-	db.getConnection((err: any, connection: any) => {
-		if (err) {
-			console.log(err);
-		} else {
-			connection.query(sql_user, (err: any) => {
-				if (err) {
-					console.log(err);
-				}
-			});
-			connection.query(sql_camp, (err: any) => {
-				if (err) {
-					console.log(err);
-				}
-			});
-			connection.query(sql_comment, (err: any) => {
-				if (err) {
-					console.log(err);
-				}
-			});
-
-			connection.release();
-		}
-	});
+	database.query(sql_user, null);
+	database.query(sql_camp, null);
+	database.query(sql_comment, null);
 };

@@ -7,7 +7,6 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as passport from 'passport';
 
-import { database } from './database/DatabaseService';
 import * as userRoutes from './routes/User';
 import * as campgroundRoutes from './routes/Campground';
 import * as commentRoutes from './routes/Comment';
@@ -15,7 +14,7 @@ import * as commentRoutes from './routes/Comment';
 const expressSanitizer = require('express-sanitizer');
 
 //initial database schema
-require('./database/DatabaseSchema').schema(database);
+require('./database/DatabaseSchema').schema();
 require('./Passport')(passport);
 
 const app = express();
