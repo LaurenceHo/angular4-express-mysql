@@ -7,7 +7,9 @@ const database = new DatabaseService();
 
 export default class CampgroundRepository implements BaseRepository<Campground> {
 	findAll(callback: any): void {
-		database.query('SELECT * FROM campgrounds', null).then((results: Campground[]) => callback(results));
+		database.query('SELECT * FROM campgrounds', null).then(
+			(results: Campground[]) => callback(results)
+		);
 	}
 
 	findOneById(id: number, callback: any): void {
@@ -25,7 +27,9 @@ export default class CampgroundRepository implements BaseRepository<Campground> 
 	}
 
 	createOne(campground: Campground, callback: any): void {
-		database.query('INSERT INTO campgrounds SET ?', campground).then((result: any) => callback({ campground_id: result.insertId }));
+		database.query('INSERT INTO campgrounds SET ?', campground).then(
+			(result: any) => callback({ campground_id: result.insertId })
+		);
 	}
 
 	updateOne(campground: Campground): void {
