@@ -49,31 +49,6 @@ gulp.task('build:client', () => {
 });
 
 /**
- * Lint all custom TypeScript files.
- */
-gulp.task('tslint', () => {
-	return gulp.src('client/app/**/*.ts')
-		.pipe(tslint({
-			formatter: 'prose'
-		}))
-		.pipe(tslint.report());
-});
-
-
-/**
- * Compile TypeScript sources and create sourcemaps in build directory.
- */
-gulp.task('compile', gulp.series('tslint'), () => {
-	let tsResult = gulp.src('client/**/*.ts')
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(tsProject());
-	return tsResult.js
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest('dist/client'))
-		.pipe(browserSync.stream());
-});
-
-/**
  * Copy all resources that are not TypeScript files into build directory. e.g. index.html, css, images
  */
 gulp.task('clientResources', () => {
@@ -85,10 +60,10 @@ gulp.task('clientResources', () => {
 /**
  * Copy bin directory for www
  */
-gulp.task('serverResources', () => {
-	return gulp.src(['server/src/bin/**'])
-		.pipe(gulp.dest('dist/server/bin'));
-});
+// gulp.task('serverResources', () => {
+// 	return gulp.src(['server/src/bin/**'])
+// 		.pipe(gulp.dest('dist/server/bin'));
+// });
 
 /**
  * Copy all required libraries into build directory.
@@ -167,13 +142,39 @@ gulp.task(
 		'build:server',
 		'build:client',
 		'clientResources',
-		'serverResources',
+		// 'serverResources',
 		'libs',
 		'font-awesome',
 		'sass',
 		'bootstrap'
 	)
 );
+
+
+/**
+ * Lint all custom TypeScript files.
+ */
+gulp.task('tslint', () => {
+	return gulp.src('client/app/**/*.ts')
+		.pipe(tslint({
+			formatter: 'prose'
+		}))
+		.pipe(tslint.report());
+});
+
+
+/**
+ * Compile TypeScript sources and create sourcemaps in build directory.
+ */
+gulp.task('compile', gulp.series('tslint'), () => {
+	let tsResult = gulp.src('client/**/*.ts')
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(tsProject());
+	return tsResult.js
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('dist/client'))
+		.pipe(browserSync.stream());
+});
 
 /**
  * Watch for changes in TypeScript, HTML and CSS files.

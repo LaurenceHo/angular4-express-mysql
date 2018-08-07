@@ -13,10 +13,17 @@ and comment create/edit/delete.
 
 ### Docker MySQL container preparation
 1. Run `docker pull mysql:5`
-2. Run `docker run --name mysql5 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5`
-3. Run `docker run -it --link mysql5:mysql --rm mysql:5 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'`
-4. Setup database and user
-    
+2. Run `docker volume create mysqldata`
+3. Run `docker run --name mysql5 -p 3306:3306 -v mysqldata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5`
+4. Run `docker run -it --link mysql5:mysql --rm mysql:5 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'`
+5. Setup database and user
+```
+mysql> CREATE DATABSE yelpcamp;
+mysql> CREATE USER 'sa'@'172.17.0.1' IDENTIFIED BY '(IJN8uhb';
+mysql> GRANT ALL ON yelpcamp.* TO 'sa'@'172.17.0.1';
+mysql> FLUSH PRIVILEGES;
+```
+6. Check privileges `mysql> SHOW GRANTS FOR 'sa'@'172.17.0.1';`    
 ## Api Document (from Express's view)
 ```
 1. getAllCampgrounds    (GET)    http://localhost:8080/api/campground

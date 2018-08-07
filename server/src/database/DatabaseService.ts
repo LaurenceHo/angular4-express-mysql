@@ -14,6 +14,10 @@ export default class DatabaseService {
 		});
 	}
 
+	getConnection = (callback: any) => {
+		this.pool.getConnection(callback);
+	};
+
 	query = (sql: string, values: any) => new Promise((resolve, reject) => {
 		this.pool.getConnection((err: any, connection: any) => {
 			if (err) {
@@ -36,4 +40,8 @@ export default class DatabaseService {
 			}
 		});
 	});
+
+	destroy = () => {
+		this.pool.end((err: any) => console.error(err));
+	}
 }
