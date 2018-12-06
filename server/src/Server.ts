@@ -19,7 +19,7 @@ require('./Passport')(passport);
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/app', express.static(path.resolve(__dirname, '../client/app')));
@@ -32,9 +32,9 @@ app.use(express.static(path.resolve(__dirname, '../../node_modules')));
 app.use(expressSanitizer());
 
 app.use(session({
-	secret: 'mySecretKey',
-	resave: true,
-	saveUninitialized: true
+  secret: 'mySecretKey',
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,15 +45,15 @@ app.use('/api', campgroundRoutes);
 app.use('/api', commentRoutes);
 
 app.get('/', (req: any, res: any) => {
-	res.sendFile(path.resolve(__dirname, '../client/index.html'));
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 app.get('*', (req: any, res: any) => {
-	res.send('Sorry, page not found!');
+  res.send('Sorry, page not found!');
 });
 
 app.listen(8080, () => {
-	console.log('This express angular app is listening on port:' + 8080);
+  console.log('This express angular app is listening on port:' + 8080);
 });
 
 export = app;

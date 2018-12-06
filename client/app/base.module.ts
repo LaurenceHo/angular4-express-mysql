@@ -24,31 +24,31 @@ import { CampgroundFormComponent } from './components/campgrounds/campground.for
 import { CommentFormComponent } from './components/campgrounds/comment.form.component';
 
 @NgModule({
-	imports: [
-		// Angular Module
-		BrowserModule,
-		HttpModule,
-		FormsModule,
-		AppRoutingModule,
-		// Primeng Module
-		ButtonModule,
-	],
-	declarations: [
-		BaseComponent,
-		CampgroundsComponent,
-		CampgroundDetailComponent,
-		CampgroundFormComponent,
-		CommentFormComponent,
-		UserComponent,
-		ProfileComponent
-	],
-	providers: [
-		ApiService,
-		CampgroundService,
-		UserService,
-		{ provide: LocationStrategy, useClass: HashLocationStrategy }
-	],
-	bootstrap: [BaseComponent]
+  imports: [
+    // Angular Module
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    AppRoutingModule,
+    // Primeng Module
+    ButtonModule,
+  ],
+  declarations: [
+    BaseComponent,
+    CampgroundsComponent,
+    CampgroundDetailComponent,
+    CampgroundFormComponent,
+    CommentFormComponent,
+    UserComponent,
+    ProfileComponent
+  ],
+  providers: [
+    ApiService,
+    CampgroundService,
+    UserService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
+  bootstrap: [ BaseComponent ]
 })
 export class BaseModule {
 }
