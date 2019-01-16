@@ -4,16 +4,16 @@
 
 'use strict';
 
-const gulp = require('gulp'),
-  browserSync = require('browser-sync').create(),
-  sass = require('gulp-sass'),
-  del = require('del'),
-  tsc = require('gulp-typescript'),
-  sourcemaps = require('gulp-sourcemaps'),
-  tsProject = tsc.createProject('tsconfig.json'),
-  tslint = require('gulp-tslint'),
-  concat = require('gulp-concat'),
-  nodemon = require('gulp-nodemon');
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const sass = require('gulp-sass');
+const del = require('del');
+const tsc = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
+const tsProject = tsc.createProject('tsconfig.json');
+const tslint = require('gulp-tslint');
+const concat = require('gulp-concat');
+const nodemon = require('gulp-nodemon');
 
 /**
  * Remove build directory.
@@ -26,8 +26,8 @@ gulp.task('clean', (cb: any) => {
  * Build Express server
  */
 gulp.task('build:server', () => {
-  let tsProject = tsc.createProject('server/tsconfig.json');
-  let tsResult = gulp.src('server/src/**/*.ts')
+  const tsProject = tsc.createProject('server/tsconfig.json');
+  const tsResult = gulp.src('server/src/**/*.ts')
     .pipe(sourcemaps.init())
     .pipe(tsProject());
   return tsResult.js
@@ -39,13 +39,14 @@ gulp.task('build:server', () => {
  * Build frontend app
  */
 gulp.task('build:client', () => {
-  let tsProject = tsc.createProject('client/tsconfig.json');
-  let tsResult = gulp.src('client/**/*.ts')
+  const tsProject = tsc.createProject('client/tsconfig.json');
+  const tsResult = gulp.src('client/**/*.ts')
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(tsProject());
   return tsResult.js
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/client'));
+    .pipe(gulp.dest('dist/client'))
+    .pipe(browserSync.stream());
 });
 
 /**
@@ -116,10 +117,10 @@ gulp.task('bootstrap', () => {
  */
 gulp.task('start', () => {
   nodemon({
-    script: 'dist/server/server.js'
-    , ext: 'html js'
-    , ignore: [ 'ignored.js' ]
-    , tasks: [ 'tslint' ]
+    script: 'dist/server/server.js',
+    ext: 'html js',
+    ignore: [ 'ignored.js' ],
+    tasks: [ 'tslint' ]
   })
     .on('restart', () => {
       console.log('restarted!');
@@ -150,7 +151,6 @@ gulp.task(
   )
 );
 
-
 /**
  * Lint all custom TypeScript files.
  */
@@ -162,12 +162,11 @@ gulp.task('tslint', () => {
     .pipe(tslint.report());
 });
 
-
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.
  */
 gulp.task('compile', gulp.series('tslint'), () => {
-  let tsResult = gulp.src('client/**/*.ts')
+  const tsResult = gulp.src('client/**/*.ts')
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(tsProject());
   return tsResult.js
@@ -181,5 +180,6 @@ gulp.task('compile', gulp.series('tslint'), () => {
  */
 gulp.task('watch', () => {
   gulp.watch([ 'client/**/*.ts' ], gulp.series('compile')).on('change', browserSync.reload);
-  gulp.watch([ 'client/**/*.html', 'client/**/*.css' ], gulp.series('clientResources')).on('change', browserSync.reload);
+  gulp.watch([ 'client/**/*.html', 'client/**/*.css' ],
+    gulp.series('clientResources')).on('change', browserSync.reload);
 });

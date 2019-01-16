@@ -3,16 +3,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Campground } from '../models/campground';
-import { Comment } from '../models/comment';
-import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-
-export class CampgroundDetail {
-  campground: Campground;
-  comments: any[];
-}
+import { Campground } from '../models/campground';
+import { CampgroundDetail } from '../models/campgroundDetail';
+import { Comment } from '../models/comment';
+import { ApiService } from './api.service';
 
 @Injectable()
 export class CampgroundService {

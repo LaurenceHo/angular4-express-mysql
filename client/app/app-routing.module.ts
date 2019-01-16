@@ -4,12 +4,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
 import { CampgroundDetailComponent } from './components/campgrounds/campground.detail.component';
 import { CampgroundFormComponent } from './components/campgrounds/campground.form.component';
-import { UserComponent } from './components/user/user.component';
-import { ProfileComponent } from './components/user/profile.component';
+import { CampgroundsComponent } from './components/campgrounds/campgrounds.component';
 import { CommentFormComponent } from './components/campgrounds/comment.form.component';
+import { ProfileComponent } from './components/user/profile.component';
+import { UserComponent } from './components/user/user.component';
 
 const appRoutes: Routes = [
   {

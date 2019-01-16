@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Comment } from '../../models/comment';
 import { CampgroundService } from '../../services/campgounds.service';
 import { UserService } from '../../services/user.service';
-import { Comment } from '../../models/comment';
-import { NgForm } from '@angular/forms';
 
 /**
  * Created by laurence-ho on 3/07/17.
@@ -61,7 +61,7 @@ export class CommentFormComponent implements OnInit {
           .subscribe(data => console.log(data));
       } else {
         this.campgroundService.editComment(this.comment)
-          .subscribe(data => console.log(data));// FIXME
+          .subscribe(data => console.log(data)); // FIXME
       }
     }
     this.commentForm.reset();

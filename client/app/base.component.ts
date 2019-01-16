@@ -3,9 +3,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
 import { NavigationEnd, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'my-app',

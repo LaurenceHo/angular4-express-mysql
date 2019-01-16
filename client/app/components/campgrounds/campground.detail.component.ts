@@ -2,14 +2,15 @@
  * Created by Laurence Ho on 08-02-2017.
  */
 
-import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
-import { CampgroundDetail, CampgroundService } from '../../services/campgounds.service';
-import { UserService } from '../../services/user.service';
-import { Comment } from '../../models/comment';
 import * as _ from 'lodash';
+import { CampgroundDetail } from '../../models/campgroundDetail';
+import { Comment } from '../../models/comment';
+import { CampgroundService } from '../../services/campgounds.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'campDetail',
@@ -31,7 +32,7 @@ export class CampgroundDetailComponent implements OnInit {
   
   ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => this.campgroundService.getCampgroundDetail(params[ 'id' ]))
+      .switchMap((params: Params) => this.campgroundService.getCampgroundDetail(params.id))
       .subscribe(data => this.campDetail = data);
     this.userdata = this.userService.getUserData();
   }
@@ -70,7 +71,7 @@ export class CampgroundDetailComponent implements OnInit {
   }
   
   updateUI(comment: Comment) {
-    let tempComment = comment[ 'comment' ];
-    this.campDetail.comments.push(tempComment);
+    // FIXME let tempComment = comment[ 'comment' ];
+    this.campDetail.comments.push(comment);
   }
 }

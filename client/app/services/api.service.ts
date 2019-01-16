@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptionsArgs, Response, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {
@@ -14,7 +14,7 @@ export class ApiService {
   
   perform(method: string, urlPath: string, body: any, params: any, formParams: any): Observable<any> {
     const requestOptions: RequestOptionsArgs = {};
-    const headers = new Headers({'Accept': '*/*'});
+    const headers = new Headers({Accept: '*/*'});
     
     if (!_.isEmpty(formParams)) {
       // Form submit
@@ -36,7 +36,7 @@ export class ApiService {
       }
     }
     
-    let searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams();
     
     if (!_.isEmpty(params)) {
       for (const param of Object.keys(params)) {

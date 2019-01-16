@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { ApiService } from './api.service';
 
-export type InternalStateType = {
-  [ key: string ]: any
-};
+export interface InternalStateType {
+  [ key: string ]: any;
+}
 
 @Injectable()
 export class UserService {
@@ -52,13 +52,13 @@ export class UserService {
   setUserData(data: any) {
     if (data) {
       window.localStorage.setItem(this.USER_DATA_KEY, data);
-      return this._state[ 'user' ] = data;
+      return this._state.user = data;
     }
   }
   
   getUserData(): any {
     const state = this.state;
-    return state.hasOwnProperty('user') ? state[ 'user' ] : undefined;
+    return state.hasOwnProperty('user') ? state.user : undefined;
   }
   
   doLogin(username: string, password: string, remember: boolean): Observable<any> {
@@ -67,15 +67,15 @@ export class UserService {
     const _formParams: any = {};
     
     if (username !== undefined) {
-      _formParams[ 'username' ] = username;
+      _formParams.username = username;
     }
     
     if (password !== undefined) {
-      _formParams[ 'password' ] = password;
+      _formParams.password = password;
     }
     
     if (remember !== undefined && remember === false) {
-      _formParams[ 'remember' ] = remember;
+      _formParams.remember = remember;
     }
     
     return this.apiService.perform('post', this.loginUrl, _bodyData, _params, _formParams);
@@ -87,11 +87,11 @@ export class UserService {
     const _formParams: any = {};
     
     if (username !== undefined) {
-      _formParams[ 'username' ] = username;
+      _formParams.username = username;
     }
     
     if (password !== undefined) {
-      _formParams[ 'password' ] = password;
+      _formParams.password = password;
     }
     
     return this.apiService.perform('post', this.signupUrl, _bodyData, _params, _formParams);

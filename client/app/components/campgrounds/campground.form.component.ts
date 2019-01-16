@@ -2,10 +2,10 @@
  * Created by laurence-ho on 2/07/17.
  */
 import { Component, OnInit } from '@angular/core';
-import { CampgroundService } from '../../services/campgounds.service';
-import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Campground } from '../../models/campground';
+import { CampgroundService } from '../../services/campgounds.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'campDetail',

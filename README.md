@@ -79,3 +79,5 @@ This project is based on https://github.com/moizKachwala/Angular2-express-mongoo
 ### Existing major issues:
 1. browserSync cannot reload the browser automatically when modifying client side code.
 2. When user refreshes the browser, the login session would be gone, and user needs to login again. 
+3. Some UI issues did not solve yet: 
+  * When user do place comment, the UI does display comment properly

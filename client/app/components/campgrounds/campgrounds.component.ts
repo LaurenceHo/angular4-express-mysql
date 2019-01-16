@@ -4,9 +4,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Campground } from '../../models/campground';
 import { CampgroundService } from '../../services/campgounds.service';
 import { UserService } from '../../services/user.service';
-import { Campground } from '../../models/campground';
 
 @Component({
   selector: 'camps',

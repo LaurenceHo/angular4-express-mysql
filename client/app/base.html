@@ -2,18 +2,18 @@
     <a class='navbar-brand' href='#'>{{title}}</a>
 
     <div class='collapse navbar-collapse'>
-        <div class='navbar-nav' *ngIf="!userdata">
-            <a class="nav-link nav-item" routerLink='/login' routerLinkActive="active">Login</a>
-            <a class="nav-link nav-item" routerLink='/signup' routerLinkActive="active">Sign Up</a>
+        <div class='navbar-nav' *ngIf='!userdata'>
+            <a class="nav-link nav-item" routerLink='/login' routerLinkActive='active'>Login</a>
+            <a class="nav-link nav-item" routerLink='/signup' routerLinkActive='active'>Sign Up</a>
         </div>
-        <div class='navbar-nav' *ngIf="userdata">
-            <a class="nav-link nav-item" href='#'> Signed In As {{userdata.username}}</a>
-            <a class="nav-link nav-item" routerLink='/profile' routerLinkActive="active">Profile</a>
-            <a class="nav-link nav-item" routerLink='/logout' routerLinkActive="active">Logout</a>
+        <div class='navbar-nav' *ngIf='userdata'>
+            <a class='nav-link nav-item' href='#'> Signed In As {{userdata.username}}</a>
+            <a class='nav-link nav-item' routerLink='/profile' routerLinkActive='active'>Profile</a>
+            <a class='nav-link nav-item' routerLink='/logout' routerLinkActive='active'>Logout</a>
         </div>
     </div>
 </nav>
 
-<div class="container">
+<div class='container'>
     <router-outlet></router-outlet>
 </div>
