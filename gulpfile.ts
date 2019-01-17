@@ -18,20 +18,18 @@ const nodemon = require('gulp-nodemon');
 /**
  * Remove build directory.
  */
-gulp.task('clean', (cb: any) => {
-  return del([ 'dist' ], cb);
-});
+gulp.task('clean', (cb: any) => del([ 'dist' ], cb));
 
 /**
  * Lint all custom TypeScript files.
  */
-gulp.task('tslint', () => {
-  return gulp.src('client/app/**/*.ts')
+gulp.task('tslint', () =>
+  gulp.src('client/app/**/*.ts')
     .pipe(tslint({
       formatter: 'prose'
     }))
-    .pipe(tslint.report());
-});
+    .pipe(tslint.report())
+);
 
 /**
  * Build Express server
@@ -61,25 +59,25 @@ gulp.task('build:client', () => {
 /**
  * Copy all resources that are not TypeScript files into build directory. e.g. index.html, css, images
  */
-gulp.task('clientResources', () => {
-  return gulp.src([ 'client/**/*', '!**/*.ts', '!client/*.json' ])
+gulp.task('clientResources', () =>
+  gulp.src([ 'client/**/*', '!**/*.ts', '!client/*.json' ])
     .pipe(gulp.dest('dist/client'))
-    .pipe(browserSync.stream());
-});
+    .pipe(browserSync.stream())
+);
 
 /**
  * Copy bin directory for www
  */
-gulp.task('serverResources', () => {
-  return gulp.src(['server/src/bin/**'])
-    .pipe(gulp.dest('dist/server/bin'));
-});
+gulp.task('serverResources', () =>
+  gulp.src([ 'server/src/bin/**' ])
+    .pipe(gulp.dest('dist/server/bin'))
+);
 
 /**
  * Copy all required libraries into build directory.
  */
-gulp.task('libs', () => {
-  return gulp.src([
+gulp.task('libs', () =>
+  gulp.src([
     'core-js/client/**',
     'zone.js/dist/zone.js',
     'reflect-metadata/Reflect.js',
@@ -88,38 +86,38 @@ gulp.task('libs', () => {
     'lodash/lodash.min.js',
     'primeng/**'
   ], {cwd: 'node_modules/**'}) /* Glob required here. */
-    .pipe(gulp.dest('dist/client/libs'));
-});
+    .pipe(gulp.dest('dist/client/libs'))
+);
 
 /**
  * Copy all required libraries into build directory.
  */
-gulp.task('font-awesome', () => {
-  return gulp.src([
+gulp.task('font-awesome', () =>
+  gulp.src([
     'font-awesome/**/**'
   ], {cwd: 'node_modules/**'}) /* Glob required here. */
-    .pipe(gulp.dest('dist/client/vendors'));
-});
+    .pipe(gulp.dest('dist/client/vendors'))
+);
 
 /**
  * Copy and compile bootstrap
  */
-gulp.task('sass', () => {
-  return gulp.src([
+gulp.task('sass', () =>
+  gulp.src([
     'bootstrap/scss/bootstrap.scss'
   ], {cwd: 'node_modules/**'})
     .pipe(sass())
-    .pipe(gulp.dest('dist/client/vendors'));
-});
+    .pipe(gulp.dest('dist/client/vendors'))
+);
 
-gulp.task('bootstrap', () => {
-  return gulp.src([
+gulp.task('bootstrap', () =>
+  gulp.src([
     'bootstrap/dist/js/bootstrap.min.js',
     'jquery/dist/jquery.slim.js',
     'popper.js/dist/popper.min.js'
   ], {cwd: 'node_modules/**'})
-    .pipe(gulp.dest('dist/client/vendors'));
-});
+    .pipe(gulp.dest('dist/client/vendors'))
+);
 
 /**
  * Start the express server
