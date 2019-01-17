@@ -23,10 +23,20 @@ gulp.task('clean', (cb: any) => {
 });
 
 /**
+ * Lint all custom TypeScript files.
+ */
+gulp.task('tslint', () => {
+  return gulp.src('client/app/**/*.ts')
+    .pipe(tslint({
+      formatter: 'prose'
+    }))
+    .pipe(tslint.report());
+});
+
+/**
  * Build Express server
  */
 gulp.task('build:server', () => {
-  const tsProject = tsc.createProject('server/tsconfig.json');
   const tsResult = gulp.src('server/src/**/*.ts')
     .pipe(sourcemaps.init())
     .pipe(tsProject());
@@ -39,7 +49,6 @@ gulp.task('build:server', () => {
  * Build frontend app
  */
 gulp.task('build:client', () => {
-  const tsProject = tsc.createProject('client/tsconfig.json');
   const tsResult = gulp.src('client/**/*.ts')
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(tsProject());
@@ -61,10 +70,10 @@ gulp.task('clientResources', () => {
 /**
  * Copy bin directory for www
  */
-// gulp.task('serverResources', () => {
-// 	return gulp.src(['server/src/bin/**'])
-// 		.pipe(gulp.dest('dist/server/bin'));
-// });
+gulp.task('serverResources', () => {
+  return gulp.src(['server/src/bin/**'])
+    .pipe(gulp.dest('dist/server/bin'));
+});
 
 /**
  * Copy all required libraries into build directory.
@@ -117,7 +126,7 @@ gulp.task('bootstrap', () => {
  */
 gulp.task('start', () => {
   nodemon({
-    script: 'dist/server/server.js',
+    script: 'dist/server/bin/www',
     ext: 'html js',
     ignore: [ 'ignored.js' ],
     tasks: [ 'tslint' ]
@@ -143,24 +152,13 @@ gulp.task(
     'build:server',
     'build:client',
     'clientResources',
-    // 'serverResources',
+    'serverResources',
     'libs',
     'font-awesome',
     'sass',
     'bootstrap'
   )
 );
-
-/**
- * Lint all custom TypeScript files.
- */
-gulp.task('tslint', () => {
-  return gulp.src('client/app/**/*.ts')
-    .pipe(tslint({
-      formatter: 'prose'
-    }))
-    .pipe(tslint.report());
-});
 
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.

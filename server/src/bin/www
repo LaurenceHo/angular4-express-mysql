@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const http = require('http');
+const app = require('../Server');
+
+const server = http.createServer(app);
+
+server.listen(8080, () => {
+  const port = server.address().port;
+  console.log('This express angular app is listening on port:' + port);
+});

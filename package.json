@@ -5,11 +5,8 @@
   "description": "Fullstack web application using Angular4, Primeng, Express, Mysql, Gulp and Passport",
   "scripts": {
     "clean": "gulp clean",
-    "compile": "gulp compile",
     "build": "gulp build",
-    "start-all": "concurrently --kill-others \"gulp watch\" \"node ./dist/server/Server.js\"",
-    "start-server": "gulp start",
-    "start-client": "gulp watch"
+    "start-all": "concurrently --kill-others \"gulp watch\" \"gulp start\""
   },
   "repository": {
     "type": "git",

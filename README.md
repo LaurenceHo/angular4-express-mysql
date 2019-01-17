@@ -67,10 +67,6 @@ npm run build
 npm run start-all
 ```
 
-* If you want to run client and server separately:
-
-Run `npm run start-server` and `npm run start-client`
-
 * Visit in your browser: `http://localhost:8080`
 
 ### Reference
