@@ -17,7 +17,7 @@ router.get('/campground', (req: any, res: any) => {
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -34,7 +34,7 @@ router.post('/campground', authentication.isLoggedIn, (req: any, res: any) => {
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -45,7 +45,7 @@ router.get('/campground/:id', (req: any, res: any) => {
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -56,7 +56,7 @@ router.get('/campground/:id/edit', authentication.checkCampOwner, (req: any, res
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -71,7 +71,7 @@ router.put('/campground/:id/edit', authentication.checkCampOwner, (req: any, res
     campgroundRepository.updateOne(req.body);
     res.status(200).send({message: 'OK'});
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -81,7 +81,7 @@ router.delete('/campground/:id', authentication.checkCampOwner, (req: any, res: 
     campgroundRepository.deleteOne(req.params.id);
     res.status(200).send({message: 'OK'});
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 

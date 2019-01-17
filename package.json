@@ -24,7 +24,6 @@
     "@angular/animations": "^4.4.7",
     "@angular/common": "^4.4.7",
     "@angular/compiler": "^4.4.7",
-    "@angular/compiler-cli": "^4.4.7",
     "@angular/core": "^4.4.7",
     "@angular/forms": "^4.4.7",
     "@angular/http": "^4.4.7",
@@ -65,7 +64,6 @@
     "core-js": "^2.6.2",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.1",
     "gulp-nodemon": "^2.4.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
@@ -76,6 +74,6 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.12.1",
     "typescript": "^2.9.2",
-    "zone.js": "^0.8.27"
+    "zone.js": "^0.8.28"
   }
 }

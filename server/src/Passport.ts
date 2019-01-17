@@ -51,14 +51,14 @@ export = (passport: Passport) => {
               return done(false, {message: 'This username is already taken.'});
             } else {
               // if there is no user with that username, create the user
-              let newUser = {
+              const newUser = {
                 id: 0,
-                username: username,
+                username,
                 password: bcrypt.hashSync(password, null)
               };
               userRepository.createOne(newUser, (result: any) => {
                 newUser.id = result.user_id;
-                done(null, newUser)
+                done(null, newUser);
               });
               return done;
             }

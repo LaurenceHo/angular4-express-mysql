@@ -1,7 +1,7 @@
-import { BaseRepository } from './BaseRepository';
+import DatabaseService from '../database/DatabaseService';
 import { Campground } from '../model/Campground';
 import { Comment } from '../model/Comment';
-import DatabaseService from '../database/DatabaseService';
+import { BaseRepository } from './BaseRepository';
 
 const database = new DatabaseService();
 
@@ -14,14 +14,14 @@ export default class CampgroundRepository implements BaseRepository<Campground> 
   
   findOneById(id: number, callback: any): void {
     database.query('SELECT * FROM campgrounds WHERE id = ?', [ id ]).then((campResult: Campground) => {
-      let campground: any = [],
-        comments: any = [];
+      let campground: any = [];
+      let comments: any = [];
       
       database.query('SELECT * FROM comments WHERE campground_id = ?', [ id ]).then((commentResult: Comment[]) => {
         campground = campResult[ 0 ];
         comments = commentResult;
         
-        callback({campground: campground, comments: comments});
+        callback({campground, comments});
       });
     });
   }

@@ -8,7 +8,7 @@ import CommentRepository from './repository/CommentRepository';
 const campgroundRepository = new CampgroundRepository();
 const commentRepository = new CommentRepository();
 
-let authentication: any = {};
+const authentication: any = {};
 
 authentication.checkCampOwner = (req: any, res: any, next: any) => {
   if (req.isAuthenticated()) {
@@ -21,7 +21,7 @@ authentication.checkCampOwner = (req: any, res: any, next: any) => {
         }
       });
     } catch (err) {
-      res.status(500).send({message: err})
+      res.status(500).send({message: err});
     }
   } else {
     res.status(403).send({message: 'Please Login First'});
@@ -39,7 +39,7 @@ authentication.checkCommentOwner = (req: any, res: any, next: any) => {
         }
       });
     } catch (err) {
-      res.status(500).send({message: err})
+      res.status(500).send({message: err});
     }
   } else {
     res.status(403).send({message: 'Please Login First'});
@@ -54,4 +54,3 @@ authentication.isLoggedIn = (req: any, res: any, next: any) => {
 };
 
 export = authentication;
-

@@ -12,7 +12,6 @@ const tsc = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const tsProject = tsc.createProject('tsconfig.json');
 const tslint = require('gulp-tslint');
-const concat = require('gulp-concat');
 const nodemon = require('gulp-nodemon');
 
 /**

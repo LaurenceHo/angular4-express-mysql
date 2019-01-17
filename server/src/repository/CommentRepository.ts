@@ -1,11 +1,12 @@
-import { BaseRepository } from './BaseRepository';
-import { Comment } from '../model/Comment';
 import DatabaseService from '../database/DatabaseService';
+import { Comment } from '../model/Comment';
+import { BaseRepository } from './BaseRepository';
 
 const database = new DatabaseService();
 
 export default class CommentRepository implements BaseRepository<Comment> {
   findAll(callback: any): void {
+    // TODO
   }
   
   findOneById(id: number, callback: any): void {

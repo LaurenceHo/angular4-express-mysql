@@ -5,4 +5,4 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BaseModule } from './base.module';
 
-platformBrowserDynamic().bootstrapModule(BaseModule);
+platformBrowserDynamic().bootstrapModule(BaseModule).catch(err => console.log(err));

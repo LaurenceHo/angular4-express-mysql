@@ -17,7 +17,7 @@ router.get('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: 
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -31,7 +31,7 @@ router.post('/comment', authentication.isLoggedIn, (req: any, res: any) => {
       res.status(200).send(callback);
     });
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -43,7 +43,7 @@ router.put('/comment/:comment_id/edit', authentication.checkCommentOwner, (req: 
     commentRepository.updateOne(req.body);
     res.status(200).send({message: 'OK'});
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 
@@ -53,7 +53,7 @@ router.delete('/comment/:comment_id', authentication.checkCommentOwner, (req: an
     commentRepository.deleteOne(req.params.comment_id);
     res.status(200).send({message: 'OK'});
   } catch (err) {
-    res.status(500).send({message: err})
+    res.status(500).send({message: err});
   }
 });
 

@@ -1,11 +1,12 @@
-import { BaseRepository } from './BaseRepository';
-import { User } from '../model/User';
 import DatabaseService from '../database/DatabaseService';
+import { User } from '../model/User';
+import { BaseRepository } from './BaseRepository';
 
 const database = new DatabaseService();
 
 export default class UserRepository implements BaseRepository<User> {
   findAll(callback: any): void {
+    // TODO
   }
   
   findOneById(id: number, callback: any): void {
@@ -27,8 +28,10 @@ export default class UserRepository implements BaseRepository<User> {
   }
   
   updateOne(item: User): void {
+    // TODO
   }
   
   deleteOne(id: number): void {
+    // TODO
   }
 }

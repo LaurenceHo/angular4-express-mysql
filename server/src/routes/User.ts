@@ -41,14 +41,14 @@ router.post('/login', (req: any, res: any, next: any) => {
 router.post('/signup', (req: any, res: any, next: any) => {
     passport.authenticate('local-signup', (err: any, user: any, info: any) => {
       if (err) {
-        return res.status(403).send({'message': err.message});
+        return res.status(403).send({message: err.message});
       }
       
       if (!user) {
-        return res.status(403).send({'message': info.message});
+        return res.status(403).send({message: info.message});
       }
       
-      return res.status(200).send({'message': 'OK'});
+      return res.status(200).send({message: 'OK'});
     })(req, res, next);
   }
 );
